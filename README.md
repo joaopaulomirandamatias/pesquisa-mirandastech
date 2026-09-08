@@ -23,7 +23,12 @@ Tudo nesta versão é **gratuito, aberto (CC BY 4.0) e roda no computador do alu
 ```
 ou `bash scripts/instalar_claude.sh` (também registra o conector Zotero no Claude Desktop, se existir).
 
-**Codex** (app e CLI): `bash scripts/instalar_codex.sh` — registra o conector `zotero` em `~/.codex/config.toml` e instala os prompts `/pesquisador`, `/metodologo`, `/orientador`, `/bibliotecario`. Na pasta do projeto o Codex lê `AGENTS.md`. O repositório também traz `.codex-plugin/plugin.json` no formato dos plugins do Codex.
+**Codex** (app e CLI), como plugin (marketplace próprio, sem depender do diretório da OpenAI):
+```
+codex plugin marketplace add joaopaulomirandamatias/pesquisa-mirandastech
+codex plugin add pesquisa-mirandastech@mirandastech
+```
+ou `bash scripts/instalar_codex.sh`, que faz isso e ainda registra o conector `zotero` em `~/.codex/config.toml` e instala os prompts `/pesquisador`, `/metodologo`, `/orientador`, `/bibliotecario`. Na pasta do projeto o Codex lê `AGENTS.md`.
 
 Requisitos: Python 3, Git, `uv` (para o conector Zotero; alternativa: `pip install mcp`), Zotero 7+ aberto com a API local ligada (Configurações → Avançado) para as ferramentas de biblioteca.
 
@@ -49,7 +54,7 @@ O projeto criado tem: pastas por etapa, `PROGRESSO.md` (fases + checklists Méto
 | `hooks/hooks.json` | ao abrir uma sessão numa pasta com `PROGRESSO.md`, mostra as pendências e lembra de chamar o Pesquisador |
 | `scripts/` | `iniciar_projeto.py`, `verificar_citacoes.py`, `verificar_refs.py`, `tamanho_amostra.py`, `cronograma.py`, `auditar_biblioteca.py`, `exportar_bbt.sh`, `backup_zotero.sh`, `instalar_claude.sh`, `instalar_codex.sh` |
 | `modelos/` | arquivos copiados para o projeto; estilos ABNT (.csl); prompts do Gemini Notebook |
-| `.codex-plugin/` · `AGENTS.md` · `codex/prompts/` | pacote do Codex |
+| `.codex-plugin/` · `.agents/plugins/marketplace.json` · `AGENTS.md` · `codex/prompts/` | pacote do Codex (manifesto do plugin, marketplace, instruções e prompts) |
 | `docs/` | o plano (Markdown e HTML) |
 | `.github/workflows/verificar.yml` | CI: manifestos, frontmatter de agentes/skills/comandos, scripts |
 

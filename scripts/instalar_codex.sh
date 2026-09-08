@@ -3,6 +3,8 @@
 set -e
 AQUI="$(cd "$(dirname "$0")/.." && pwd)"; SRV="$AQUI/scripts/zotero_mcp.py"
 if command -v codex >/dev/null; then
+  codex plugin marketplace add joaopaulomirandamatias/pesquisa-mirandastech >/dev/null 2>&1 || codex plugin marketplace upgrade mirandastech >/dev/null 2>&1 || true
+  codex plugin add pesquisa-mirandastech@mirandastech >/dev/null 2>&1 && echo "Codex: plugin pesquisa-mirandastech instalado (skills e AGENTS.md)" || true
   codex mcp remove zotero >/dev/null 2>&1 || true
   codex mcp add zotero -- uv run --with mcp python "$SRV" && echo "Codex: conector zotero registrado em ~/.codex/config.toml"
 else

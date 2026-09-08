@@ -1,0 +1,13 @@
+{
+  "name": "mirandastech",
+  "displayName": "MirandasTech Pesquisa",
+  "description": "Plugins dos manuais MirandasTech de pesquisa científica",
+  "plugins": [
+    {
+      "name": "pesquisa-mirandastech",
+      "source": { "source": "local", "path": "./" },
+      "category": "Education & Research",
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_USE" }
+    }
+  ]
+}
