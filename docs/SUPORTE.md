@@ -1,7 +1,7 @@
 # Suporte — Pesquisa MirandasTech
 
 - **Dúvidas sobre o plugin, instalação e agentes:** abra uma issue em https://github.com/joaopaulomirandamatias/pesquisa-mirandastech/issues (em português ou inglês). Diga o cliente (Claude Code, Claude Desktop, Codex app ou CLI), o sistema operacional e o que aconteceu.
-- **E-mail:** joaopaulomirandamatias@gmail.com.
+- **E-mail:** contato@mirandastech.com.br.
 - **Hub de pesquisa e manuais:** https://www.mirandastech.com.br/pesquisa — Metodologia (https://metodologia.mirandastech.com.br/), Uso de IA (https://manual.mirandastech.com.br/), Zotero (https://zotero.mirandastech.com.br/), Gemini Notebook (https://notebook.mirandastech.com.br/).
 - **Antes de abrir uma issue:** rode `claude plugin validate` (Claude Code) ou `codex plugin list` (Codex) e, para o conector Zotero, confirme que o Zotero está aberto com a API local ligada (Configurações → Avançado → «Permitir que outros aplicativos neste computador se comuniquem com o Zotero») e que `uv` está instalado.
 - **Política de privacidade:** docs/PRIVACIDADE.md · **Termos de uso:** docs/TERMOS.md.
