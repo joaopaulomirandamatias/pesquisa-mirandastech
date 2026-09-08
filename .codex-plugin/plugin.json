@@ -1,0 +1,21 @@
+{
+  "name": "pesquisa-mirandastech",
+  "version": "1.0.0",
+  "description": "Pesquisa MirandasTech: o Pesquisador conduz o estudante do tema à defesa por 11 fases com evidência, com as skills do Metodólogo (método e ABNT), do Orientador (uso responsável de IA), do Bibliotecário (Zotero, com conector MCP) e da leitura com o Gemini Notebook.",
+  "author": { "name": "MirandasTech", "url": "https://mirandastech.com.br" },
+  "homepage": "https://github.com/joaopaulomirandamatias/pesquisa-mirandastech",
+  "repository": "https://github.com/joaopaulomirandamatias/pesquisa-mirandastech",
+  "license": "CC-BY-4.0",
+  "keywords": ["pesquisa", "metodologia", "abnt", "zotero", "ia", "pos-graduacao"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Pesquisa MirandasTech",
+    "shortDescription": "Conduza sua pesquisa dentro das normas, fase a fase",
+    "longDescription": "Quatro papéis (Pesquisador, Metodólogo, Orientador de uso de IA, Bibliotecário do Zotero) e a camada de leitura com o Gemini Notebook, baseados nos manuais MirandasTech. O aluno decide; a IA formula, registra e só fecha uma fase com evidência.",
+    "developerName": "MirandasTech",
+    "category": "Education & Research",
+    "capabilities": ["Interactive", "Read"],
+    "websiteURL": "https://mirandastech.com.br",
+    "defaultPrompt": ["/pesquisador onde paramos", "/pesquisador começar minha pesquisa sobre …", "/pesquisador auditar a biblioteca e as citações"]
+  }
+}

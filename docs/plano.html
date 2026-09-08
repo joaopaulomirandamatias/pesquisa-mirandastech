@@ -1,0 +1,147 @@
+<title>Plugin Pesquisa MirandasTech</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{--ink:#1b2530;--ink2:#4a5866;--bg:#f7f6f2;--card:#ffffff;--line:#d9d6cd;--blue:#17436B;--blue-soft:#e6eef6;--sig:#C4530E;--sig-soft:#fbeadf;--go:#2f6b3a;--go-soft:#e4f0e6;--amber:#8a6100;--amber-soft:#fbf1d6;--stop:#8e2b2b;--stop-soft:#f6e1e1;--mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;--cond:'IBM Plex Sans Condensed','Arial Narrow',Arial,sans-serif;--serif:'Spectral',Georgia,serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e8e6e0;--ink2:#b3b0a7;--bg:#14181d;--card:#1c2229;--line:#333b45;--blue:#8fb4d9;--blue-soft:#1d2d3d;--sig:#e8875a;--sig-soft:#3a2418;--go:#7fc48c;--go-soft:#1c3021;--amber:#e3b64a;--amber-soft:#3a3016;--stop:#e08a8a;--stop-soft:#3a1f1f}}
+:root[data-theme="dark"]{--ink:#e8e6e0;--ink2:#b3b0a7;--bg:#14181d;--card:#1c2229;--line:#333b45;--blue:#8fb4d9;--blue-soft:#1d2d3d;--sig:#e8875a;--sig-soft:#3a2418;--go:#7fc48c;--go-soft:#1c3021;--amber:#e3b64a;--amber-soft:#3a3016;--stop:#e08a8a;--stop-soft:#3a1f1f}
+body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:16px;line-height:1.55;margin:0}
+main{max-width:980px;margin:0 auto;padding:40px 28px 80px}
+h1,h2,h3{font-family:var(--cond);letter-spacing:-.01em;text-wrap:balance;line-height:1.12}
+h1{font-size:40px;margin:0 0 6px}h2{font-size:26px;margin:44px 0 12px;padding-top:14px;border-top:3px solid var(--blue)}h3{font-size:19px;margin:22px 0 8px}
+.kicker{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:12px;color:var(--sig);font-weight:600}
+.lead{font-size:18px;color:var(--ink2);max-width:66ch}
+p{max-width:70ch}
+table{border-collapse:collapse;width:100%;font-size:14.5px;margin:10px 0 6px}
+th{font-family:var(--cond);text-transform:uppercase;letter-spacing:.08em;font-size:11.5px;color:var(--ink2);text-align:left;padding:8px 10px;border-bottom:2px solid var(--line)}
+td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.tw{overflow-x:auto}
+code,.mono{font-family:var(--mono);font-size:.88em}
+code{background:var(--blue-soft);padding:1px 5px;border-radius:3px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin:12px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:14px 16px}
+.card h3{margin:0 0 6px;font-size:17px}.card p{font-size:14.5px;margin:0;color:var(--ink2)}
+.tag{display:inline-block;font-family:var(--cond);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:3px;margin-right:6px}
+.free{background:var(--go-soft);color:var(--go)}.pro{background:var(--sig-soft);color:var(--sig)}.verify{background:var(--amber-soft);color:var(--amber)}.no{background:var(--stop-soft);color:var(--stop)}
+.box{border-left:4px solid var(--blue);background:var(--blue-soft);padding:10px 14px;margin:14px 0;border-radius:0 6px 6px 0}
+.box.warn{border-color:var(--sig);background:var(--sig-soft)}.box.stop{border-color:var(--stop);background:var(--stop-soft)}
+.box b{font-family:var(--cond)}
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:12px 0}
+.step{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:10px 12px;font-size:13.5px}
+.step .n{font-family:var(--cond);font-weight:700;color:var(--blue);font-size:12px;letter-spacing:.08em}
+.step .who{font-family:var(--cond);font-size:12px;color:var(--sig);margin-top:4px}
+pre{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px 14px;font-family:var(--mono);font-size:13px;overflow-x:auto;line-height:1.5}
+ul{padding-left:20px}li{margin:4px 0;max-width:70ch}
+.meta{font-family:var(--cond);color:var(--ink2);font-size:13px}
+</style>
+<main>
+<div class="kicker">MirandasTech · plano para decisão · 08/09/2026</div>
+<h1>Plugin Pesquisa MirandasTech</h1>
+<p class="lead">O que o estudante instala no Claude Code, no Claude Desktop e no Codex; o que cada função faz; como o agente Pesquisador conduz uma pesquisa dentro das normas; e o que pode, e o que não pode, ser remunerado e limitado.</p>
+<p class="meta">Base: os quatro manuais publicados (Metodologia, Uso de IA, Zotero, Gemini Notebook), os três agentes existentes (Metodólogo, Orientador, Bibliotecário), o conector MCP do Zotero e o hub de pesquisa em construção.</p>
+
+<h2>1. O que a pessoa instala</h2>
+<p>Um único pacote, distribuído pelo repositório <code>pesquisa-mirandastech</code> (o hub aponta para ele), que se apresenta de forma diferente em cada cliente porque cada cliente aceita coisas diferentes.</p>
+<div class="grid">
+  <div class="card"><h3>Claude Code</h3><p><code>/plugin marketplace add joaopaulomirandamatias/pesquisa-mirandastech</code> e <code>/plugin install pesquisa@mirandastech</code>. Entram: 4 agentes, todas as skills, comandos <code>/pesquisa:…</code>, o conector Zotero, um hook de início de sessão e os modelos de arquivo. É o cliente completo.</p></div>
+  <div class="card"><h3>Codex (app e CLI)</h3><p>O mesmo repositório traz <code>.codex-plugin/plugin.json</code> e <code>skills/</code>, o formato do plugin oficial do Zotero da OpenAI, mais <code>AGENTS.md</code> e prompts. Sem subagentes: os quatro agentes viram skills invocadas por nome, e o Pesquisador vira o prompt principal.</p></div>
+  <div class="card"><h3>Claude Desktop e outros clientes MCP</h3><p>Só conectores: o Zotero local e, no plano pago, o servidor MirandasTech. Não há agentes nem skills aqui; o valor é acesso às ferramentas dentro de qualquer conversa.</p></div>
+</div>
+<div class="box"><b>Quem paga o modelo.</b> O plugin não gasta créditos seus. O estudante usa a própria assinatura do Claude ou do Codex; o que roda no seu servidor (plano pago) é o único custo de infraestrutura da MirandasTech.</div>
+
+<h2>2. As funções, uma a uma</h2>
+<div class="tw"><table>
+<thead><tr><th style="width:190px">Função</th><th>O que faz</th><th style="width:170px">Onde roda</th><th style="width:90px">Camada</th></tr></thead>
+<tbody>
+<tr><td><b>Pesquisador</b> (novo)</td><td>Coordena: diagnostica onde o aluno está, cria a pasta do projeto, mantém um único <code>PROGRESSO.md</code>, chama o especialista certo em cada fase e só avança com evidência (seção 3).</td><td>Agente (Claude) · prompt principal (Codex)</td><td><span class="tag free">grátis</span></td></tr>
+<tr><td><b>Metodólogo</b></td><td>Pergunta → objetivos → classificação → método → amostra → instrumento → análise → ética → cronograma; projeto NBR 15287:2025; banca simulada.</td><td>Agente/skill local</td><td><span class="tag free">grátis</span></td></tr>
+<tr><td><b>Orientador</b> (uso de IA)</td><td>O que pode ser delegado em cada etapa, registro em <code>USO_DE_IA.csv</code>, declaração de uso, triagem assistida com status preliminar.</td><td>Agente/skill local</td><td><span class="tag free">grátis</span></td></tr>
+<tr><td><b>Bibliotecário</b> + conector Zotero</td><td>Configuração do Zotero, auditoria da biblioteca (sem DOI, sem PDF, caixa alta, duplicados), referência ABNT gerada pelo Zotero, exportação Better BibTeX.</td><td>Agente/skill + MCP local (API do Zotero)</td><td><span class="tag free">grátis</span></td></tr>
+<tr><td><b>Leitura e síntese</b> (Gemini Notebook)</td><td>Prompts de inventário, triagem, fichamento IMRaD, matriz de síntese, banca; conferência da matriz exportada célula a célula. Sem API: a ponte é por arquivo.</td><td>Skill local</td><td><span class="tag free">grátis</span></td></tr>
+<tr><td><b>Scripts</b></td><td><code>iniciar_projeto</code>, <code>verificar_citacoes</code>, <code>tamanho_amostra</code>, <code>cronograma</code>, <code>auditar_biblioteca</code>, <code>exportar_bbt</code>, <code>backup_zotero</code>.</td><td>Local (Python/bash)</td><td><span class="tag free">grátis</span></td></tr>
+<tr><td><b>Comandos</b> <code>/pesquisa:…</code></td><td><code>iniciar</code>, <code>status</code>, <code>proxima</code>, <code>auditar</code>, <code>declarar</code>, <code>banca</code>, <code>entregar</code>: atalhos para as fases do Pesquisador.</td><td>Claude Code (Codex: prompts)</td><td><span class="tag free">grátis</span></td></tr>
+<tr><td><b>Servidor MirandasTech</b> (novo)</td><td>Ferramentas que precisam de dados ou processamento que não cabem no computador do aluno: verificação de referências contra a Crossref e as NBR 6023/10520, relatório PRISMA a partir da biblioteca, laudo de conformidade do projeto, rubricas de banca por programa, modelos institucionais, painel de progresso para o professor.</td><td>MCP remoto (HTTP, chave por usuário)</td><td><span class="tag pro">pago</span></td></tr>
+</tbody></table></div>
+
+<h2>3. O Pesquisador: como conduz uma pesquisa dentro das normas</h2>
+<p>Não é um quinto especialista; é o gerente de projeto. Ele sabe a ordem das fases, quem decide em cada uma (sempre o aluno), qual especialista chamar, qual manual e slide apontar, e qual evidência exige para marcar a fase como concluída. Nunca escreve resultados, nunca inventa dados ou referências, e não libera coleta com pessoas sem parecer do comitê de ética registrado.</p>
+<div class="flow">
+<div class="step"><div class="n">0 · DIAGNÓSTICO</div>Onde o aluno está, prazo, programa, orientador, ferramentas. Cria a pasta e o <code>PROGRESSO.md</code>.<div class="who">Pesquisador</div></div>
+<div class="step"><div class="n">1 · PERGUNTA</div>Tema → problema → pergunta com «tabela vazia do resultado» → objetivos.<div class="who">Metodólogo</div></div>
+<div class="step"><div class="n">2 · MÉTODO</div>Classificação, desenho, amostra, instrumento, análise; o que a IA pode fazer aqui.<div class="who">Metodólogo · Orientador</div></div>
+<div class="step"><div class="n">3 · PROJETO E ÉTICA</div>Projeto NBR 15287; CEP quando houver pessoas. Porta fechada até o parecer.<div class="who">Metodólogo</div></div>
+<div class="step"><div class="n">4 · BUSCA E BIBLIOTECA</div>Bases, string, coleção por base e data; auditoria da biblioteca.<div class="who">Metodólogo · Bibliotecário</div></div>
+<div class="step"><div class="n">5 · TRIAGEM</div>Deduplicar, triagem assistida com status preliminar, decisão do aluno, números para o PRISMA.<div class="who">Orientador · Bibliotecário</div></div>
+<div class="step"><div class="n">6 · LEITURA E SÍNTESE</div>PDFs do Zotero → notebook; fichamento; matriz de síntese conferida célula a célula.<div class="who">Leitura (Gemini Notebook)</div></div>
+<div class="step"><div class="n">7 · ANÁLISE</div>Coleta e análise conforme o método; a IA só onde foi autorizada e registrada.<div class="who">Metodólogo · Orientador</div></div>
+<div class="step"><div class="n">8 · ESCRITA ABNT</div>Estrutura NBR 14724, citações 10520, referências 6023 via Zotero; verificação automática.<div class="who">Bibliotecário · scripts</div></div>
+<div class="step"><div class="n">9 · PRÉ-BANCA</div>Cinco objeções mais fortes, perguntas prováveis, respostas com página.<div class="who">Metodólogo · Leitura</div></div>
+<div class="step"><div class="n">10 · ENTREGA</div>Declaração de uso de IA, backup, versão congelada da biblioteca, checklist final.<div class="who">Orientador · Bibliotecário</div></div>
+</div>
+<h3>Regras que valem em todas as fases</h3>
+<ul>
+<li><b>Evidência antes de marcar.</b> Uma fase só fecha com o arquivo existente ou o script passando: <code>DECISOES.md</code> com a entrada datada, <code>verificar_citacoes</code> sem erro, auditoria da biblioteca sem pendência crítica, <code>USO_DE_IA.csv</code> preenchido.</li>
+<li><b>O aluno decide; o agente formula.</b> Alternativas com prós e contras; a escolha vai para <code>DECISOES.md</code> com data e justificativa. Nada é registrado sem confirmação.</li>
+<li><b>Um estado só.</b> <code>PROGRESSO.md</code> substitui os três checklists atuais (os agentes continuam lendo as seções deles). Toda sessão começa por «onde paramos» e termina por «o próximo passo».</li>
+<li><b>Rastro para o orientador humano.</b> <code>/pesquisa:status</code> gera um resumo de uma página: fase, decisões, pendências, uso de IA declarado. É o que o professor lê.</li>
+</ul>
+
+<h2>4. Remuneração: o que dá para cobrar e como limitar</h2>
+<div class="box stop"><b>O que não dá.</b> Não existe cobrança nem limite de uso dentro do sistema de plugins do Claude Code nem do Codex. Agentes, skills e prompts são arquivos de texto instalados no computador do aluno: quem tem o repositório tem o conteúdo, e pode copiar. Colocar «limite no plugin» significa, na prática, colocar limite <i>no seu servidor</i>, não no texto.</div>
+<p>Por isso o desenho separa o que é <span class="tag free">grátis e aberto</span> (os manuais e os agentes locais, licença CC BY, o que já é público hoje) do que é <span class="tag pro">pago</span>: serviços que rodam no servidor MirandasTech e só respondem com chave válida. É o único ponto em que dá para medir, limitar e cobrar de verdade.</p>
+<div class="tw"><table>
+<thead><tr><th style="width:170px">Plano</th><th>O que inclui</th><th style="width:230px">Como se limita</th></tr></thead>
+<tbody>
+<tr><td><b>Aberto</b><br><span class="meta">R$ 0</span></td><td>Quatro manuais, quatro agentes, skills, scripts, conector Zotero local, comandos. Tudo o que existe hoje mais o Pesquisador.</td><td>Não se limita. É a porta de entrada e a divulgação.</td></tr>
+<tr><td><b>Pesquisador Pro</b><br><span class="meta">assinatura mensal ou por semestre</span></td><td>Servidor MirandasTech: verificação completa de referências (Crossref + NBR 6023/10520), relatório PRISMA gerado da biblioteca, laudo de conformidade do projeto (15287/14724), banca simulada com rubricas do programa, modelos institucionais (USP, Unicamp…), histórico do <code>PROGRESSO.md</code> na nuvem, suporte no hub.</td><td>Chave por aluno com validade; cota de chamadas por mês por ferramenta; renovação pelo hub. A chave fica no <code>.env</code> do projeto; o servidor recusa sem ela.</td></tr>
+<tr><td><b>Turma</b><br><span class="meta">licença por professor</span></td><td>Tudo do Pro para N alunos, painel do professor com o status de cada projeto (só o que o aluno autorizar), rubricas próprias da disciplina, material de aula a partir dos manuais.</td><td>Chaves emitidas pelo professor; cota por turma; expira no fim do semestre.</td></tr>
+</tbody></table></div>
+<h3>Onde vender e cobrar</h3>
+<ul>
+<li><b>Hub de pesquisa</b> como loja: página do plano, checkout (Stripe ou o próprio Hostinger), emissão da chave, painel «minha chave e meu consumo». O hub já vai existir; a loja é uma seção dele.</li>
+<li><b>Diretórios oficiais</b> (conectores do Claude, plugins do Codex): servem para divulgação e instalação em um clique, não para cobrar; nenhum dos dois tem cobrança embutida para terceiros que eu tenha conseguido confirmar. Marcado como <span class="tag verify">confirmar</span> na seção 7.</li>
+<li><b>Repositório privado</b> como alternativa simples: o pacote Pro num repo privado do GitHub e o aluno pagante entra como colaborador. Funciona, mas não limita uso nem impede cópia; serve só como primeiro degrau.</li>
+</ul>
+<div class="box warn"><b>Dados dos alunos.</b> O servidor Pro deve receber o mínimo: referências, metadados e o <code>PROGRESSO.md</code>, nunca PDFs nem dados de participantes. Termos de uso e política de privacidade no hub (LGPD), com o aluno sabendo o que sobe.</div>
+
+<h2>5. Arquitetura</h2>
+<pre>hub-pesquisa (GitHub, público)
+├── .claude-plugin/marketplace.json     → marketplace «mirandastech»
+├── plugins/pesquisa/                   → o plugin do Claude Code
+│   ├── .claude-plugin/plugin.json
+│   ├── agents/   pesquisador.md · metodologo.md · orientador.md · bibliotecario.md
+│   ├── skills/   (as de hoje + leitura-gemini-notebook + pesquisador)
+│   ├── commands/ pesquisa:iniciar … pesquisa:entregar
+│   ├── .mcp.json (zotero local · mirandastech-pro remoto, opcional)
+│   └── modelos/  DECISOES.md · USO_DE_IA.csv · PROGRESSO.md · AGENTS.md
+├── .codex-plugin/plugin.json + skills/ + AGENTS.md + codex/prompts/   → pacote do Codex
+├── site/  (catálogo dos manuais, trilha, busca, loja)
+└── scripts/ (os de hoje, unificados)
+
+servidor-pro (privado, Railway) — MCP HTTP com autenticação por chave
+├── /mcp   ferramentas: verificar_referencias · relatorio_prisma · laudo_projeto ·
+│          banca_rubrica · modelos_institucionais · progresso_sync
+└── /api   chaves, cotas, consumo (alimenta a loja do hub)</pre>
+<p>Os repositórios dos manuais continuam sendo a fonte de cada agente; o hub os agrega no build (como já faz com os sites). Assim uma correção no manual do Zotero atualiza o plugin sem trabalho duplicado.</p>
+
+<h2>6. Roadmap e esforço</h2>
+<div class="tw"><table>
+<thead><tr><th style="width:60px">Etapa</th><th>Entrega</th><th style="width:150px">Esforço</th><th style="width:220px">Depende de</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Plugin aberto no hub (marketplace único, quatro agentes, comandos, pacote do Codex). Zero conteúdo novo além do Pesquisador.</td><td>1 a 2 dias</td><td>Repositório do hub no GitHub</td></tr>
+<tr><td>2</td><td>Pesquisador: agente, skill com as 11 fases e portas, <code>PROGRESSO.md</code> único, migração dos três checklists.</td><td>2 a 3 dias</td><td>Etapa 1; nome do agente</td></tr>
+<tr><td>3</td><td>Teste com dois ou três alunos reais do início ao <code>/pesquisa:status</code>; ajustes.</td><td>2 semanas de uso</td><td>Etapa 2</td></tr>
+<tr><td>4</td><td>Servidor Pro: primeiras três ferramentas (verificar referências, relatório PRISMA, laudo do projeto), chaves e cotas.</td><td>1 semana</td><td>Decisão de preço e de onde cobrar</td></tr>
+<tr><td>5</td><td>Loja no hub, termos e privacidade, plano Turma, painel do professor.</td><td>1 semana</td><td>Etapa 4; checkout escolhido</td></tr>
+<tr><td>6</td><td>Editor de Manuais (agente interno que reproduz a produção de um manual com capturas reais).</td><td>3 a 4 dias</td><td>Só quando houver o próximo manual na fila</td></tr>
+</tbody></table></div>
+
+<h2>7. Decisões suas e pontos a confirmar</h2>
+<ul>
+<li><b>Nome</b> do agente coordenador e do plugin («Pesquisador», «Pesquisa MirandasTech» são os provisórios).</li>
+<li><b>Fronteira grátis/pago</b>: a proposta deixa tudo o que já existe aberto e cobra só pelo servidor. A alternativa (fechar os agentes num repo privado) rende menos e desgasta a marca; recomendo não fazer.</li>
+<li><b>Preço e ciclo</b>: mensal, semestral, por turma. Meu palpite para começar: semestral para aluno, licença anual para professor.</li>
+<li><b>Codex</b>: espelho completo ou versão reduzida. Como o Codex não tem subagentes, a versão reduzida (Pesquisador como prompt principal, especialistas como skills) é a única honesta.</li>
+<li><span class="tag verify">confirmar</span> regras de submissão e de cobrança nos diretórios oficiais de conectores do Claude e de plugins do Codex antes de contar com eles na divulgação.</li>
+<li><span class="tag verify">confirmar</span> forma de autenticação do MCP remoto que o Claude Desktop e o Codex aceitam hoje (OAuth ou cabeçalho com chave) para o servidor Pro.</li>
+</ul>
+</main>

@@ -1,0 +1,27 @@
+name: verificar
+on: [push, pull_request]
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Manifestos, agentes, skills e comandos
+        run: |
+          python3 - <<'PY'
+          import json,glob,re,os
+          for f in ['.claude-plugin/plugin.json','.claude-plugin/marketplace.json','.mcp.json','hooks/hooks.json','.codex-plugin/plugin.json']: json.load(open(f))
+          for f in glob.glob('agents/*.md')+glob.glob('skills/*/SKILL.md')+glob.glob('commands/*.md')+glob.glob('codex/prompts/*.md'):
+              t=open(f,encoding='utf-8').read(); assert t.startswith('---') and '\ndescription:' in t.split('---')[1], f
+          assert not any('railway.app' in open(f,encoding='utf-8').read() for f in glob.glob('**/*.md',recursive=True))
+          print('ok:',len(glob.glob('agents/*.md')),'agentes',len(glob.glob('skills/*/SKILL.md')),'skills',len(glob.glob('commands/*.md')),'comandos')
+          PY
+      - name: Scripts executam
+        run: |
+          python3 -m py_compile scripts/*.py
+          bash -n scripts/*.sh
+          python3 scripts/iniciar_projeto.py /tmp/proj --tema "teste" --metodo "revisão" && test -f /tmp/proj/PROGRESSO.md && grep -c "^| " /tmp/proj/PROGRESSO.md
+          python3 scripts/tamanho_amostra.py proporcao --e 0.05 --N 1000
+          python3 scripts/cronograma.py modelos/cronograma.csv --meses 12 --svg /tmp/c.svg
+          python3 -c "import xml.dom.minidom,glob; [xml.dom.minidom.parse(f) for f in glob.glob('modelos/estilos/*.csl')]; print('csl ok')"
