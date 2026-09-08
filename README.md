@@ -1,5 +1,7 @@
 # Pesquisa MirandasTech — plugin para Claude Code e Codex
 
+**Hub de pesquisa:** https://www.mirandastech.com.br/pesquisa (todos os manuais, o plugin e as novidades).
+
 Um só pacote com os quatro papéis dos manuais MirandasTech, para conduzir uma pesquisa de pós-graduação dentro das normas, fase a fase, com evidência:
 
 | Papel | O que faz | Manual |

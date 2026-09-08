@@ -1,6 +1,6 @@
 # Plano — Plugin Pesquisa MirandasTech
 
-_Versão de 08/09/2026. Página original: docs/plano.html. Esta versão implementa a camada gratuita completa; a camada paga (servidor MirandasTech) fica para depois._
+_Versão de 08/09/2026. Hub de pesquisa: https://www.mirandastech.com.br/pesquisa. Página original: docs/plano.html. Esta versão implementa a camada gratuita completa; a camada paga (servidor MirandasTech) fica para depois._
 
 MirandasTech · plano para decisão · 08/09/2026
 # Plugin Pesquisa MirandasTech

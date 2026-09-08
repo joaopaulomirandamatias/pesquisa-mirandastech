@@ -1,4 +1,4 @@
-# Regras deste projeto de pesquisa (lidas por qualquer agente de IA que abra a pasta)
+# Regras deste projeto de pesquisa (lidas por qualquer agente de IA que abra a pasta) — hub: https://www.mirandastech.com.br/pesquisa
 
 Este projeto segue os manuais MirandasTech: Metodologia (https://metodologia.mirandastech.com.br/), Uso de IA na pesquisa (https://manual.mirandastech.com.br/), Zotero (https://zotero.mirandastech.com.br/) e Gemini Notebook (https://notebook.mirandastech.com.br/). O estado do projeto está em `PROGRESSO.md`; as decisões, em `DECISOES.md`; o uso de IA, em `USO_DE_IA.csv`.
 
