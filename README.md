@@ -55,7 +55,7 @@ O projeto criado tem: pastas por etapa, `PROGRESSO.md` (fases + checklists Méto
 | `scripts/` | `iniciar_projeto.py`, `verificar_citacoes.py`, `verificar_refs.py`, `tamanho_amostra.py`, `cronograma.py`, `auditar_biblioteca.py`, `exportar_bbt.sh`, `backup_zotero.sh`, `instalar_claude.sh`, `instalar_codex.sh` |
 | `modelos/` | arquivos copiados para o projeto; estilos ABNT (.csl); prompts do Gemini Notebook |
 | `.codex-plugin/` · `.agents/plugins/marketplace.json` · `AGENTS.md` · `codex/prompts/` | pacote do Codex (manifesto do plugin, marketplace, instruções e prompts) |
-| `docs/` | o plano (Markdown e HTML) |
+| `docs/` | o plano (Markdown e HTML), textos de submissão aos diretórios (`DESCRICAO.md`), política de privacidade, termos de uso e suporte |
 | `.github/workflows/verificar.yml` | CI: manifestos, frontmatter de agentes/skills/comandos, scripts |
 
 ## Como citar
