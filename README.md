@@ -52,7 +52,7 @@ O projeto criado tem: pastas por etapa, `PROGRESSO.md` (fases + checklists Méto
 |---|---|
 | `.claude-plugin/` | manifesto do plugin `pesquisa` e marketplace `mirandastech` (lista também o plugin só-Zotero) |
 | `agents/` | `pesquisador.md`, `metodologo.md`, `orientador.md`, `bibliotecario.md` |
-| `skills/` | `pesquisador`, `metodologo-pesquisa`, `projeto-nbr15287`, `abnt-citacoes-referencias`, `banca-simulada`, `orientador-ia-pesquisa`, `triagem-assistida`, `bibliotecario-zotero`, `leitura-gemini-notebook` |
+| `skills/` | `pesquisador`, `metodologo-pesquisa`, `projeto-nbr15287`, `abnt-citacoes-referencias`, `banca-simulada`, `orientador-ia-pesquisa`, `triagem-assistida`, `bibliotecario-zotero`, `leitura-gemini-notebook`, `revisao-sistematica-prisma` |
 | `commands/` | os sete comandos `/pesquisa:…` |
 | `.mcp.json` · `scripts/zotero_mcp.py` | conector MCP da biblioteca Zotero (7 ferramentas, só leitura) |
 | `hooks/hooks.json` | ao abrir uma sessão numa pasta com `PROGRESSO.md`, mostra as pendências e lembra de chamar o Pesquisador |

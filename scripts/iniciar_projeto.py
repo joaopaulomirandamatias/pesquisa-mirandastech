@@ -97,6 +97,7 @@ def main():
     copia(MODELOS / "livro_de_codigos.csv", raiz / "05_analise/livro_de_codigos.csv"); copia(MODELOS / "TCLE_modelo.md", raiz / "03_etica/TCLE.md"); copia(MODELOS / "cronograma.csv", raiz / "00_projeto/cronograma.csv")
     copia(MODELOS / "estrutura_colecoes.md", raiz / "tools/zotero_estrutura_colecoes.md"); copia(MODELOS / "convencao_etiquetas.md", raiz / "tools/zotero_convencao_etiquetas.md")
     copia(MODELOS / "prompts_gemini_notebook.md", raiz / "tools/prompts_gemini_notebook.md"); copia(MODELOS / "estrutura_notebooks.md", raiz / "tools/gemini_notebook_estrutura.md")
+    copia(MODELOS / "CODEBOOK.md", raiz / "02_triagem/CODEBOOK.md"); copia(MODELOS / "CONTAGENS.md", raiz / "02_triagem/CONTAGENS.md"); copia(MODELOS / "BUSCA.md", raiz / "01_buscas/BUSCA.md")
     dm = raiz / "00_projeto/DECISOES_METODO.md"
     if not dm.exists(): dm.write_text(f"# Decisões de método — {a.tema}\n\nRegistro da entrevista de decisão com o Metodólogo (uma seção por pergunta, com data).\n\n## Tema delimitado\n\n## Problema e lacuna\n\n## Pergunta e tabela vazia do resultado\n\n## Objetivos\n\n## Hipóteses / pressupostos e variáveis\n\n## Justificativa e delimitação\n\n## Classificação (4 eixos)\n\n## Desenho — «escolhi … porque …; descartei … porque …»\n\n## População, amostra, n\n\n## Técnicas e instrumentos\n\n## Análise\n\n## Ética\n\n## Cronograma e orçamento\n", encoding="utf-8"); print("  +", dm.relative_to(raiz))
     proto = raiz / "00_protocolo/protocolo.md"

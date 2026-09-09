@@ -1,5 +1,11 @@
 # Histórico de versões
 
+## 1.0.4 — 2026-09-09
+- Nova skill `revisao-sistematica-prisma`: revisão sistemática do protocolo ao relato com PRISMA 2020 (registro no PROSPERO/OSF, busca reprodutível, deduplicação, triagem no ASReview LAB ou Rayyan, dupla triagem com kappa, extração, qualidade, fluxograma e checklist), ligada ao manual https://prisma.mirandastech.com.br/. O Pesquisador a chama nas fases 4, 5 e 8.
+- Novos `scripts/deduplicar.py` (DOI e título normalizado, com arquivo de auditoria) e `scripts/kappa.py` (tabela 2×2, po, pe, κ e faixa de Landis e Koch).
+- Novos modelos `BUSCA.md` (diário de busca PRISMA-S), `CODEBOOK.md` e `CONTAGENS.md` (uma linha por caixa do fluxograma); `iniciar_projeto.py` os copia para `01_buscas/` e `02_triagem/`.
+- `sincronizar_manuais.py` passa a sincronizar também o repositório `revisao-sistematica-pesquisa-cientifica`.
+
 ## 1.0.3 — 2026-09-09
 - Suíte de testes dos agentes em `evals/` (`claude plugin eval`): nove casos com projeto preparado por cenário (`_lib/projeto.sh`), graders regex, tool_used, file_exists e juiz LLM; primeira rodada 8/8 nos casos de conversa. Ver `evals/README.md`.
 - `PROGRESSO.md` declara a versão do esquema (`<!-- esquema: 1 -->`); `iniciar_projeto.py` avisa quando o arquivo é de esquema mais antigo ou mais novo que o plugin.

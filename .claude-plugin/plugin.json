@@ -1,7 +1,7 @@
 {
   "name": "pesquisa",
   "description": "Pesquisa MirandasTech: o agente Pesquisador conduz o estudante do tema à defesa por 11 fases com evidência, apoiado pelo Metodólogo (método e ABNT), pelo Orientador (uso responsável de IA), pelo Bibliotecário (Zotero, com conector MCP) e pela camada de leitura (Gemini Notebook). Reúne os quatro manuais MirandasTech.",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": {
     "name": "MirandasTech",
     "url": "https://mirandastech.com.br"
