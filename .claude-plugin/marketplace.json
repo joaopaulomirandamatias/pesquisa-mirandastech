@@ -12,7 +12,7 @@
       "name": "pesquisa",
       "source": "./",
       "description": "Pesquisador + Metodólogo + Orientador + Bibliotecário, comandos /pesquisa, conector Zotero, modelos e scripts (parte gratuita completa)",
-      "version": "1.0.4",
+      "version": "1.0.5",
       "category": "productivity"
     },
     {

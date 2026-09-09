@@ -1,5 +1,10 @@
 # Histórico de versões
 
+## 1.0.5 — 2026-09-09
+- Nova skill `busca-bases-abertas`: estratégia por conceitos, sintaxe por base, diário PRISMA-S e buscas reprodutíveis por API, ligada ao manual https://busca.mirandastech.com.br/. O Pesquisador a chama na fase 4.
+- Novos `scripts/buscar_openalex.py` (cursor, CSV + RIS + diário JSON), `scripts/contar_bases.py` (mesma pergunta em seis APIs) e `scripts/verificar_oa.py` (Unpaywall).
+- `sincronizar_manuais.py` sincroniza também o repositório `busca-bases-pesquisa-cientifica`.
+
 ## 1.0.4 — 2026-09-09
 - Nova skill `revisao-sistematica-prisma`: revisão sistemática do protocolo ao relato com PRISMA 2020 (registro no PROSPERO/OSF, busca reprodutível, deduplicação, triagem no ASReview LAB ou Rayyan, dupla triagem com kappa, extração, qualidade, fluxograma e checklist), ligada ao manual https://prisma.mirandastech.com.br/. O Pesquisador a chama nas fases 4, 5 e 8.
 - Novos `scripts/deduplicar.py` (DOI e título normalizado, com arquivo de auditoria) e `scripts/kappa.py` (tabela 2×2, po, pe, κ e faixa de Landis e Koch).
