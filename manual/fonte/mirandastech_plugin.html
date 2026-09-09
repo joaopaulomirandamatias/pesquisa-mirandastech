@@ -643,7 +643,7 @@ bash scripts/instalar_claude.sh</pre></div>
     <div class="two rv">
       <div>
         <ol>
-          <li>Rode <code>bash scripts/instalar_claude.sh</code> (slide anterior): se encontra o arquivo <code>claude_desktop_config.json</code>, ele escreve nele a entrada <code>zotero</code> (bloco ao lado). Se prefere fazer à mão, copie o bloco e troque o caminho.</li>
+          <li>Três caminhos, todos com o mesmo resultado: <code>bash scripts/instalar_claude.sh</code> (slide anterior); a oferta que o <code>/pesquisa:iniciar</code> faz na pergunta sobre ferramentas (ele só escreve com o seu «sim»); ou, à mão, <code>python3 scripts/registrar_desktop.py --registrar</code>. Todos escrevem a entrada <code>zotero</code> (bloco ao lado) em <code>claude_desktop_config.json</code>, com backup. Quem instalou só pelo marketplace precisa de um deles.</li>
           <li>Reinicie o Claude Desktop. O conector aparece entre os conectores da conversa, com as sete ferramentas (<code>status</code>, <code>listar_colecoes</code>, <code>buscar_itens</code>, <code>detalhar_item</code>, <code>referencia_abnt</code>, <code>auditar</code>, <code>exportar_bbt</code>).</li>
           <li>Com o Zotero aberto e a API local ligada, peça: «Liste as coleções da minha biblioteca» — a resposta vem da ferramenta <code>listar_colecoes</code>.</li>
         </ol>
@@ -751,7 +751,7 @@ codex plugin list</pre></div>
     <h2 class="rv">No Codex, cada chamada ao conector pede aprovação — como liberar as ferramentas que só leem</h2>
     <div class="two rv">
       <div>
-        <p class="lead">Por padrão, o Codex pede a sua aprovação a cada chamada de ferramenta de um conector MCP. As sete ferramentas do <code>zotero</code> apenas leem a biblioteca; nenhuma escreve nem envia nada para fora do computador. Se quiser dispensar a pergunta, libere ferramenta por ferramenta no arquivo de configuração.</p>
+        <p class="lead">Por padrão, o Codex pede a sua aprovação a cada chamada de ferramenta de um conector MCP. As sete ferramentas do <code>zotero</code> apenas leem a biblioteca; nenhuma escreve nem envia nada para fora do computador. Se quiser dispensar a pergunta, o <code>instalar_codex.sh</code> oferece liberar as sete de uma vez (responda «s»; ele faz backup do <code>config.toml</code>); ou libere ferramenta por ferramenta, à mão, com o bloco abaixo.</p>
         <div class="code"><div class="code-head">~/.codex/config.toml — liberar ferramentas do conector, uma a uma</div><pre>[mcp_servers.zotero.tools.status]
 approval_mode = "auto"
 
@@ -1122,7 +1122,7 @@ Bibliotecário, exporte a coleção «2 Incluídos» em BibLaTeX pelo Better Bib
 
 <section class="slide" id="s24" data-title="Atualizar e publicar uma nova versão">
   <div class="inner">
-    <div class="kicker-part rv">Manutenção<span>1 de 3 · versão atual 1.0.0</span></div>
+    <div class="kicker-part rv">Manutenção<span>1 de 3 · versão atual 1.0.1</span></div>
     <h2 class="rv">Atualizar e publicar: no Claude Code basta o <em>push</em>; para o Codex, <code>empacotar_codex.py</code> gera o ZIP</h2>
     <div class="two rv">
       <figure><div class="shot"><img src="capturas/pl_16_portal_codex_publicado.jpg" width="1920" height="938" alt="Portal de plugins da OpenAI com o plugin Pesquisa MirandasTech publicado"></div><figcaption><b>Figura 19</b> O portal de plugins com o Pesquisa MirandasTech publicado (08/09/2026). Uma nova versão é um novo ZIP enviado aqui, com o número de versão maior.</figcaption></figure>
@@ -1303,7 +1303,7 @@ codex plugin list</pre></div>
           <tr><td class="mono">modelos/</td><td>Arquivos copiados para o projeto; estilos ABNT (.csl); prompts do Gemini Notebook</td></tr>
           <tr><td class="mono">.codex-plugin/ · .agents/plugins/ · <span class="gterm" tabindex="0" data-t="AGENTS.md" data-d="Regras do projeto lidas por qualquer agente que abra a pasta: proibições absolutas, gates humanos, registro. O Codex o lê automaticamente.">AGENTS.md</span> · codex/prompts/</td><td>Pacote do Codex: manifesto, catálogo, instruções e os quatro prompts</td></tr>
           <tr><td class="mono">docs/</td><td><code>PLANO.md</code>, <code>DESCRICAO.md</code> (textos de submissão), <code>PRIVACIDADE.md</code>, <code>TERMOS.md</code>, <code>SUPORTE.md</code></td></tr>
-          <tr><td class="mono">dist/</td><td>ZIP da versão enviada ao diretório do Codex (<code>pesquisa-mirandastech-1.0.0.zip</code>)</td></tr>
+          <tr><td class="mono">dist/</td><td>ZIP da versão a enviar ao diretório do Codex (<code>pesquisa-mirandastech-1.0.1.zip</code>)</td></tr>
           <tr><td class="mono">.github/workflows/verificar.yml</td><td>Verificação contínua: manifestos, cabeçalhos de agentes, skills e comandos, scripts</td></tr>
         </tbody></table></div>
       </div>

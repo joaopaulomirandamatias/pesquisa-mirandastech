@@ -1,9 +1,29 @@
 {
   "name": "mirandastech",
-  "owner": { "name": "MirandasTech", "url": "https://mirandastech.com.br" },
-  "metadata": { "description": "Plugins dos manuais MirandasTech de pesquisa científica" },
+  "owner": {
+    "name": "MirandasTech",
+    "url": "https://mirandastech.com.br"
+  },
+  "metadata": {
+    "description": "Plugins dos manuais MirandasTech de pesquisa científica"
+  },
   "plugins": [
-    { "name": "pesquisa", "source": "./", "description": "Pesquisador + Metodólogo + Orientador + Bibliotecário, comandos /pesquisa, conector Zotero, modelos e scripts (parte gratuita completa)", "version": "1.0.0", "category": "productivity" },
-    { "name": "zotero-pesquisa", "source": { "source": "github", "repo": "joaopaulomirandamatias/zotero-pesquisa-cientifica" }, "description": "Só o Bibliotecário do Zotero (agente, skill e conector)", "version": "1.1.0", "category": "productivity" }
+    {
+      "name": "pesquisa",
+      "source": "./",
+      "description": "Pesquisador + Metodólogo + Orientador + Bibliotecário, comandos /pesquisa, conector Zotero, modelos e scripts (parte gratuita completa)",
+      "version": "1.0.1",
+      "category": "productivity"
+    },
+    {
+      "name": "zotero-pesquisa",
+      "source": {
+        "source": "github",
+        "repo": "joaopaulomirandamatias/zotero-pesquisa-cientifica"
+      },
+      "description": "Só o Bibliotecário do Zotero (agente, skill e conector)",
+      "version": "1.1.0",
+      "category": "productivity"
+    }
   ]
 }

@@ -1,0 +1,2 @@
+data,etapa,ferramenta,modelo_versao,finalidade,dados_enviados,prompt_ou_consulta,validacao,decisao_humana,declara,quem
+2026-03-04,triagem,Claude,claude-sonnet-5,agrupar registros pela regra do codebook,identificadores e títulos; resumos ficaram locais,"agrupar o lote pelas regras R1-R6; não decidir",autor decidiu um a um; script grava só com --gravar,sim por registro,declare,JPM

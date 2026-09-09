@@ -25,14 +25,14 @@ Slides com capturas reais de cada cliente (Claude Code, Claude Desktop, Codex ap
 /plugin marketplace add joaopaulomirandamatias/pesquisa-mirandastech
 /plugin install pesquisa@mirandastech
 ```
-ou `bash scripts/instalar_claude.sh` (também registra o conector Zotero no Claude Desktop, se existir).
+ou `bash scripts/instalar_claude.sh` (também registra o conector Zotero no Claude Desktop, se existir). Quem instalou pelo marketplace pode registrar o Desktop depois: o `/pesquisa:iniciar` oferece isso na hora, ou rode `python3 scripts/registrar_desktop.py --registrar`.
 
 **Codex** (app e CLI): o plugin está publicado no diretório oficial de plugins do ChatGPT/Codex — no app, Plugins → «Procurar plugins» → «Pesquisa MirandasTech» → instalar (página no diretório: https://chatgpt.com/plugins/plugins_6aa0a0320a248191b33a514a3a52325b). Alternativa pelo marketplace próprio:
 ```
 codex plugin marketplace add joaopaulomirandamatias/pesquisa-mirandastech
 codex plugin add pesquisa-mirandastech@mirandastech
 ```
-ou `bash scripts/instalar_codex.sh`, que faz isso e ainda registra o conector `zotero` em `~/.codex/config.toml` e instala os prompts `/pesquisador`, `/metodologo`, `/orientador`, `/bibliotecario`. Na pasta do projeto o Codex lê `AGENTS.md`.
+ou `bash scripts/instalar_codex.sh`, que faz isso, registra o conector `zotero` em `~/.codex/config.toml`, instala os prompts `/pesquisador`, `/metodologo`, `/orientador`, `/bibliotecario` e, se você disser sim, libera as sete ferramentas do conector (todas só leem) para rodar sem aprovação a cada chamada (`approval_mode = "auto"`). Na pasta do projeto o Codex lê `AGENTS.md`.
 
 Requisitos: Python 3, Git, `uv` (para o conector Zotero; alternativa: `pip install mcp`), Zotero 7+ aberto com a API local ligada (Configurações → Avançado) para as ferramentas de biblioteca.
 
