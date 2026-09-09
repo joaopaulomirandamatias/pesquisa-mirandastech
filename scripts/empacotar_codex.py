@@ -55,6 +55,7 @@ def main():
             for f in arquivos:
                 if EXCLUIR & set(f.relative_to(RAIZ).parts): continue
                 z.write(f, f"{nome}/{f.relative_to(RAIZ).as_posix()}"); n += 1
-    print(f"ok: {saida.relative_to(RAIZ)} — {n} arquivos, {saida.stat().st_size/1024:.0f} KB, versão {m['version']}")
+    nome = saida.relative_to(RAIZ) if saida.is_relative_to(RAIZ) else saida
+    print(f"ok: {nome} — {n} arquivos, {saida.stat().st_size/1024:.0f} KB, versão {m['version']}")
     print("Envie em platform.openai.com/plugins → Create plugin → Skills only (nova versão = novo envio).")
 if __name__ == "__main__": main()
