@@ -1,0 +1,21 @@
+schema_version: "1.1"
+name: orientador-triagem
+description: >-
+  O aluno pergunta se pode usar IA para triar resumos e como registrar. O Orientador deve responder com as regras do manual de IA: status preliminar, decisão humana por registro, registro em USO_DE_IA.csv e declaração.
+tags: [orientador]
+runs: 1
+context:
+  scaffold_script: setup.sh
+execution:
+  prompt: "Orientador, posso usar IA para triar os resumos da minha revisão sistemática? Como eu registro isso?"
+  max_turns: 12
+  allowed_tools: [Read, Glob, Grep, Skill, Agent]
+graders:
+  - type: regex
+    name: cita_registro
+    pattern: "USO_DE_IA"
+    match: contains
+  - type: llm
+    name: regras_da_triagem
+    criteria: |
+      A resposta deve dizer que sim, com condições: a IA só propõe (status preliminar) e o aluno decide registro a registro; os critérios (codebook) precisam estar escritos antes; dados licenciados como resumos de bases ficam fora do que se envia, ou se envia só o necessário com o registro; cada uso entra em USO_DE_IA.csv com ferramenta, modelo, finalidade, dados enviados, validação e decisão humana; e o uso será declarado no trabalho. Falha se disser que a IA pode decidir inclusão/exclusão sozinha, se não mencionar o registro ou se inventar uma política que não está no manual.

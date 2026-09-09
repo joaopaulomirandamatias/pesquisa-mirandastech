@@ -62,6 +62,10 @@ O projeto criado tem: pastas por etapa, `PROGRESSO.md` (fases + checklists Méto
 | `docs/` | o plano (Markdown e HTML), textos de submissão aos diretórios (`DESCRICAO.md`), política de privacidade, termos de uso e suporte |
 | `.github/workflows/verificar.yml` | CI: manifestos, frontmatter de agentes/skills/comandos, scripts |
 
+## Testes dos agentes
+
+A pasta [`evals/`](evals/) tem oito casos para `claude plugin eval` (estado inicial, fase 3, recusa de fechar fase sem evidência, material de fase posterior, pergunta ampla, triagem com IA, API local do Zotero, pasta sem projeto). Rode antes de publicar uma versão; instruções em `evals/README.md`.
+
 ## Publicar uma nova versão
 1. Edite agentes, skills ou modelos e faça push: o Claude Code atualiza sozinho pelo marketplace.
 2. Para o diretório do Codex: `python3 scripts/empacotar_codex.py --versao X.Y.Z` (valida manifestos, ícones e skills e gera `dist/pesquisa-mirandastech-X.Y.Z.zip`), depois envie o ZIP em platform.openai.com/plugins → Create plugin → Skills only e publique.

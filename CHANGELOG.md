@@ -1,5 +1,8 @@
 # Histórico de versões
 
+## Não publicado
+- Suíte de testes dos agentes em `evals/` (`claude plugin eval`): oito casos com projeto preparado por cenário (`_lib/projeto.sh`), graders regex, tool_used e juiz LLM. Ver `evals/README.md`.
+
 ## 1.0.2 — 2026-09-09
 - `scripts/relatorio_orientador.py`: relatório para o orientador gerado só dos arquivos do projeto (fases, checklists com evidência, decisões datadas, uso de IA por etapa); `/pesquisa:status` passa a gerá-lo em `00_projeto/RELATORIO_ORIENTADOR.md` antes de comentar.
 - Hook de início de sessão usa `scripts/resumo_sessao.py`: fase atual, fases fechadas, contagem dos checklists, última decisão datada, usos de IA e há quantos dias o `PROGRESSO.md` não muda.

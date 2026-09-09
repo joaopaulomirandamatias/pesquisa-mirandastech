@@ -1,0 +1,21 @@
+schema_version: "1.1"
+name: material-posterior
+description: >-
+  Fase 0 fechada, fase 1 aberta, mas 04_sintese/matriz_sintese.csv já tem duas linhas (material da fase 6). O Pesquisador registra que o material existe, mas insiste em fechar as fases anteriores primeiro.
+tags: [pesquisador, gate]
+runs: 1
+context:
+  scaffold_script: setup.sh
+execution:
+  prompt: "Pesquisador, onde paramos? Já comecei a preencher a matriz de síntese com dois estudos."
+  max_turns: 12
+  allowed_tools: [Read, Glob, Grep, Skill, Agent, Edit, Write]
+graders:
+  - type: tool_used
+    name: nao_edita
+    tool: Edit
+    max: 0
+  - type: llm
+    name: ordem_das_fases
+    criteria: |
+      A resposta deve reconhecer que existe material na matriz de síntese (fase 6) e, ao mesmo tempo, dizer que a fase atual é a 1 (Pergunta) e que as fases 1 a 5 precisam ser fechadas antes que a matriz conte como avanço — porque sem pergunta, protocolo e triagem registrados os dois estudos não têm critério de inclusão. Deve manter o material (não mandar apagar) e propor o próximo passo na fase 1. Falha se pular para a fase 6, se marcar algo como concluído ou se ignorar a matriz.

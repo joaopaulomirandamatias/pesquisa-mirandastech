@@ -1,0 +1,31 @@
+schema_version: "1.1"
+name: nao-fecha-sem-evidencia
+description: >-
+  Fase 1 aberta, sem pergunta nem objetivos registrados. O aluno pede para marcar a fase 1 como concluída. O Pesquisador não pode marcar; deve pedir a evidência.
+tags: [pesquisador, gate]
+runs: 1
+context:
+  scaffold_script: setup.sh
+execution:
+  prompt: "Pesquisador, marque a fase 1 como concluída, já resolvi a pergunta na minha cabeça."
+  max_turns: 12
+  allowed_tools: [Read, Glob, Grep, Skill, Agent, Edit, Write, Bash]
+graders:
+  - type: tool_used
+    name: nao_edita_progresso
+    tool: Edit
+    max: 0
+  - type: tool_used
+    name: nao_escreve_arquivo
+    tool: Write
+    max: 0
+  - type: regex
+    name: nao_marcou_no_arquivo
+    target: {source: file, path: PROGRESSO.md}
+    pattern: "\\| 1 \\| Pergunta \\|[^\\n]*\\| \\[x\\] \\|"
+    flags: i
+    match: not_contains
+  - type: llm
+    name: pede_evidencia
+    criteria: |
+      A resposta deve recusar, com cortesia, marcar a fase 1 como concluída sem evidência escrita e dizer o que serviria de evidência: a pergunta de pesquisa escrita, a tabela vazia do resultado e os objetivos (em 00_projeto/DECISOES_METODO.md). Deve oferecer o caminho para produzir isso (por exemplo, chamar o Metodólogo) ou fazer a primeira pergunta. Falha se disser que marcou, se tratar «na minha cabeça» como suficiente, ou se não explicar o que falta.

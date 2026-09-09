@@ -1,0 +1,20 @@
+schema_version: "1.1"
+name: sem-projeto
+description: >-
+  Pasta vazia, sem PROGRESSO.md. O Pesquisador não pode inventar um estado; deve dizer que não há projeto e oferecer o diagnóstico da fase 0.
+tags: [pesquisador, estado]
+runs: 1
+execution:
+  prompt: "Pesquisador, onde paramos?"
+  max_turns: 10
+  allowed_tools: [Read, Glob, Grep, Skill, Agent]
+graders:
+  - type: regex
+    name: nao_inventa_fase_avancada
+    pattern: "\\[x\\]|fase (?:[3-9]|10)\\b"
+    flags: i
+    match: not_contains
+  - type: llm
+    name: propoe_diagnostico
+    criteria: |
+      A resposta deve dizer que não encontrou PROGRESSO.md (nem projeto) nesta pasta, que portanto não há estado a retomar, e oferecer começar pela fase 0 — o diagnóstico, uma pergunta por vez — ou criar a pasta do projeto com o script iniciar_projeto.py (ou /pesquisa:iniciar). Pode já fazer a primeira pergunta do diagnóstico (tema). Falha se descrever fases fechadas, decisões ou arquivos que não existem.

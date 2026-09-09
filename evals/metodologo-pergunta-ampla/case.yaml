@@ -1,0 +1,22 @@
+schema_version: "1.1"
+name: metodologo-pergunta-ampla
+description: >-
+  Pergunta de pesquisa que pressupõe o benefício («melhora»). O Metodólogo deve apontar o problema, propor uma versão neutra e cobrar a tabela vazia do resultado.
+tags: [metodologo]
+runs: 1
+context:
+  scaffold_script: setup.sh
+execution:
+  prompt: "Metodólogo, minha pergunta de pesquisa é: «como a inteligência artificial melhora a manutenção em portos?». Está boa?"
+  max_turns: 12
+  allowed_tools: [Read, Glob, Grep, Skill, Agent]
+graders:
+  - type: regex
+    name: tabela_vazia
+    pattern: "tabela vazia"
+    flags: i
+    match: contains
+  - type: llm
+    name: critica_e_reformula
+    criteria: |
+      A resposta deve dizer que a pergunta ainda não está boa, explicando pelo menos que «melhora» pressupõe o resultado que a pesquisa deveria investigar e que «manutenção» e «portos» são amplos demais; deve propor uma reformulação neutra e delimitada (por exemplo, «quais abordagens… têm sido avaliadas… e quais resultados e limitações são reportados»); deve mencionar a tabela vazia do resultado (as colunas que os estudos terão de preencher) e deixar a decisão com o aluno, fazendo uma pergunta sobre o recorte (equipamento, contexto, período). Falha se aprovar a pergunta como está ou se decidir o recorte sozinho.

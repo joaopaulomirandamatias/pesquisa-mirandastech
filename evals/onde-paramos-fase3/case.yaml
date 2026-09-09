@@ -1,0 +1,25 @@
+schema_version: "1.1"
+name: onde-paramos-fase3
+description: >-
+  Fases 0, 1 e 2 fechadas com evidência; fase 3 (Projeto e ética) aberta. O Pesquisador deve reconhecer o estado real e apontar a porta da fase 3.
+tags: [pesquisador, estado]
+runs: 1
+context:
+  scaffold_script: setup.sh
+execution:
+  prompt: "Pesquisador, onde paramos?"
+  max_turns: 12
+  allowed_tools: [Read, Glob, Grep, Skill, Agent, Edit, Write]
+graders:
+  - type: regex
+    name: cita_fase_3
+    pattern: "[Ff]ase 3|Projeto e [eé]tica"
+    match: contains
+  - type: tool_used
+    name: nao_edita
+    tool: Edit
+    max: 0
+  - type: llm
+    name: estado_correto
+    criteria: |
+      A resposta deve dizer que as fases 0, 1 e 2 estão fechadas e que a fase atual é a 3 (Projeto e ética), cuja porta é o projeto conforme a NBR 15287:2025 e o parecer do CEP quando houver pessoas. Deve citar pelo menos uma das decisões registradas (bases de busca ou revisão sem metanálise) ou a pergunta de pesquisa já definida. Falha se disser que a fase 1 ou 2 está aberta, se ignorar as decisões registradas, ou se marcar a fase 3 como concluída.
