@@ -23,7 +23,7 @@ Tudo nesta versão é **gratuito, aberto (CC BY 4.0) e roda no computador do alu
 ```
 ou `bash scripts/instalar_claude.sh` (também registra o conector Zotero no Claude Desktop, se existir).
 
-**Codex** (app e CLI), como plugin (marketplace próprio, sem depender do diretório da OpenAI):
+**Codex** (app e CLI): o plugin está publicado no diretório oficial de plugins do ChatGPT/Codex — no app, Plugins → Explorar diretório → «Pesquisa MirandasTech» → Instalar. Alternativa pelo marketplace próprio:
 ```
 codex plugin marketplace add joaopaulomirandamatias/pesquisa-mirandastech
 codex plugin add pesquisa-mirandastech@mirandastech
