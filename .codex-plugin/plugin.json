@@ -20,9 +20,9 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Pesquisa MirandasTech",
-    "shortDescription": "Conduza sua pesquisa dentro das normas, fase a fase",
+    "shortDescription": "Pesquisa por fases, na norma",
     "longDescription": "Quatro papéis (Pesquisador, Metodólogo, Orientador de uso de IA, Bibliotecário do Zotero) e a camada de leitura com o Gemini Notebook, baseados nos manuais MirandasTech. O aluno decide; a IA formula, registra e só fecha uma fase com evidência.",
-    "developerName": "MirandasTech",
+    "developerName": "João Paulo Miranda Matias",
     "category": "Education & Research",
     "capabilities": [
       "Interactive",
