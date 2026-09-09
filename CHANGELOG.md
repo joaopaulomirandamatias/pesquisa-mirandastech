@@ -1,5 +1,10 @@
 # Histórico de versões
 
+## 1.0.7 — 2026-09-09
+- Nova skill `git-github-pesquisadores`: controle de versão do projeto de pesquisa (o que entra e o que fica fora do Git, commits e tags por marco, README/LICENSE/CITATION.cff, release e DOI pelo Zenodo, auditoria antes de publicar), ligada ao manual https://git.mirandastech.com.br/. O Pesquisador a chama na fase 10.
+- Novos `scripts/checar_repo.py` (auditoria: arquivos grandes, segredos, dados pessoais, README/LICENSE/CITATION.cff), `scripts/salvar_versao.sh` (commit + tag anotada) e `scripts/citacao_cff.py` (CITATION.cff 1.2.0 + BibTeX + ABNT).
+- `sincronizar_manuais.py` sincroniza também o repositório `git-github-pesquisa-cientifica`.
+
 ## 1.0.6 — 2026-09-09
 - Nova skill `latex-overleaf-abntex2`: trabalho acadêmico em LaTeX com o abnTeX2 no Overleaf ou local (TinyTeX), .bib do Zotero com Better BibTeX, latexmk e leitura do log, ligada ao manual https://latex.mirandastech.com.br/. O Pesquisador a chama na fase 8.
 - Novos `scripts/compilar.sh`, `scripts/novo_trabalho.py` (projeto a partir do modelo canônico com os dados do aluno) e `scripts/checar_citacoes.py`.

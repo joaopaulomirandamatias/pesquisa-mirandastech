@@ -21,7 +21,7 @@ Estado do projeto: `PROGRESSO.md` (fases + checklists M = Método, I = Uso de IA
 | 7 Análise | Técnica decidida antes; pressupostos; efeito com IC ou categorias com trecho; scripts e dados guardados; figuras por script; IA só onde autorizada; itens M10–M11, I10 | Metodólogo · Orientador | Metodologia 21–24 · IA 34 |
 | 8 Escrita ABNT | Estrutura NBR 14724:2024; `verificar_citacoes.py` e `verificar_refs.py` sem erro; referências pelo Zotero (NBR 6023:2025); marcas de IA removidas; números batem com tabelas; itens M12–M15, I11–I13, B4–B5 | Bibliotecário (`abnt-citacoes-referencias`) · scripts · LaTeX (`latex-overleaf-abntex2`) | Metodologia 25, 30–32 · IA 40–44 · Zotero 30–33 |
 | 9 Pré-banca | Cinco objeções com resposta; perguntas prováveis a partir da tese (notebook) com página; ensaio; item M16, L… | Metodólogo (`banca-simulada`) · Leitura | Metodologia 34 · Gemini Notebook 36 |
-| 10 Entrega | Declaração de uso de IA aprovada (I14–I15); guia de relato conferido (I16); backup do Zotero e versão congelada da biblioteca (B11); checklist final sem pendência | Orientador · Bibliotecário | IA 43, 16 · Zotero 41 |
+| 10 Entrega | Declaração de uso de IA aprovada (I14–I15); guia de relato conferido (I16); backup do Zotero e versão congelada da biblioteca (B11); repositório auditado (`checar_repo.py` sem bloqueio), tag da versão entregue e, se pedido, release com DOI — skill `git-github-pesquisadores`; checklist final sem pendência | Orientador · Bibliotecário | IA 43, 16 · Zotero 41 |
 
 ## Diagnóstico (fase 0) — perguntas, uma por mensagem
 1. Tema em uma frase e o que já existe (nada, projeto, dados, texto).
