@@ -1,6 +1,6 @@
 {
   "name": "pesquisa-mirandastech",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Pesquisa MirandasTech: o Pesquisador conduz o estudante do tema à defesa por 11 fases com evidência, com as skills do Metodólogo (método e ABNT), do Orientador (uso responsável de IA), do Bibliotecário (Zotero, com conector MCP) e da leitura com o Gemini Notebook.",
   "author": {
     "name": "MirandasTech",

@@ -5,7 +5,7 @@ O plugin é a fonte única; cada manual recebe a cópia com as substituições d
 
     python3 scripts/sincronizar_manuais.py --verificar [--raiz zotero=/caminho ...]   # só compara; sai 1 se divergir
     python3 scripts/sincronizar_manuais.py --aplicar  [--raiz ...]                     # escreve nos repositórios dos manuais
-    python3 scripts/sincronizar_manuais.py --verificar --clonar                        # clona os seis repos do GitHub num diretório temporário (CI)
+    python3 scripts/sincronizar_manuais.py --verificar --clonar                        # clona os sete repos do GitHub num diretório temporário (CI)
 
 Sem --raiz, procura os repositórios em ../manual_zotero/repo_publico etc. (estrutura local do autor)."""
 import argparse, difflib, os, shutil, subprocess, sys, tempfile
@@ -60,6 +60,10 @@ REPOS = {
                "arquivos": [("skills/busca-bases-abertas/SKILL.md", "skills/busca-bases-abertas/SKILL.md"),
                             ("scripts/buscar_openalex.py", "scripts/buscar_openalex.py"), ("scripts/contar_bases.py", "scripts/contar_bases.py"),
                             ("scripts/verificar_oa.py", "scripts/verificar_oa.py"), ("modelos/BUSCA.md", "modelos/BUSCA.md")]},
+    "latex": {"git": "latex-overleaf-abntex2-pesquisa-cientifica", "local": PLUGIN.parent / "manual_latex/repo_publico",
+               "subs": [],
+               "arquivos": [("skills/latex-overleaf-abntex2/SKILL.md", "skills/latex-overleaf-abntex2/SKILL.md"),
+                            ("scripts/compilar.sh", "scripts/compilar.sh"), ("scripts/novo_trabalho.py", "scripts/novo_trabalho.py"), ("scripts/checar_citacoes.py", "scripts/checar_citacoes.py")]},
 }
 
 def transformar(texto, subs):
@@ -78,7 +82,7 @@ def pares(cfg, raiz):
 def main():
     ap = argparse.ArgumentParser(); g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--verificar", action="store_true"); g.add_argument("--aplicar", action="store_true")
-    ap.add_argument("--raiz", action="append", default=[], help="nome=caminho (zotero, metodologia, ia, gemini, prisma, busca)")
+    ap.add_argument("--raiz", action="append", default=[], help="nome=caminho (zotero, metodologia, ia, gemini, prisma, busca, latex)")
     ap.add_argument("--clonar", action="store_true", help="clona os repositórios do GitHub num diretório temporário")
     ap.add_argument("--so", help="só este manual"); a = ap.parse_args()
     raizes = {k: v["local"] for k, v in REPOS.items()}

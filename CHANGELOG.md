@@ -1,5 +1,10 @@
 # Histórico de versões
 
+## 1.0.6 — 2026-09-09
+- Nova skill `latex-overleaf-abntex2`: trabalho acadêmico em LaTeX com o abnTeX2 no Overleaf ou local (TinyTeX), .bib do Zotero com Better BibTeX, latexmk e leitura do log, ligada ao manual https://latex.mirandastech.com.br/. O Pesquisador a chama na fase 8.
+- Novos `scripts/compilar.sh`, `scripts/novo_trabalho.py` (projeto a partir do modelo canônico com os dados do aluno) e `scripts/checar_citacoes.py`.
+- `sincronizar_manuais.py` sincroniza também o repositório `latex-overleaf-abntex2-pesquisa-cientifica`.
+
 ## 1.0.5 — 2026-09-09
 - Nova skill `busca-bases-abertas`: estratégia por conceitos, sintaxe por base, diário PRISMA-S e buscas reprodutíveis por API, ligada ao manual https://busca.mirandastech.com.br/. O Pesquisador a chama na fase 4.
 - Novos `scripts/buscar_openalex.py` (cursor, CSV + RIS + diário JSON), `scripts/contar_bases.py` (mesma pergunta em seis APIs) e `scripts/verificar_oa.py` (Unpaywall).
