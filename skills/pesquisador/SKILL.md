@@ -35,7 +35,7 @@ Depois: `python3 scripts/iniciar_projeto.py <pasta> --tema "…" --metodo "…" 
 | Comando | O que faz |
 |---|---|
 | `/pesquisa:iniciar` | Diagnóstico e criação da pasta |
-| `/pesquisa:status` | Resumo de uma página: fase, decisões recentes, pendências, uso de IA declarado — o que o orientador humano lê |
+| `/pesquisa:status` | Roda `scripts/relatorio_orientador.py --salvar` (relatório determinístico em `00_projeto/RELATORIO_ORIENTADOR.md`: fases, checklists com evidência, decisões datadas, uso de IA) e acrescenta a leitura do Pesquisador — o que o orientador humano lê |
 | `/pesquisa:proxima` | O próximo passo da fase atual, com quem conduz e a evidência esperada |
 | `/pesquisa:auditar` | Roda `auditar_biblioteca.py`, `verificar_citacoes.py` e `verificar_refs.py` no que existir e resume |
 | `/pesquisa:declarar` | Monta a declaração de uso de IA a partir de `USO_DE_IA.csv` (Orientador) |

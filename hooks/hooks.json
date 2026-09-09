@@ -3,7 +3,7 @@
     "SessionStart": [
       {
         "hooks": [
-          { "type": "command", "command": "if [ -f PROGRESSO.md ]; then echo 'Projeto de pesquisa MirandasTech detectado. Estado atual (PROGRESSO.md):'; grep -m 12 -E '^\\| *[0-9]+ *\\| .*\\[ \\]' PROGRESSO.md | head -3; echo 'Diga: \"Pesquisador, onde paramos?\"'; fi" }
+          { "type": "command", "command": "if [ -f PROGRESSO.md ]; then python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/resumo_sessao.py\" 2>/dev/null || { echo 'Projeto de pesquisa MirandasTech detectado (PROGRESSO.md).'; echo 'Diga: \"Pesquisador, onde paramos?\"'; }; fi" }
         ]
       }
     ]

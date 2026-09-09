@@ -1,5 +1,10 @@
 # Histórico de versões
 
+## 1.0.2 — 2026-09-09
+- `scripts/relatorio_orientador.py`: relatório para o orientador gerado só dos arquivos do projeto (fases, checklists com evidência, decisões datadas, uso de IA por etapa); `/pesquisa:status` passa a gerá-lo em `00_projeto/RELATORIO_ORIENTADOR.md` antes de comentar.
+- Hook de início de sessão usa `scripts/resumo_sessao.py`: fase atual, fases fechadas, contagem dos checklists, última decisão datada, usos de IA e há quantos dias o `PROGRESSO.md` não muda.
+- Descrições das sete ferramentas do conector Zotero trazem os nomes dos parâmetros e exemplos de chamada.
+
 ## 1.0.1 — 2026-09-09
 - Modelos `USO_DE_IA.csv` e `registro_exportacoes.csv` nascem só com o cabeçalho; as linhas de exemplo foram para `modelos/exemplos/` (os agentes liam o exemplo como dado do projeto). `DECISOES.md` avisa que D001 e D002 são esqueletos.
 - Novo `scripts/registrar_desktop.py` (`--verificar` / `--registrar`, com backup): registra o conector Zotero no Claude Desktop; o `/pesquisa:iniciar` oferece isso ao aluno e o `instalar_claude.sh` passa a usá-lo.

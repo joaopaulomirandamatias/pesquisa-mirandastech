@@ -42,7 +42,7 @@ Requisitos: Python 3, Git, `uv` (para o conector Zotero; alternativa: `pip insta
 python3 scripts/iniciar_projeto.py minha-pesquisa --tema "…" --metodo "revisão sistemática" --programa "PPGEE" --prazo 2027-03
 cd minha-pesquisa
 ```
-No Claude Code: **«Pesquisador, onde paramos?»** ou os comandos `/pesquisa:iniciar`, `/pesquisa:status`, `/pesquisa:proxima`, `/pesquisa:auditar`, `/pesquisa:declarar`, `/pesquisa:banca`, `/pesquisa:entregar`. No Codex: `/pesquisador onde paramos`.
+No Claude Code: **«Pesquisador, onde paramos?»** ou os comandos `/pesquisa:iniciar`, `/pesquisa:status` (gera `00_projeto/RELATORIO_ORIENTADOR.md` com `scripts/relatorio_orientador.py`, só a partir dos arquivos), `/pesquisa:proxima`, `/pesquisa:auditar`, `/pesquisa:declarar`, `/pesquisa:banca`, `/pesquisa:entregar`. No Codex: `/pesquisador onde paramos`.
 
 O projeto criado tem: pastas por etapa, `PROGRESSO.md` (fases + checklists Método, Uso de IA, Biblioteca e Leitura, com os slides de cada item), `DECISOES.md`, `USO_DE_IA.csv`, `AGENTS.md` (regras lidas por qualquer agente), `ACORDO_ORIENTADOR.md`, protocolo, modelos de matriz de síntese, buscas, tabela de operacionalização, livro de códigos, cronograma, TCLE, estrutura de coleções do Zotero e prompts do Gemini Notebook. Pastas de um projeto antigo dos manuais (com `PROGRESSO_IA.md` ou `PROGRESSO_METODOLOGIA.md`) são migradas sem sobrescrever nada.
 

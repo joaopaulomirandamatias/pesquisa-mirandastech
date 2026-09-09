@@ -53,20 +53,25 @@ def _resumo(it):
 
 @mcp.tool()
 def status() -> str:
-    """Verifica se o Zotero está aberto com a API local ligada e quantos itens e coleções há."""
+    """Verifica se o Zotero está aberto com a API local ligada e quantos itens e coleções há.
+    Sem parâmetros. Exemplo: status()"""
     n = len(_todos("/api/users/0/items/top")); c = len(_todos("/api/users/0/collections"))
     return f"Zotero acessível em {BASE}: {n} itens de nível superior, {c} coleções."
 
 @mcp.tool()
 def listar_colecoes() -> list[dict]:
-    """Lista as coleções da biblioteca (nome, chave, coleção-mãe, número de itens)."""
+    """Lista as coleções da biblioteca (nome, chave, coleção-mãe, número de itens).
+    Sem parâmetros. Exemplo: listar_colecoes()"""
     return [{"nome": c["data"]["name"], "chave": c["key"], "mae": c["data"].get("parentCollection") or None,
              "itens": c["meta"].get("numItems", 0)} for c in _todos("/api/users/0/collections")]
 
 @mcp.tool()
 def buscar_itens(texto: str = "", colecao: str = "", etiqueta: str = "", limite: int = 25) -> list[dict]:
     """Busca itens por texto (título, autor, ano — «Todos os campos»), opcionalmente dentro de uma
-    coleção (pelo nome) e/ou com uma etiqueta. Retorna chave, tipo, título, autores, ano, DOI e etiquetas."""
+    coleção (pelo nome) e/ou com uma etiqueta. Retorna chave, tipo, título, autores, ano, DOI e etiquetas.
+    Parâmetros: texto (o que procurar), colecao (nome exato da coleção), etiqueta (nome da etiqueta), limite (1–100).
+    Exemplos: buscar_itens(texto="PRISMA 2020") · buscar_itens(colecao="2 Incluídos", limite=100) · buscar_itens(etiqueta="duplicata")
+    Sem nenhum parâmetro devolve os primeiros 25 itens da biblioteca."""
     path = f"/api/users/0/collections/{_colecao_id(colecao)}/items/top" if colecao else "/api/users/0/items/top"
     q = {"limit": max(1, min(limite, 100)), "qmode": "everything"}
     if texto: q["q"] = texto
@@ -75,7 +80,8 @@ def buscar_itens(texto: str = "", colecao: str = "", etiqueta: str = "", limite:
 
 @mcp.tool()
 def detalhar_item(chave: str) -> dict:
-    """Todos os metadados de um item (pela chave de 8 caracteres) e a lista de anexos e notas."""
+    """Todos os metadados de um item (pela chave de 8 caracteres) e a lista de anexos e notas.
+    Parâmetro: chave (a «chave» devolvida por buscar_itens). Exemplo: detalhar_item(chave="LXS55N5P")"""
     it = _get(f"/api/users/0/items/{chave}"); filhos = _get(f"/api/users/0/items/{chave}/children")
     return {"item": it["data"], "filhos": [{"chave": f["key"], "tipo": f["data"]["itemType"],
             "titulo": f["data"].get("title", ""), "contentType": f["data"].get("contentType", "")} for f in filhos]}
@@ -85,7 +91,9 @@ def referencia_abnt(chaves: list[str] | None = None, colecao: str = "", estilo: 
                     modo: str = "bibliografia") -> str:
     """Gera referências formatadas pelo próprio Zotero (processador CSL). Padrão: estilo ABNT autor-data;
     alternativas: «associacao-brasileira-de-normas-tecnicas-numerico», «apa», «ieee» etc. (precisa estar instalado).
-    modo «bibliografia» devolve a lista; modo «citacao» devolve as citações no texto, ex.: (SILVA, 2024)."""
+    modo «bibliografia» devolve a lista; modo «citacao» devolve as citações no texto, ex.: (SILVA, 2024).
+    Parâmetros: chaves (lista de chaves) OU colecao (nome); estilo; modo.
+    Exemplos: referencia_abnt(chaves=["LXS55N5P"]) · referencia_abnt(colecao="2 Incluídos") · referencia_abnt(chaves=["LXS55N5P"], modo="citacao")"""
     q = {"format": "bib" if modo == "bibliografia" else "citation", "style": estilo, "locale": "pt-BR", "limit": 100}
     if chaves: path, q["itemKey"] = "/api/users/0/items", ",".join(chaves)
     elif colecao: path = f"/api/users/0/collections/{_colecao_id(colecao)}/items/top"
@@ -100,7 +108,8 @@ def referencia_abnt(chaves: list[str] | None = None, colecao: str = "", estilo: 
 @mcp.tool()
 def auditar(colecao: str = "") -> dict:
     """Aponta o que sai errado na lista de referências: itens sem DOI, sem PDF, sem autor ou ano,
-    título em CAIXA ALTA, capturados como «Página da web», anexos órfãos e prováveis duplicados. Só lê."""
+    título em CAIXA ALTA, capturados como «Página da web», anexos órfãos e prováveis duplicados. Só lê.
+    Parâmetro opcional: colecao (nome). Exemplos: auditar() · auditar(colecao="2 Incluídos")"""
     path = f"/api/users/0/collections/{_colecao_id(colecao)}/items/top" if colecao else "/api/users/0/items/top"
     itens = _todos(path); filhos = {}
     for it in _todos("/api/users/0/items"):
@@ -132,7 +141,8 @@ def auditar(colecao: str = "") -> dict:
 @mcp.tool()
 def exportar_bbt(colecao: str, formato: str = "biblatex") -> str:
     """Exporta uma coleção pelo Better BibTeX (formato «bibtex», «biblatex» ou «json» = CSL JSON).
-    Exige o plugin Better BibTeX instalado e ativo. Devolve o conteúdo do arquivo."""
+    Exige o plugin Better BibTeX instalado e ativo. Devolve o conteúdo do arquivo.
+    Parâmetros: colecao (nome, obrigatório), formato. Exemplo: exportar_bbt(colecao="2 Incluídos", formato="biblatex")"""
     url = f"{BASE}/better-bibtex/export/collection?/{urllib.parse.quote(colecao)}.{formato}"
     try:
         with urllib.request.urlopen(url, timeout=120) as r: return r.read().decode("utf-8")
