@@ -438,6 +438,16 @@ body{margin:0}
 .struct h5{margin:0 0 6px;font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--blueprint)}
 .struct ol,.struct ul{margin:0;padding-left:16px}.struct li{font-family:var(--cond);font-size:13px;line-height:1.35;margin:2px 0}
 @media (max-width:900px){.struct{grid-template-columns:minmax(0,1fr)}.gantt{grid-template-columns:110px repeat(12,minmax(0,1fr))}}
+
+/* lupa: clique na captura para ampliar */
+.shot img{cursor:zoom-in}
+.lightbox{position:fixed;inset:0;z-index:80;background:rgba(10,14,20,.88);display:none;align-items:center;justify-content:center;padding:3vh 3vw;cursor:zoom-out}
+.lightbox.on{display:flex}
+.lightbox img{max-width:94vw;max-height:88vh;width:auto;height:auto;border-radius:4px;box-shadow:0 12px 40px rgba(0,0,0,.6);background:#fff}
+.lightbox figcaption{position:absolute;left:50%;bottom:1.6vh;transform:translateX(-50%);max-width:90vw;font-family:var(--cond);font-size:13.5px;color:#E3E9EF;text-align:center;line-height:1.4;padding:6px 12px;background:rgba(10,14,20,.6);border-radius:4px}
+.lightbox .lb-close{position:absolute;top:12px;right:14px;width:40px;height:40px;border-radius:4px;border:1px solid rgba(255,255,255,.3);background:rgba(10,14,20,.5);color:#fff;font:20px/1 var(--mono);cursor:pointer}
+.lightbox .lb-hint{position:absolute;top:18px;left:18px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+@media print{.lightbox{display:none!important}}
 </style>
 <div class="prog" id="prog"></div>
 <div class="scrim" id="scrim"></div>
@@ -1554,5 +1564,24 @@ codex plugin list</pre></div>
   function paint(){ var n = 0; boxes.forEach(function(b){ var it = b.closest('.check-item'); if (b.checked) { n++; it.classList.add('done'); } else { it.classList.remove('done'); } }); if (status) status.textContent = n + ' de ' + boxes.length; }
   var st = load(); boxes.forEach(function(b){ b.checked = !!st[b.id]; b.addEventListener('change', function(){ var s = load(); s[b.id] = b.checked; save(s); paint(); }); }); paint();
   var reset = document.getElementById('check-reset'); if (reset) reset.addEventListener('click', function(){ boxes.forEach(function(b){ b.checked = false; }); save({}); paint(); });
+})();
+</script>
+<script>
+(function(){
+  var lb = document.createElement('div'); lb.className = 'lightbox'; lb.setAttribute('role','dialog'); lb.setAttribute('aria-modal','true');
+  lb.innerHTML = '<span class="lb-hint">clique fora ou Esc para fechar</span><button type="button" class="lb-close" aria-label="Fechar">×</button><figure style="margin:0;display:contents"><img alt=""><figcaption hidden></figcaption></figure>';
+  document.body.appendChild(lb);
+  var img = lb.querySelector('img'), cap = lb.querySelector('figcaption');
+  function open(src, alt, text){ img.src = src; img.alt = alt || ''; if (text) { cap.textContent = text; cap.hidden = false; } else { cap.hidden = true; } lb.classList.add('on'); document.body.style.overflow = 'hidden'; }
+  function close(){ lb.classList.remove('on'); img.removeAttribute('src'); document.body.style.overflow = ''; }
+  document.addEventListener('click', function(ev){
+    var t = ev.target;
+    if (t.tagName === 'IMG' && t.closest('.shot')) {
+      var fig = t.closest('figure'), fc = fig && fig.querySelector('figcaption');
+      open(t.currentSrc || t.src, t.alt, fc ? fc.textContent.replace(/\s+/g,' ').trim() : '');
+    }
+  });
+  lb.addEventListener('click', function(ev){ if (ev.target !== img) close(); });
+  document.addEventListener('keydown', function(ev){ if (ev.key === 'Escape' && lb.classList.contains('on')) close(); });
 })();
 </script>
