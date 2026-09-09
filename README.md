@@ -52,11 +52,15 @@ O projeto criado tem: pastas por etapa, `PROGRESSO.md` (fases + checklists Méto
 | `commands/` | os sete comandos `/pesquisa:…` |
 | `.mcp.json` · `scripts/zotero_mcp.py` | conector MCP da biblioteca Zotero (7 ferramentas, só leitura) |
 | `hooks/hooks.json` | ao abrir uma sessão numa pasta com `PROGRESSO.md`, mostra as pendências e lembra de chamar o Pesquisador |
-| `scripts/` | `iniciar_projeto.py`, `verificar_citacoes.py`, `verificar_refs.py`, `tamanho_amostra.py`, `cronograma.py`, `auditar_biblioteca.py`, `exportar_bbt.sh`, `backup_zotero.sh`, `instalar_claude.sh`, `instalar_codex.sh` |
+| `scripts/` | `iniciar_projeto.py`, `verificar_citacoes.py`, `verificar_refs.py`, `tamanho_amostra.py`, `cronograma.py`, `auditar_biblioteca.py`, `exportar_bbt.sh`, `backup_zotero.sh`, `instalar_claude.sh`, `instalar_codex.sh`, `empacotar_codex.py` (gera o ZIP para o diretório do Codex e sobe a versão nos manifestos) |
 | `modelos/` | arquivos copiados para o projeto; estilos ABNT (.csl); prompts do Gemini Notebook |
 | `.codex-plugin/` · `.agents/plugins/marketplace.json` · `AGENTS.md` · `codex/prompts/` | pacote do Codex (manifesto do plugin, marketplace, instruções e prompts) |
 | `docs/` | o plano (Markdown e HTML), textos de submissão aos diretórios (`DESCRICAO.md`), política de privacidade, termos de uso e suporte |
 | `.github/workflows/verificar.yml` | CI: manifestos, frontmatter de agentes/skills/comandos, scripts |
+
+## Publicar uma nova versão
+1. Edite agentes, skills ou modelos e faça push: o Claude Code atualiza sozinho pelo marketplace.
+2. Para o diretório do Codex: `python3 scripts/empacotar_codex.py --versao X.Y.Z` (valida manifestos, ícones e skills e gera `dist/pesquisa-mirandastech-X.Y.Z.zip`), depois envie o ZIP em platform.openai.com/plugins → Create plugin → Skills only e publique.
 
 ## Como citar
 MATIAS, J. P. M. *Pesquisa MirandasTech: plugin de acompanhamento de pesquisa para Claude Code e Codex.* v1.0, set. 2026. CC BY 4.0.

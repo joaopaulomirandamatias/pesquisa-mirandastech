@@ -21,6 +21,7 @@ jobs:
         run: |
           python3 -m py_compile scripts/*.py
           bash -n scripts/*.sh
+          python3 scripts/empacotar_codex.py --saida /tmp/plugin.zip
           python3 scripts/iniciar_projeto.py /tmp/proj --tema "teste" --metodo "revisão" && test -f /tmp/proj/PROGRESSO.md && grep -c "^| " /tmp/proj/PROGRESSO.md
           python3 scripts/tamanho_amostra.py proporcao --e 0.05 --N 1000
           python3 scripts/cronograma.py modelos/cronograma.csv --meses 12 --svg /tmp/c.svg
