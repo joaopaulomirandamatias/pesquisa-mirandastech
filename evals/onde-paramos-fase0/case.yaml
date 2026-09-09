@@ -18,10 +18,12 @@ graders:
   - type: tool_used
     name: nao_edita
     tool: Edit
+    min: 0
     max: 0
   - type: tool_used
     name: nao_escreve
     tool: Write
+    min: 0
     max: 0
   - type: llm
     name: resposta_de_estado

@@ -20,7 +20,8 @@ if cen == "fase3":
     fechar_fase(1, "2026-08-27", "00_projeto/DECISOES_METODO.md §1–3 (pergunta, tabela vazia, objetivos)")
     fechar_fase(2, "2026-09-03", "00_projeto/DECISOES_METODO.md §4–6; DECISOES.md D003")
     for k, d, e in [("M1", "2026-08-27", "DECISOES_METODO.md §1"), ("M2", "2026-08-27", "DECISOES_METODO.md §2"), ("M3", "2026-08-27", "DECISOES_METODO.md §3"),
-                    ("M5", "2026-09-03", "DECISOES_METODO.md §4"), ("M6", "2026-09-03", "DECISOES_METODO.md §5"), ("I1", "2026-08-20", "ACORDO_ORIENTADOR.md")]:
+                    ("M5", "2026-09-03", "DECISOES_METODO.md §4"), ("M6", "2026-09-03", "DECISOES_METODO.md §5"),
+                    ("M7", "2026-09-03", "DECISOES_METODO.md §7 (critérios de elegibilidade = população da revisão)"), ("M8", "2026-09-03", "DECISOES_METODO.md §8 (formulário de extração)"), ("I1", "2026-08-20", "ACORDO_ORIENTADOR.md")]:
         fechar_item(k, d, e)
     open("00_projeto/DECISOES_METODO.md", "w", encoding="utf-8").write("""# Decisões de método
 
@@ -42,6 +43,12 @@ Escolhi revisão sistemática porque a pergunta é sobre o estado das evidência
 
 ## 6. Análise
 Síntese narrativa estruturada pela tabela do resultado; sem metanálise (heterogeneidade esperada).
+
+## 7. Elegibilidade (o «quem» da revisão)
+Inclui: estudos empíricos, 2015–2026, em inglês ou português, com abordagem de IA aplicada a manutenção preditiva de equipamento portuário. Exclui: revisões, editoriais, estudos sem dados de equipamento.
+
+## 8. Formulário de extração
+As oito colunas da tabela vazia do resultado, mais «página da evidência» e «quem extraiu».
 """)
     d = open("DECISOES.md", encoding="utf-8").read()
     d = d.replace("**Data:** AAAA-MM-DD · **Responsável:** … · **Decisão:** … · **Justificativa:** … · **Impacto medido:** …",

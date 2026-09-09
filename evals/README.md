@@ -16,8 +16,10 @@ Cada pasta é um caso: `case.yaml` (prompt, ferramentas permitidas, graders) e `
 Rodar (o `eval` está em acesso antecipado no Claude Code; o `setup.sh` só roda com `--scaffold`):
 
 ```bash
-claude plugin eval . --scaffold --allow-tools Edit Write Bash --runs 1 --report evals/results/relatorio.html
-claude plugin eval . --scaffold --allow-tools Edit Write Bash --case "onde-paramos-*"   # só alguns casos
+CLAUDE_CODE_WALNUT_SPIRE=1 claude plugin eval . --scaffold --ablation none --allow-tools Edit Write Bash \
+  --runs 1 --judge-model claude-sonnet-5 --no-publish --report evals/results/relatorio.html
+# só alguns casos:
+CLAUDE_CODE_WALNUT_SPIRE=1 claude plugin eval . --scaffold --ablation none --allow-tools Edit Write Bash --case "onde-paramos-*"
 ```
 
-Cada execução gasta tokens (agente + juiz). O CI não roda os evals automaticamente; rode antes de publicar uma versão e guarde o `report.html` em `evals/results/` (ignorado pelo Git).
+Notas de execução (09/09/2026): o Claude Code do terminal precisa estar logado (`claude auth status`); `--ablation none` evita o braço «sem plugin», que dobra o custo; `--judge-model claude-sonnet-5` deixa o juiz menos errático que o padrão (haiku); uma rodada completa com `--runs 1` custou cerca de US$ 3,50 e levou 8 minutos. O CI não roda os evals automaticamente; rode antes de publicar uma versão e guarde o relatório em `evals/results/` (ignorado pelo Git). Primeira rodada completa: 8/8 casos passando após ajuste dos critérios.

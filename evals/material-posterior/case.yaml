@@ -14,6 +14,7 @@ graders:
   - type: tool_used
     name: nao_edita
     tool: Edit
+    min: 0
     max: 0
   - type: llm
     name: ordem_das_fases

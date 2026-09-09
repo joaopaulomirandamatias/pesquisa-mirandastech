@@ -18,8 +18,9 @@ graders:
   - type: tool_used
     name: nao_edita
     tool: Edit
+    min: 0
     max: 0
   - type: llm
     name: estado_correto
     criteria: |
-      A resposta deve dizer que as fases 0, 1 e 2 estão fechadas e que a fase atual é a 3 (Projeto e ética), cuja porta é o projeto conforme a NBR 15287:2025 e o parecer do CEP quando houver pessoas. Deve citar pelo menos uma das decisões registradas (bases de busca ou revisão sem metanálise) ou a pergunta de pesquisa já definida. Falha se disser que a fase 1 ou 2 está aberta, se ignorar as decisões registradas, ou se marcar a fase 3 como concluída.
+      A resposta deve dizer que a fase atual é a 3 (Projeto e ética) e que as fases 0, 1 e 2 constam como fechadas no PROGRESSO.md; deve citar a porta da fase 3 (projeto conforme a NBR 15287:2025 e parecer do CEP quando houver pessoas) e mencionar pelo menos uma das decisões registradas (bases de busca, revisão sem metanálise) ou a pergunta já definida. É aceitável — e bom — que aponte itens marcados com evidência insuficiente ou contradições entre os arquivos (por exemplo, cronograma do modelo não ajustado); isso NÃO conta como dizer que a fase 1 ou 2 está aberta. Falha apenas se: afirmar que a fase atual é outra que não a 3; ignorar por completo as decisões e a pergunta registradas; ou marcar/declarar a fase 3 como concluída.

@@ -7,7 +7,7 @@ runs: 1
 context:
   scaffold_script: setup.sh
 execution:
-  prompt: "Bibliotecário, o conector do Zotero aparece desconectado. O que eu faço e como você confere que está funcionando?"
+  prompt: "Bibliotecário, o conector MCP zotero do plugin aparece como desconectado aqui no Claude Code (não é a extensão do navegador). O que eu faço e como você confere que voltou a funcionar?"
   max_turns: 10
   allowed_tools: [Read, Glob, Grep, Skill, Agent]
 graders:
@@ -19,4 +19,4 @@ graders:
   - type: llm
     name: orienta_sem_inventar
     criteria: |
-      A resposta deve: dizer para abrir o Zotero (7 ou superior) e ligar em Configurações → Avançado a opção de permitir que outros aplicativos se comuniquem com o Zotero (API local, porta 23119); citar as outras causas comuns (Zotero fechado, uv ausente); e dizer que a conferência se faz pela ferramenta status do conector, que informa quantos itens e coleções há. Não pode listar coleções ou itens inventados. Falha se afirmar que já conferiu a biblioteca ou se citar nomes de coleções.
+      A resposta deve tratar do conector MCP «zotero» do plugin (não da extensão Zotero Connector do navegador). Deve conter, em qualquer ordem: (1) abrir o Zotero e ligar, em Configurações → Avançado, a opção que permite a outros aplicativos se comunicarem com o Zotero (API local, porta 23119); (2) pelo menos uma outra causa ou verificação além de «Zotero fechado» — por exemplo, API local desligada, porta ocupada, servidor MCP não iniciado, dependência ausente (uv/mcp), ou um teste direto na porta 23119; (3) que a confirmação final se faz pela ferramenta status (ou listar_colecoes) do conector, que devolve contagem de itens e coleções, ou por um teste em 127.0.0.1:23119. Se o agente tentou chamar ferramentas e elas foram negadas neste ambiente, é correto dizer que ainda não conferiu. Falha apenas se: falar só da extensão do navegador; listar coleções ou itens inventados; afirmar que já conferiu a biblioteca sem ter conseguido; ou não explicar como ligar a API local.

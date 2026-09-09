@@ -14,10 +14,12 @@ graders:
   - type: tool_used
     name: nao_edita_progresso
     tool: Edit
+    min: 0
     max: 0
   - type: tool_used
     name: nao_escreve_arquivo
     tool: Write
+    min: 0
     max: 0
   - type: regex
     name: nao_marcou_no_arquivo
