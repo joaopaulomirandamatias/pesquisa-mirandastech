@@ -68,6 +68,30 @@ REPOS = {
                "subs": [],
                "arquivos": [("skills/git-github-pesquisadores/SKILL.md", "skills/git-github-pesquisadores/SKILL.md"),
                             ("scripts/checar_repo.py", "scripts/checar_repo.py"), ("scripts/salvar_versao.sh", "scripts/salvar_versao.sh"), ("scripts/citacao_cff.py", "scripts/citacao_cff.py")]},
+    "dados": {"git": "analise-de-dados-pesquisa-cientifica", "local": PLUGIN.parent / "manual_dados/repo_publico",
+               "subs": [],
+               "arquivos": [("skills/analise-de-dados/SKILL.md", "skills/analise-de-dados/SKILL.md"),
+                            ("scripts/limpar_dados.py", "scripts/limpar_dados.py"), ("scripts/analisar.py", "scripts/analisar.py"), ("scripts/codificar_taguette.py", "scripts/codificar_taguette.py")]},
+    "bibliometria": {"git": "bibliometria-pesquisa-cientifica", "local": PLUGIN.parent / "manual_bibliometria/repo_publico",
+               "subs": [],
+               "arquivos": [("skills/bibliometria-vosviewer/SKILL.md", "skills/bibliometria-vosviewer/SKILL.md"),
+                            ("scripts/indicadores_bibliometricos.py", "scripts/indicadores_bibliometricos.py"), ("scripts/mapa_vosviewer.py", "scripts/mapa_vosviewer.py")]},
+    "cienciaaberta": {"git": "ciencia-aberta-pesquisa-cientifica", "local": PLUGIN.parent / "manual_ciencia_aberta/repo_publico",
+               "subs": [],
+               "arquivos": [("skills/ciencia-aberta-preregistro/SKILL.md", "skills/ciencia-aberta-preregistro/SKILL.md"),
+                            ("scripts/preregistro.py", "scripts/preregistro.py"), ("scripts/deposito_zenodo.py", "scripts/deposito_zenodo.py"), ("scripts/plano_gestao_dados.py", "scripts/plano_gestao_dados.py")]},
+    "defesa": {"git": "defesa-qualificacao-pesquisa-cientifica", "local": PLUGIN.parent / "manual_defesa/repo_publico",
+               "subs": [],
+               "arquivos": [("skills/defesa-qualificacao/SKILL.md", "skills/defesa-qualificacao/SKILL.md"),
+                            ("scripts/apresentacao_defesa.py", "scripts/apresentacao_defesa.py"), ("scripts/ensaio_defesa.py", "scripts/ensaio_defesa.py"), ("scripts/checklist_defesa.py", "scripts/checklist_defesa.py")]},
+    "orientador": {"git": "manual-do-orientador-pesquisa-cientifica", "local": PLUGIN.parent / "manual_orientador/repo_publico",
+               "subs": [],
+               "arquivos": [("skills/orientacao-academica/SKILL.md", "skills/orientacao-academica/SKILL.md"),
+                            ("scripts/acordo_orientacao.py", "scripts/acordo_orientacao.py"), ("scripts/reuniao_orientacao.py", "scripts/reuniao_orientacao.py"), ("scripts/autoria_credit.py", "scripts/autoria_credit.py"), ("scripts/relatorio_orientador.py", "scripts/relatorio_orientador.py"), ("scripts/resumo_sessao.py", "scripts/resumo_sessao.py")]},
+    "professor": {"git": "manual-do-professor-pesquisa-cientifica", "local": PLUGIN.parent / "manual_professor/repo_publico",
+               "subs": [],
+               "arquivos": [("skills/ensino-pesquisa/SKILL.md", "skills/ensino-pesquisa/SKILL.md"),
+                            ("scripts/plano_de_ensino.py", "scripts/plano_de_ensino.py"), ("scripts/rubrica.py", "scripts/rubrica.py"), ("scripts/turma_progresso.py", "scripts/turma_progresso.py")]},
 }
 
 def transformar(texto, subs):
@@ -86,7 +110,7 @@ def pares(cfg, raiz):
 def main():
     ap = argparse.ArgumentParser(); g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--verificar", action="store_true"); g.add_argument("--aplicar", action="store_true")
-    ap.add_argument("--raiz", action="append", default=[], help="nome=caminho (zotero, metodologia, ia, gemini, prisma, busca, latex, git)")
+    ap.add_argument("--raiz", action="append", default=[], help="nome=caminho (zotero, metodologia, ia, gemini, prisma, busca, latex, git, dados, bibliometria, cienciaaberta, defesa, orientador, professor)")
     ap.add_argument("--clonar", action="store_true", help="clona os repositórios do GitHub num diretório temporário")
     ap.add_argument("--so", help="só este manual"); a = ap.parse_args()
     raizes = {k: v["local"] for k, v in REPOS.items()}

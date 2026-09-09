@@ -1,5 +1,35 @@
 # Histórico de versões
 
+## 1.0.13 — 2026-09-09
+- Nova skill `ensino-pesquisa`: plano de ensino semana a semana ligado aos manuais, rubricas por entrega com o arquivo que prova, painel da turma, uso de IA na disciplina, estágio de docência, ligada ao manual https://professor.mirandastech.com.br/.
+- Novos `scripts/plano_de_ensino.py`, `scripts/rubrica.py` e `scripts/turma_progresso.py`.
+- `sincronizar_manuais.py` sincroniza também o repositório `manual-do-professor-pesquisa-cientifica`.
+
+## 1.0.12 — 2026-09-09
+- Nova skill `orientacao-academica`: acordo de orientação, atas de reunião com pendências, matriz CRediT e critérios ICMJE de autoria, relatório de progresso, integridade, ligada ao manual https://orientador.mirandastech.com.br/.
+- Novos `scripts/acordo_orientacao.py`, `scripts/reuniao_orientacao.py` e `scripts/autoria_credit.py`.
+- `sincronizar_manuais.py` sincroniza também o repositório `manual-do-orientador-pesquisa-cientifica`.
+
+## 1.0.11 — 2026-09-09
+- Nova skill `defesa-qualificacao`: regimento primeiro, roteiro da apresentação por bloco (Beamer compilado), ensaios cronometrados, banca simulada, checklist antes/no dia/depois, correções e versão final, ligada ao manual https://defesa.mirandastech.com.br/.
+- Novos `scripts/apresentacao_defesa.py`, `scripts/ensaio_defesa.py` e `scripts/checklist_defesa.py`.
+- `sincronizar_manuais.py` sincroniza também o repositório `defesa-qualificacao-pesquisa-cientifica`.
+
+## 1.0.10 — 2026-09-09
+- Nova skill `ciencia-aberta-preregistro`: pré-registro (OSF, AsPredicted, PROSPERO, ReBEC), plano de gestão de dados, depósito com DOI (Zenodo/OSF), preprints, licenças CC, FAIR, ORCID e Registered Reports, ligada ao manual https://cienciaaberta.mirandastech.com.br/.
+- Novos `scripts/preregistro.py`, `scripts/deposito_zenodo.py` e `scripts/plano_gestao_dados.py`.
+- `sincronizar_manuais.py` sincroniza também o repositório `ciencia-aberta-pesquisa-cientifica`.
+
+## 1.0.9 — 2026-09-09
+- Nova skill `bibliometria-vosviewer`: indicadores do corpus, redes de coautoria, termos, fontes e acoplamento bibliográfico nos formatos do VOSviewer e do VOSviewer Online, Bibliometrix como alternativa, relato responsável (Leiden, DORA), ligada ao manual https://bibliometria.mirandastech.com.br/.
+- Novos `scripts/indicadores_bibliometricos.py` e `scripts/mapa_vosviewer.py`.
+- `sincronizar_manuais.py` sincroniza também o repositório `bibliometria-pesquisa-cientifica`.
+
+## 1.0.8 — 2026-09-09
+- Nova skill `analise-de-dados`: limpeza documentada, descritivas, comparação entre grupos com tamanho de efeito e IC, correlação, tabela cruzada, figuras por script, codificação no Taguette e relato conforme SAMPL/COREQ, ligada ao manual https://dados.mirandastech.com.br/. O Pesquisador a chama na fase 7.
+- Novos `scripts/limpar_dados.py` (relatório de limpeza sem apagar linhas), `scripts/analisar.py` (Welch t/Mann-Whitney, ANOVA/Kruskal, Pearson/Spearman, qui-quadrado/V de Cramér, boxplot) e `scripts/codificar_taguette.py` (etiqueta × documento, trechos, coocorrência).
+- `sincronizar_manuais.py` sincroniza também o repositório `analise-de-dados-pesquisa-cientifica`.
+
 ## 1.0.7 — 2026-09-09
 - Nova skill `git-github-pesquisadores`: controle de versão do projeto de pesquisa (o que entra e o que fica fora do Git, commits e tags por marco, README/LICENSE/CITATION.cff, release e DOI pelo Zenodo, auditoria antes de publicar), ligada ao manual https://git.mirandastech.com.br/. O Pesquisador a chama na fase 10.
 - Novos `scripts/checar_repo.py` (auditoria: arquivos grandes, segredos, dados pessoais, README/LICENSE/CITATION.cff), `scripts/salvar_versao.sh` (commit + tag anotada) e `scripts/citacao_cff.py` (CITATION.cff 1.2.0 + BibTeX + ABNT).
