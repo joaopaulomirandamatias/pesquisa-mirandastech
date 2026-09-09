@@ -21,6 +21,7 @@ def ler(pasta="."):
     if not p.is_file(): return None
     txt = p.read_text(encoding="utf-8")
     tema = (re.search(r"^# Progresso — (.+)$", txt, re.M) or [None, ""])[1]
+    esquema = int((re.search(r"<!-- esquema: (\d+)", txt) or [None, "0"])[1])
     fases = tabela(txt, "| Fase | Nome |")
     fechadas = [f for f in fases if len(f) > 4 and f[4].lower() == "[x]"]
     abertas = [f for f in fases if len(f) > 4 and f[4].lower() != "[x]"]
@@ -40,7 +41,7 @@ def ler(pasta="."):
     usos = 0; u = pasta / "USO_DE_IA.csv"
     if u.is_file():
         with open(u, encoding="utf-8", newline="") as f: usos = sum(1 for r in csv.DictReader(f) if any(r.values()))
-    return {"tema": tema, "fase_atual": atual and {"n": atual[0], "nome": atual[1], "porta": atual[2]},
+    return {"tema": tema, "esquema": esquema, "fase_atual": atual and {"n": atual[0], "nome": atual[1], "porta": atual[2]},
             "fases_fechadas": [f[0] for f in fechadas], "checklists": checks, "dias_sem_alteracao": dias,
             "ultima_decisao": ultima and {"id": ultima[0], "titulo": ultima[1], "data": ultima[2]}, "usos_de_ia": usos}
 

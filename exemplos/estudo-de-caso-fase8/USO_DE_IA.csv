@@ -1,0 +1,3 @@
+data,etapa,ferramenta,modelo_versao,finalidade,dados_enviados,prompt_ou_consulta,validacao,decisao_humana,declara,quem
+2026-03-16,coleta,Whisper local,large-v3,transcrição bruta de 14 entrevistas,áudio anonimizado (sem nomes),"transcrever",cada transcrição conferida com o áudio pelo autor,sim,declare,autor
+2026-05-04,analise,Claude Code,claude-sonnet-5,sugerir códigos iniciais a partir de 3 transcrições anonimizadas,3 transcrições sem identificadores,"proponha códigos descritivos; não interprete",autor manteve 9 de 17 sugestões; livro de códigos v1,sim,declare,autor

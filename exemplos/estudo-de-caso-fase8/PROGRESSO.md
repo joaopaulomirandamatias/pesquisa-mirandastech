@@ -1,0 +1,95 @@
+# Progresso — Adoção de gêmeo digital na operação de um terminal de contêineres
+<!-- esquema: 1 · gerado por iniciar_projeto.py do plugin Pesquisa MirandasTech -->
+> **Exemplo fictício** gerado por `exemplos/gerar_exemplos.py`: estudos, números e pessoas são inventados; serve para mostrar o formato preenchido.
+
+**Método provável:** estudo de caso · **Programa:** PPGEP · **Prazo:** 2026-12 · **Início:** 2026-09-08
+Manuais: https://metodologia.mirandastech.com.br/ · https://manual.mirandastech.com.br/ · https://zotero.mirandastech.com.br/ · https://notebook.mirandastech.com.br/
+
+Regra: um item só é marcado `[x]` pelo agente responsável depois de conferir a evidência (arquivo, script, número). Anote data e evidência ao lado. O aluno decide; o agente formula e registra em DECISOES.md.
+
+## Fases (Pesquisador)
+
+| Fase | Nome | Porta de saída | Quem conduz | Estado | Data | Evidência |
+|---|---|---|---|---|---|---|
+| 0 | Diagnóstico | Tema, prazo, programa, orientador e ferramentas registrados; pasta criada | Pesquisador | [x] | 2025-09-08 | cabeçalho; acordo assinado |
+| 1 | Pergunta | Tema delimitado → problema → pergunta com tabela vazia do resultado → objetivos | Metodólogo | [x] | 2025-09-22 | DECISOES_METODO.md §1–3 |
+| 2 | Método | Classificação, desenho, amostra, instrumento, análise; o que a IA pode fazer aqui | Metodólogo · Orientador | [x] | 2025-10-13 | §4–8; D003 |
+| 3 | Projeto e ética | Projeto NBR 15287:2025; parecer do CEP quando houver pessoas | Metodólogo | [x] | 2025-12-15 | projeto NBR 15287; parecer CEP CAAE 00000000.0.0000.0000 (D004) |
+| 4 | Busca e biblioteca | Bases, strings verbatim, coleção por base e data; auditoria da biblioteca | Metodólogo · Bibliotecário | [x] | 2026-02-02 | buscas.csv; biblioteca auditada |
+| 5 | Triagem | Deduplicação, triagem assistida com status preliminar, decisão do aluno, números do PRISMA | Orientador · Bibliotecário | [x] | 2026-02-23 | triagem de 96 → 22 documentos internos e artigos de apoio |
+| 6 | Leitura e síntese | PDFs do Zotero → notebook; fichamento; matriz de síntese conferida célula a célula | Leitura (Gemini Notebook) | [x] | 2026-04-06 | matriz_sintese.csv 22 linhas conferidas |
+| 7 | Análise | Coleta e análise conforme o método; IA só onde autorizada e registrada | Metodólogo · Orientador | [x] | 2026-07-13 | 05_analise/: 14 entrevistas transcritas e codificadas (livro de códigos v3); dados em dados_FORA_DO_GIT |
+| 8 | Escrita ABNT | NBR 14724, 10520, 6023 via Zotero; verificação automática de citações e referências | Bibliotecário · scripts | [ ] | | |
+| 9 | Pré-banca | Cinco objeções mais fortes, perguntas prováveis, respostas com página | Metodólogo · Leitura | [ ] | | |
+| 10 | Entrega | Declaração de uso de IA, backup, versão congelada da biblioteca, checklist final | Orientador · Bibliotecário | [ ] | | |
+
+## Método (Metodólogo) — slides em metodologia.mirandastech.com.br
+
+| # | Área | Item | Slides | Estado | Data | Evidência conferida |
+|---|---|---|---|---|---|---|
+| M1 | Pergunta | Pergunta clara, delimitada, empírica e viável; tabela vazia do resultado | 7 | [x] | 2025-09-22 | §1 |
+| M2 | Objetivos | Objetivo geral = pergunta em ação; específicos geram resultado, não etapa | 8 | [x] | 2025-09-22 | §2 |
+| M3 | Justificativa | Lacuna apontada com revisões; relevância; contribuição verificável | 9 | [x] | 2025-09-22 | §3 |
+| M4 | Revisão | Buscas registradas; matriz de síntese; fichas com página | 10–11 | [x] | 2026-04-06 | matriz_sintese.csv |
+| M5 | Classificação | Natureza, abordagem, objetivo e procedimento — uma resposta por eixo | 12 | [x] | 2025-10-13 | §4 |
+| M6 | Método | Frase «escolhi X porque…; descartei Y porque…» registrada | 14 | [x] | 2025-10-13 | §5 |
+| M7 | Amostra | População, unidade, amostragem, n calculado e obtido | 16 | [x] | 2025-10-13 | §7: 14 entrevistados por papel (saturação em 12) |
+| M8 | Instrumento | Tabela de operacionalização; juízes; pré-teste registrado | 18 | [x] | 2025-10-13 | 02_instrumentos/roteiro_entrevista.md; pré-teste com 2 |
+| M9 | Ética | Parecer do CEP com CAAE antes da coleta; TCLE arquivado; LGPD | 6, 27 | [x] | 2025-12-15 | 03_etica/parecer_cep.pdf (fora do git); TCLE arquivado |
+| M10 | Análise | Técnica decidida antes; pressupostos; efeito com IC; categorias com trecho | 21–22 | [x] | 2026-07-13 | análise temática (Braun & Clarke) decidida em §6 |
+| M11 | Reprodutibilidade | Dados, scripts, ambiente e decisões guardados; figura por script | 24 | [x] | 2026-07-13 | 05_analise/scripts/; figuras por script |
+| M12 | Estrutura | NBR 14724:2024 / 15287:2025 e modelo do programa | 25, 28 | [x] | 2025-12-15 | 06_texto/projeto_nbr15287.md |
+| M13 | Citações | NBR 10520:2023; diretas com página; sem paráfrase próxima | 30 | [ ] | | |
+| M14 | Referências | NBR 6023:2025 via gerenciador; DOI resolvido; texto ↔ lista | 31 | [ ] | | |
+| M15 | Texto | Números batem com tabelas; conclusão por objetivo; limites explícitos | 32 | [ ] | | |
+| M16 | Defesa | Cinco objeções com resposta; ensaio; material à mão | 34 | [ ] | | |
+
+## Uso de IA (Orientador) — slides em manual.mirandastech.com.br
+
+| # | Área | Item | Slides | Estado | Data | Evidência conferida |
+|---|---|---|---|---|---|---|
+| I1 | Governança | Acordo com o orientador assinado; protocolo congelado e datado antes da primeira busca; procedimento de emenda escrito | 6, 17 | [x] | 2025-10-20 | acordo; protocolo congelado |
+| I2 | Governança | Arquivo de regras do agente com proibições absolutas, gates humanos e critério de conclusão | 37 | [x] | 2025-09-08 | AGENTS.md |
+| I3 | Dados | Dado licenciado e pessoal fora do repositório; treinamento desligado nas ferramentas; hash registrado | 9, 11 | [x] | 2026-07-13 | transcrições anonimizadas em dados_FORA_DO_GIT |
+| I4 | Busca | String de cada base salva verbatim do histórico, com data, filtros, total e SHA-256 do export | 18, 22 | [ ] | | |
+| I5 | Busca | Teste com e sem truncamento registrado; conjunto-semente com regra de decisão prévia | 19, 21 | [ ] | | |
+| I6 | Triagem | Codebook versionado; toda recomendação de IA com status preliminar; decisão humana por registro | 23, 28 | [ ] | | |
+| I7 | Triagem | κ com intervalo de confiança; grau de cegamento declarado; regra de parada do aprendizado ativo escrita antes | 26, 27 | [ ] | | |
+| I8 | Acesso | Os três números do texto completo medidos separadamente; E5 declarado com lista | 31 | [ ] | | |
+| I9 | Extração | Cada codificação com página e seção; extração assistida conferida no PDF; dupla codificação em amostra | 32, 33 | [x] | 2026-07-13 | codificação com página e trecho; dupla codificação em 20% |
+| I10 | Figuras | Toda figura gerada por script que lê o dado; nenhum número digitado; nenhuma imagem gerada por IA | 34 | [x] | 2026-07-20 | figuras geradas por 05_analise/scripts/figuras.py |
+| I11 | Referências | Todo DOI resolvido na Crossref na versão final; referência sem DOI com prova alternativa | 42 | [ ] | | |
+| I12 | Texto | Marcas de IA contadas e removidas; um trecho lido em voz alta; comparação linha a linha com a versão do modelo | 40, 41 | [ ] | | |
+| I13 | Texto | Todo número do texto bate com a tabela de origem; somas fecham; resumo contado | 44 | [ ] | | |
+| I14 | Equipe | Registro de uso compartilhado com a coluna «quem»; todos os coautores leram o texto inteiro e aprovaram a declaração | 12, 13 | [ ] | | |
+| I15 | Declaração | Uso de IA declarado com ferramenta, fase, finalidade, validação e o que a IA não fez | 43 | [ ] | | |
+| I16 | Entrega | Guia de relato conferido item a item; disponibilidade de dados verdadeira no momento da submissão | 16 | [ ] | | |
+
+## Biblioteca (Bibliotecário) — slides em zotero.mirandastech.com.br
+
+| # | Área | Item | Slides | Estado | Data | Evidência conferida |
+|---|---|---|---|---|---|---|
+| B1 | Instalação | Zotero instalado do site oficial; Connector no navegador; ícone testado numa página com DOI | 6–9 | [x] | 2025-09-15 | testado |
+| B2 | Conta | Sincronização automática ligada; decisão sobre arquivos (Storage/WebDAV/nenhum) registrada | 10 | [ ] | | |
+| B3 | Configurações | Idioma pt-BR; PDF automático e acesso aberto; renomeação automática; pasta de dados fora de nuvem sincronizada | 11 | [ ] | | |
+| B4 | Estilo | Estilo ABNT instalado e testado com artigo, livro e tese; idioma da citação pt-BR | 30–31 | [x] | 2025-09-15 | ABNT |
+| B5 | Editor | Aba/menu Zotero visível no editor; Preferências do documento com ABNT | 32–33 | [ ] | | |
+| B6 | Estrutura | Coleções por etapa e convenção de etiquetas escritas em DECISOES.md | 20–21 | [x] | 2025-10-13 | coleções por etapa |
+| B7 | Auditorias | Pesquisas salvas «sem DOI», «sem PDF», «página da web» criadas | 22 | [ ] | | |
+| B8 | Auditoria | scripts/auditar_biblioteca.py sem pendências críticas | 49 | [x] | 2026-02-02 | auditoria sem críticas |
+| B9 | Leitura | Convenção de cores das anotações definida; nota extraída com página testada | 27–28 | [ ] | | |
+| B10 | Exportação | Better BibTeX se houver LaTeX/Obsidian; .bib com «Manter atualizado» | 38 | [ ] | | |
+| B11 | Backup | Backup da pasta de dados feito com o Zotero fechado; rotina agendada | 41 | [ ] | | |
+| B12 | Grupo | Se há coautores: grupo privado criado, permissões e dono definidos | 44 | [ ] | | |
+
+## Leitura e síntese (Gemini Notebook) — slides em notebook.mirandastech.com.br
+
+| # | Área | Item | Slides | Estado | Data | Evidência conferida |
+|---|---|---|---|---|---|---|
+| L1 | Conta | Conta pessoal ou institucional escolhida sabendo a diferença de privacidade | 7, 43 | [x] | 2026-03-02 | conta institucional |
+| L2 | Fontes | PDFs nomeados «Autor - Ano - Título» (do Zotero); nenhuma URL de editora; nenhum PDF escaneado sem OCR | 11–14 | [x] | 2026-03-02 | 22 fontes |
+| L3 | Ingestão | Pergunta de inventário rodada; guia de cada fonte aberto; fontes vazias corrigidas | 19 | [ ] | | |
+| L4 | Citações | Trecho aberto e lido para cada afirmação usada; frases sem número descartadas | 21 | [x] | 2026-04-06 | trechos conferidos |
+| L5 | Matriz | Colunas definidas pelo protocolo; primeira versão pelo notebook; cada célula conferida na planilha | 34 | [x] | 2026-04-06 | matriz conferida célula a célula |
+| L6 | Dados sensíveis | Nada identificável enviado; transcrições anonimizadas; feedback não enviado em conversas com dados | 43–45 | [ ] | | |
+| L7 | Declaração | Uso do notebook na leitura declarado; nada do Estúdio citado no texto | 45 | [ ] | | |

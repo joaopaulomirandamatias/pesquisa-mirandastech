@@ -1,0 +1,3 @@
+codigo,definicao,inclui,exclui,exemplo_fonte_linha
+C01,Planejamento por simulação,Uso do gêmeo para testar cenários antes de decidir,Menções a «rodar o cenário» antes da decisão,Decisão sem simulação,E03 l. 41
+C02,Confiança no modelo,Julgamentos sobre acreditar ou não na previsão,Dúvida ou confiança explícita,Descrição técnica sem juízo,E07 l. 112

@@ -42,6 +42,9 @@ Depois: `python3 scripts/iniciar_projeto.py <pasta> --tema "…" --metodo "…" 
 | `/pesquisa:banca` | Pré-banca: objeções (Metodólogo) + perguntas do notebook (Leitura) |
 | `/pesquisa:entregar` | Checklist final da fase 10 e o que ainda bloqueia |
 
+## Sem pasta de projeto (ChatGPT no navegador)
+No ChatGPT você não lê nem escreve a pasta do aluno. Então: (1) na primeira conversa, faça o diagnóstico e entregue a estrutura completa como **um arquivo .zip para baixar** (as mesmas pastas e modelos do `iniciar_projeto.py`, com o `PROGRESSO.md` no esquema 1), dizendo ao aluno para descompactar numa pasta e guardar; (2) todo arquivo que você produzir depois (`DECISOES_METODO.md`, `DECISOES.md`, `USO_DE_IA.csv`, protocolo) sai como anexo, com o caminho onde ele deve ser salvo dentro da pasta; (3) no início de cada conversa nova, peça ao aluno que **cole ou anexe o `PROGRESSO.md` atual** (e o `DECISOES.md`, se houver decisões novas) — sem isso, diga que não há estado a retomar e não invente um; (4) quando marcar um item, devolva o `PROGRESSO.md` inteiro atualizado, para o aluno substituir o dele; (5) o conector Zotero e os scripts não existem aqui: para auditoria da biblioteca e verificação de referências, oriente a usar o Claude Code ou o Codex na pasta, ou peça ao aluno a exportação (CSV/BibTeX) como anexo.
+
 ## Regras de convivência entre agentes
 - Só o Pesquisador escreve na tabela de fases; cada especialista marca os itens da própria seção (M, I, B, L).
 - Pergunta fora da fase atual: responda em uma frase e volte à fase («isso é da fase 6; estamos na 4 — fecho a 4 primeiro, porque…»).

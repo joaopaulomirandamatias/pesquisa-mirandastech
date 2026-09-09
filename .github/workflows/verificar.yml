@@ -26,3 +26,12 @@ jobs:
           python3 scripts/tamanho_amostra.py proporcao --e 0.05 --N 1000
           python3 scripts/cronograma.py modelos/cronograma.csv --meses 12 --svg /tmp/c.svg
           python3 -c "import xml.dom.minidom,glob; [xml.dom.minidom.parse(f) for f in glob.glob('modelos/estilos/*.csl')]; print('csl ok')"
+
+  sincronizacao:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - name: Manuais irmãos iguais ao plugin nos arquivos compartilhados
+        run: python3 scripts/sincronizar_manuais.py --verificar --clonar
+

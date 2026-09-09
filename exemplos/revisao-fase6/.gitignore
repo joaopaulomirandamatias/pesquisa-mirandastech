@@ -1,0 +1,7 @@
+dados_FORA_DO_GIT/
+dados_restritos_FORA_DO_GIT/
+04_dados_FORA_DO_GIT/
+*.xlsx
+*.pdf
+exports/
+.env

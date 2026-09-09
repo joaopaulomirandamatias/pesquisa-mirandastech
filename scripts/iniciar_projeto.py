@@ -12,6 +12,7 @@ import argparse, re, shutil, subprocess, sys
 from datetime import date
 from pathlib import Path
 AQUI = Path(__file__).resolve().parent.parent; MODELOS = AQUI / "modelos"
+ESQUEMA = 1  # versão da estrutura do PROGRESSO.md (fases + checklists M/I/B/L); suba ao mudar tabelas ou colunas
 PASTAS = ["00_projeto", "00_protocolo", "01_revisao/fichas", "01_buscas", "02_instrumentos", "02_triagem", "03_etica", "03_extracao",
           "04_sintese", "05_analise", "06_texto", "07_banca", "tools", "dados_FORA_DO_GIT"]
 FASES = [
@@ -102,8 +103,12 @@ def main():
     if not proto.exists(): proto.write_text(f"# Protocolo — {a.tema}\n\n**Método:** {a.metodo}\n**Congelado em:** (preencher — depois disso, só por emenda)\n\n1. Pergunta e subperguntas\n2. Bases e justificativa\n3. Blocos conceituais e strings (verbatim)\n4. Janela, idiomas, tipos documentais\n5. Critérios de inclusão e códigos de exclusão\n6. Procedimento de triagem\n7. Conjunto-semente\n8. Campos de extração e codebook\n9. Avaliação de qualidade\n10. Plano de síntese\n11. Gates humanos\n12. Procedimento de emenda\n\n## Emendas\n(nenhuma)\n", encoding="utf-8"); print("  +", proto.relative_to(raiz))
     marcados = set(); migra(raiz / "PROGRESSO_IA.md", marcados); migra(raiz / "PROGRESSO_METODOLOGIA.md", marcados); migra(raiz / "PROGRESSO_ZOTERO.md", marcados)
     prog = raiz / "PROGRESSO.md"
+    if prog.exists():
+        m = re.search(r"<!-- esquema: (\d+)", prog.read_text(encoding="utf-8")); v = int(m.group(1)) if m else 0
+        if v < ESQUEMA: print(f"  ! PROGRESSO.md está no esquema {v} (atual: {ESQUEMA}); nada foi alterado — migração manual: confira as tabelas contra um projeto novo")
+        elif v > ESQUEMA: print(f"  ! PROGRESSO.md está no esquema {v}, mais novo que este plugin ({ESQUEMA}); atualize o plugin")
     if not prog.exists():
-        L = [f"# Progresso — {a.tema}", "", f"**Método provável:** {a.metodo} · **Programa:** {a.programa} · **Prazo:** {a.prazo} · **Início:** {date.today().isoformat()}",
+        L = [f"# Progresso — {a.tema}", f"<!-- esquema: {ESQUEMA} · gerado por iniciar_projeto.py do plugin Pesquisa MirandasTech -->", "", f"**Método provável:** {a.metodo} · **Programa:** {a.programa} · **Prazo:** {a.prazo} · **Início:** {date.today().isoformat()}",
              "Manuais: https://metodologia.mirandastech.com.br/ · https://manual.mirandastech.com.br/ · https://zotero.mirandastech.com.br/ · https://notebook.mirandastech.com.br/", "",
              "Regra: um item só é marcado `[x]` pelo agente responsável depois de conferir a evidência (arquivo, script, número). Anote data e evidência ao lado. O aluno decide; o agente formula e registra em DECISOES.md.", "",
              "## Fases (Pesquisador)", "", "| Fase | Nome | Porta de saída | Quem conduz | Estado | Data | Evidência |", "|---|---|---|---|---|---|---|"]

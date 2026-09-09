@@ -62,9 +62,17 @@ O projeto criado tem: pastas por etapa, `PROGRESSO.md` (fases + checklists Méto
 | `docs/` | o plano (Markdown e HTML), textos de submissão aos diretórios (`DESCRICAO.md`), política de privacidade, termos de uso e suporte |
 | `.github/workflows/verificar.yml` | CI: manifestos, frontmatter de agentes/skills/comandos, scripts |
 
+## Exemplos preenchidos
+
+[`exemplos/`](exemplos/) traz dois projetos fictícios — uma revisão sistemática na fase 6 e um estudo de caso na fase 8 — para ver como fica o `PROGRESSO.md` com evidência, `DECISOES.md` datado e `USO_DE_IA.csv` preenchido. Copie a pasta, abra o Claude Code nela e diga «Pesquisador, onde paramos?».
+
+## Manuais irmãos sincronizados
+
+Os agentes, skills, scripts e modelos que também existem nos repositórios dos quatro manuais são gerados a partir deste plugin: `python3 scripts/sincronizar_manuais.py --verificar` compara (o CI faz isso clonando os repositórios) e `--aplicar` reescreve as cópias com as substituições de cada contexto. Edite aqui, nunca lá.
+
 ## Testes dos agentes
 
-A pasta [`evals/`](evals/) tem oito casos para `claude plugin eval` (estado inicial, fase 3, recusa de fechar fase sem evidência, material de fase posterior, pergunta ampla, triagem com IA, API local do Zotero, pasta sem projeto). Rode antes de publicar uma versão; instruções em `evals/README.md`.
+A pasta [`evals/`](evals/) tem nove casos para `claude plugin eval` (estado inicial, fase 3, recusa de fechar fase sem evidência, material de fase posterior, pergunta ampla, triagem com IA, API local do Zotero, pasta sem projeto). Rode antes de publicar uma versão; instruções em `evals/README.md`.
 
 ## Publicar uma nova versão
 1. Edite agentes, skills ou modelos e faça push: o Claude Code atualiza sozinho pelo marketplace.

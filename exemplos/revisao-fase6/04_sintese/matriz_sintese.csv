@@ -1,0 +1,4 @@
+id,autor_ano,pergunta_do_estudo,contexto,desenho,amostra,instrumento,achado_principal,limite_declarado,relacao_com_minha_pergunta,pagina_da_evidencia
+E01,Almeida 2023,LSTM prevê falha em guindaste STS?,terminal de contêineres (fictício),experimento,3 guindastes,vibração e corrente,F1 0.91 em janela de 24 h,sem custo medido,dado de um terminal só,p. 7
+E02,Nakamura 2021,Random forest para RTG?,pátio de contêineres,estudo de caso,12 RTG,sensores hidráulicos,redução de 12% das paradas não programadas,sem comparador,p. 12
+E03,Duarte 2024,Detecção de anomalia em esteira de granéis?,terminal de grãos,experimento,1 linha,acústica,AUC 0.88,validação em 2 meses,p. 5

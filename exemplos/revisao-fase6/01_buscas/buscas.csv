@@ -1,0 +1,4 @@
+data,base,string_verbatim,filtros,total_retornado,arquivo_exportado,sha256
+2026-05-19,Scopus,"TITLE-ABS-KEY((""predictive maintenance"" OR ""condition-based maintenance"") AND (port OR terminal OR crane) AND (""machine learning"" OR ""deep learning"" OR ""artificial intelligence""))","2015-2026; article; conference paper",203,scopus_2026-05-19.csv,<sha256>
+2026-05-19,Web of Science,"TS=((""predictive maintenance"") AND (port* OR terminal* OR crane*) AND (""machine learning"" OR ""deep learning""))","2015-2026; Article; Proceedings",141,wos_2026-05-19.txt,<sha256>
+2026-05-19,IEEE Xplore,"(""predictive maintenance"") AND (port OR crane) AND (""machine learning"")","2015-2026",68,ieee_2026-05-19.csv,<sha256>

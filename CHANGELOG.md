@@ -1,7 +1,13 @@
 # Histórico de versões
 
-## Não publicado
-- Suíte de testes dos agentes em `evals/` (`claude plugin eval`): oito casos com projeto preparado por cenário (`_lib/projeto.sh`), graders regex, tool_used e juiz LLM. Ver `evals/README.md`.
+## 1.0.3 — 2026-09-09
+- Suíte de testes dos agentes em `evals/` (`claude plugin eval`): nove casos com projeto preparado por cenário (`_lib/projeto.sh`), graders regex, tool_used, file_exists e juiz LLM; primeira rodada 8/8 nos casos de conversa. Ver `evals/README.md`.
+- `PROGRESSO.md` declara a versão do esquema (`<!-- esquema: 1 -->`); `iniciar_projeto.py` avisa quando o arquivo é de esquema mais antigo ou mais novo que o plugin.
+- Skill do Pesquisador ganha a seção «Sem pasta de projeto (ChatGPT no navegador)»: estrutura em .zip, anexos com caminho, `PROGRESSO.md` colado a cada conversa, nada inventado.
+- `scripts/sincronizar_manuais.py`: o plugin passa a ser a fonte única dos agentes, skills, scripts e modelos compartilhados com os repositórios dos quatro manuais (`--verificar` no CI, `--aplicar` para reescrever).
+- `exemplos/`: dois projetos fictícios preenchidos (revisão na fase 6; estudo de caso na fase 8), regeneráveis por `exemplos/gerar_exemplos.py`.
+- Capturas e PDF do manual saem do Git para a release `manual-assets`; o Dockerfile do manual e o do hub baixam o zip no build (clone do plugin ~5 MB mais leve).
+- Corrigida uma frase truncada no agente Bibliotecário.
 
 ## 1.0.2 — 2026-09-09
 - `scripts/relatorio_orientador.py`: relatório para o orientador gerado só dos arquivos do projeto (fases, checklists com evidência, decisões datadas, uso de IA por etapa); `/pesquisa:status` passa a gerá-lo em `00_projeto/RELATORIO_ORIENTADOR.md` antes de comentar.

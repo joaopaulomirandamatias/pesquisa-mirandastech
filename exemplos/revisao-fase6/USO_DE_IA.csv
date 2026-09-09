@@ -1,0 +1,4 @@
+data,etapa,ferramenta,modelo_versao,finalidade,dados_enviados,prompt_ou_consulta,validacao,decisao_humana,declara,quem
+2026-05-05,busca,Claude Code,claude-sonnet-5,sugerir sinônimos para a string,termos da pergunta,"proponha variantes de manutenção preditiva e terminal portuário",string final decidida pelo autor e testada nas 3 bases,sim,declare,autor
+2026-06-02,triagem,Claude Code,claude-sonnet-5,agrupar 287 registros pelo livro de códigos v2 com status preliminar,títulos e identificadores; resumos locais,"aplicar R1–R6; não decidir",autor decidiu um a um; 41 elegíveis,sim por registro,declare,autor
+2026-07-21,leitura,Gemini Notebook,Gemini 3.5,inventário das 18 fontes e perguntas por seção,18 PDFs licenciados (conta institucional),"para cada fonte: objetivo; método; resultado; limitação com citação",cada célula conferida no trecho citado,sim,declare,autor

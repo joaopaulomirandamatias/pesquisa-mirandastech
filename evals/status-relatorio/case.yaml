@@ -1,0 +1,35 @@
+schema_version: "1.1"
+name: status-relatorio
+description: >-
+  O comando /pesquisa:status deve rodar o relatorio_orientador.py, gravar 00_projeto/RELATORIO_ORIENTADOR.md e acrescentar a leitura do Pesquisador sem marcar nada.
+tags: [comando, pesquisador]
+runs: 1
+context:
+  scaffold_script: setup.sh
+execution:
+  prompt: "/pesquisa:status"
+  max_turns: 12
+  allowed_tools: [Read, Glob, Grep, Skill, Agent, Bash, Edit, Write]
+graders:
+  - type: tool_used
+    name: rodou_script
+    tool: Bash
+    input_match: relatorio_orientador
+    min: 1
+  - type: file_exists
+    name: relatorio_gravado
+    path: "00_projeto/RELATORIO_ORIENTADOR.md"
+  - type: tool_used
+    name: nao_edita
+    tool: Edit
+    min: 0
+    max: 0
+  - type: regex
+    name: progresso_intacto
+    target: {source: file, path: PROGRESSO.md}
+    pattern: "\\| 3 \\| Projeto e [eé]tica \\|[^\\n]*\\| \\[x\\] \\|"
+    match: not_contains
+  - type: llm
+    name: leitura_do_pesquisador
+    criteria: |
+      A resposta deve apresentar (ou resumir fielmente) o relatório gerado — fases 0, 1 e 2 fechadas, fase 3 aberta, itens marcados com evidência, decisões D001 e D003 datadas — e acrescentar uma leitura curta (até dez linhas) com: o que fecha a fase 3, o item de evidência mais fraca e o próximo passo em uma frase. Não pode marcar nada nem alterar os arquivos de estado. Falha se inventar fases fechadas além de 0–2, se omitir o relatório, ou se a leitura passar de uns dez pontos.
