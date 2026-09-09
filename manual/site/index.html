@@ -552,17 +552,18 @@ body{margin:0}
 <section class="slide alt" id="s03b" data-title="Roteiro">
   <div class="inner">
     <div class="kicker-part rv">Introdução<span>3 de 3</span></div>
-    <h2 class="rv">Roteiro: cinco partes, na ordem em que você vai usá-las</h2>
+    <h2 class="rv">Roteiro: seis partes, na ordem em que você vai usá-las</h2>
     <div class="flow rv">
       <div class="node"><span class="nn">Parte 1</span><span class="nt">Instalar no Claude</span><span class="nd">Claude Code pelo <span class="gterm" tabindex="0" data-t="Marketplace (catálogo)" data-d="Arquivo marketplace.json num repositório que lista plugins instaláveis. O catálogo mirandastech lista pesquisa e zotero-pesquisa. Instala-se por plugin@catálogo.">marketplace</span>, o inventário instalado, o script de instalação, o <span class="gterm" tabindex="0" data-t="Diretório community (Claude)" data-d="Catálogo de plugins de terceiros da Anthropic, com revisão; submissão pelo Console. Quando aceito, instala-se por pesquisa@claude-community.">diretório community</span> e o Claude Desktop (só o conector)</span></div>
       <div class="node"><span class="nn">Parte 2</span><span class="nt">Instalar no Codex e no ChatGPT</span><span class="nd">Aplicativo do Codex pelo diretório, linha de comando pelo <span class="gterm" tabindex="0" data-t="Marketplace (catálogo)" data-d="Arquivo marketplace.json num repositório que lista plugins instaláveis. O catálogo mirandastech lista pesquisa e zotero-pesquisa. Instala-se por plugin@catálogo.">marketplace</span> próprio, conector e prompts, aprovação de ferramentas, ChatGPT com @menção</span></div>
       <div class="node"><span class="nn">Parte 3</span><span class="nt">Usar</span><span class="nd">Criar o projeto, a árvore e o <code>PROGRESSO.md</code>, as onze fases e as portas, a sessão típica, os especialistas, os comandos, o conector, a leitura, as recusas, o registro</span></div>
-      <div class="node"><span class="nn">Parte 4</span><span class="nt">Manter</span><span class="nd">Atualizar e publicar nova versão, problemas conhecidos, privacidade, termos e licença</span></div>
-      <div class="node"><span class="nn">Parte 5</span><span class="nt">Fechamento</span><span class="nd">Erros comuns, checklist de instalação e primeira sessão, glossário, referências, repositório, os manuais juntos</span></div>
+      <div class="node"><span class="nn">Parte 4</span><span class="nt">Demonstração</span><span class="nd">Uma pesquisa começando do zero no ChatGPT, em quatro passos gravados: diagnóstico, fechamento da fase 0, pergunta com o Metodólogo, retomada sem pasta</span></div>
+      <div class="node"><span class="nn">Parte 5</span><span class="nt">Manter</span><span class="nd">Atualizar e publicar nova versão, problemas conhecidos, privacidade, termos e licença</span></div>
+      <div class="node"><span class="nn">Parte 6</span><span class="nt">Fechamento</span><span class="nd">Erros comuns, checklist de instalação e primeira sessão, glossário, referências, repositório, os manuais juntos</span></div>
     </div>
     <div class="two rv">
-      <div class="rule-box"><span class="blabel">Como ler</span><p>Escolha o cliente que usa e siga só a parte dele (1 ou 2); todo mundo passa pela Parte 3. Se você já instalou, vá direto ao slide «Sessão típica» e volte quando um passo não estiver claro. A Parte 4 é para quem mantém o plugin ou quer entender o que ele faz com os seus dados.</p></div>
-      <div class="note"><span class="blabel">Convenções</span><p>Nomes de menu e de botão entre «aspas angulares». Comandos de terminal e de chat em blocos com botão «copiar». Siglas explicadas na primeira vez que aparecem e no glossário. Capturas em 1920 × 938, feitas em setembro de 2026, com a interface em português.</p></div>
+      <div class="rule-box"><span class="blabel">Como ler</span><p>Escolha o cliente que usa e siga só a parte dele (1 ou 2); todo mundo passa pela Parte 3. Se você já instalou, vá direto ao slide «Sessão típica» e volte quando um passo não estiver claro. A Parte 4 mostra uma sessão real, do início ao fim, em animações. A Parte 5 é para quem mantém o plugin ou quer entender o que ele faz com os seus dados.</p></div>
+      <div class="note"><span class="blabel">Convenções</span><p>Nomes de menu e de botão entre «aspas angulares». Comandos de terminal e de chat em blocos com botão «copiar». Siglas explicadas na primeira vez que aparecem e no glossário. Capturas em 1920 × 938 e animações em 1200 × 585 (Parte 4), feitas em setembro de 2026, com a interface em português.</p></div>
     </div>
   </div>
 </section>
@@ -1124,8 +1125,95 @@ Bibliotecário, exporte a coleção «2 Incluídos» em BibLaTeX pelo Better Bib
   </div>
 </section>
 
-<!-- ===================== PARTE 4 ===================== -->
-<section class="slide divider" id="p4" data-title="Parte 4 · Manutenção"><div class="inner"><div class="kicker-part rv">Parte 4<span>Manutenção</span></div><h2 class="rv">Atualizar, publicar, resolver e saber o que ele faz com os seus dados</h2><p class="rv">Como o plugin se atualiza em cada cliente, como se gera uma nova versão para o diretório do Codex, os problemas conhecidos e a política de privacidade, os termos e a licença.</p></div><div class="num">04</div></section>
+<!-- ===================== PARTE 4 · DEMONSTRAÇÃO ===================== -->
+<section class="slide divider" id="p4" data-title="Parte 4 · Demonstração"><div class="inner"><div class="kicker-part rv">Parte 4<span>Demonstração</span></div><h2 class="rv">Uma pesquisa começando do zero, no ChatGPT</h2><p class="rv">Sessão real de 9 de setembro de 2026, no ChatGPT do navegador com o plugin na versão 1.0.3: tema de automação portuária, do diagnóstico à pergunta de pesquisa. As animações mostram a tela como ela é; o que o plugin gerou está descrito ao lado de cada uma.</p></div><div class="num">04</div></section>
+
+<section class="slide" id="d01" data-title="Demonstração 1: chamar o Pesquisador">
+  <div class="inner">
+    <div class="kicker-part rv">Demonstração<span>1 de 4 · fase 0</span></div>
+    <h2 class="rv">Passo 1 — chamar o Pesquisador com o contexto: tema, nível, prazo e ferramentas</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/demo_01_chamar_pesquisador.gif" width="1200" height="585" alt="Animação: no ChatGPT, a menção @Pesquisa MirandasTech, a mensagem com o tema e a resposta do Pesquisador com a proposta de recorte, a lista do que falta e os anexos"></div><figcaption><b>Animação 1</b> Digite «@», escolha «Pesquisa MirandasTech» e escreva o pedido na mesma mensagem. O Pesquisador detecta a fase 0, propõe um recorte, lista o que falta e entrega o pacote inicial como anexos.</figcaption></figure>
+      <div>
+        <div class="code"><div class="code-head">mensagem enviada</div><pre>@Pesquisa MirandasTech Pesquisador, quero começar minha pesquisa. Tema: um mecanismo para usar agentes autônomos de IA com governança e auditoria em sistemas de automação para monitoramento e segurança pública, privada e ambiental na área portuária. Sou aluno de mestrado, tenho orientador, prazo de qualificação em 2027-06, uso Zotero e Gemini Notebook, escrevo no Word. Ainda não tenho nada escrito.</pre></div>
+        <div class="tw"><table><thead><tr><th style="width:150px">O que ele fez</th><th>Como apareceu</th></tr></thead><tbody>
+          <tr><td>Fase</td><td>«iniciei sua pesquisa na fase 0 — diagnóstico»; nada marcado como feito</td></tr>
+          <tr><td>Recorte</td><td>Concentrar a contribuição no mecanismo de governança e auditoria; as três frentes (pública, privada, ambiental) como contexto; título provisório</td></tr>
+          <tr><td>Desenho candidato</td><td>Protótipo comparado com e sem o mecanismo em ambiente controlado: violações de política, reconstrução das execuções, latência, conclusão das tarefas</td></tr>
+          <tr><td>O que falta</td><td>Programa e instituição; contas pessoais ou institucionais; cenário, acesso a dados, coautores</td></tr>
+          <tr><td>Anexos</td><td>Um DOCX de diagnóstico e um ZIP com a pasta do projeto (<code>PROGRESSO.md</code>, <code>DECISOES.md</code>, <code>USO_DE_IA.csv</code>, <code>00_projeto/</code>)</td></tr>
+          <tr><td>Fecho</td><td>Uma única pergunta: a quais dados ou cenários de teste de um porto você tem acesso</td></tr>
+        </tbody></table></div>
+        <div class="trap"><span class="blabel">Armadilha</span><p><strong>Tomar o DOCX como projeto pronto.</strong> A pergunta e os objetivos que saem na fase 0 são provisórios, e o próprio texto diz isso; eles só viram decisão na fase 1, com o Metodólogo. A resposta levou onze minutos porque o ChatGPT montou o DOCX e o ZIP; no Claude Code ou no Codex, a pasta nasce em segundos.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="d02" data-title="Demonstração 2: fechar a fase 0">
+  <div class="inner">
+    <div class="kicker-part rv">Demonstração<span>2 de 4 · fase 0 fechada</span></div>
+    <h2 class="rv">Passo 2 — responder às pendências e pedir para fechar a fase 0</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/demo_02_fechar_fase0.gif" width="1200" height="585" alt="Animação: a resposta do aluno com ambiente, programa, contas e acompanhamento, e o Pesquisador fechando a fase 0 e devolvendo o PROGRESSO.md atualizado"></div><figcaption><b>Animação 2</b> Com as pendências respondidas, o Pesquisador fecha a fase 0 e devolve o <code>PROGRESSO.md</code> inteiro para substituir o seu.</figcaption></figure>
+      <div>
+        <div class="code"><div class="code-head">mensagem enviada</div><pre>Tenho acesso a um simulador de terminal de contêineres (gêmeo digital com dados sintéticos) do laboratório do meu grupo; não tenho dados reais de porto. Programa: mestrado em engenharia elétrica de uma universidade pública. Contas: Gemini Notebook institucional, Zotero pessoal. Sem coautores; o orientador vai ler o PROGRESSO.md nas reuniões. Pode fechar a fase 0?</pre></div>
+        <ul class="bul">
+          <li>«Fechei a fase 0, com sua confirmação registrada como evidência no PROGRESSO.md»: a porta da fase é tema, prazo, programa, orientador e ferramentas registrados.</li>
+          <li>Registrou ambiente (simulador com dados sintéticos), programa, ferramentas e acompanhamento; avisou que a validade dos resultados para operações reais fica para o desenho do estudo.</li>
+          <li>Devolveu três anexos: <code>PROGRESSO.md</code> completo «para substituir na raiz da sua pasta», o ZIP atualizado e o DOCX.</li>
+          <li class="warn">Terminou pela pergunta da fase seguinte: quais eventos de monitoramento ou segurança o simulador reproduz.</li>
+        </ul>
+        <div class="rule-box"><span class="blabel">Regra</span><p><strong>Sem pasta, o estado vive no arquivo devolvido.</strong> No ChatGPT o plugin não lê o seu computador: guarde o <code>PROGRESSO.md</code> que ele devolveu (nesta conta, ele também ficou na biblioteca do ChatGPT, e a retomada do passo 4 usou isso). Se a conversa seguinte não o encontrar, anexe ou cole o arquivo; sem ele, o Pesquisador não deve inventar onde você parou.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="d03" data-title="Demonstração 3: o Metodólogo e a pergunta">
+  <div class="inner">
+    <div class="kicker-part rv">Demonstração<span>3 de 4 · fase 1</span></div>
+    <h2 class="rv">Passo 3 — chamar o Metodólogo: a pergunta «boa» que ainda não está pronta</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/demo_03_metodologo_fase1.gif" width="1200" height="585" alt="Animação: a mensagem com os três eventos do simulador e a pergunta de pesquisa, e a resposta do Metodólogo com a crítica, a pergunta candidata, a tabela vazia do resultado e os itens M1 a M3 pendentes"></div><figcaption><b>Animação 3</b> Na mesma conversa, o papel é chamado pelo nome. O Metodólogo critica a pergunta, propõe uma versão verificável, monta a tabela vazia do resultado e lista o que fecha M1–M3.</figcaption></figure>
+      <div>
+        <div class="code"><div class="code-head">mensagem enviada</div><pre>O simulador reproduz intrusão em área restrita do pátio, colisão iminente entre veículos e guindastes, e vazamento em tanque de combustível (alarme ambiental). Metodólogo, minha pergunta de pesquisa é: «como agentes autônomos melhoram a segurança do porto?». Está boa? O que falta para fechar a fase 1?</pre></div>
+        <div class="tw"><table><thead><tr><th style="width:150px">O que ele apontou</th><th>Por quê</th></tr></thead><tbody>
+          <tr><td>«Melhoram» pressupõe benefício</td><td>A pesquisa tem de admitir melhora, ausência de efeito ou piora</td></tr>
+          <tr><td>«Segurança» é ampla</td><td>Conformidade das ações, auditoria e resposta ao incidente pedem medidas distintas</td></tr>
+          <tr><td>«Porto» não diz o ambiente</td><td>É um terminal de contêineres simulado, com dados sintéticos</td></tr>
+          <tr><td>A contribuição sumiu</td><td>O mecanismo de governança e auditoria não estava na pergunta</td></tr>
+          <tr><td>Pergunta candidata</td><td>«Em um gêmeo digital de terminal de contêineres, qual é o efeito de um mecanismo de governança e auditoria sobre as ações não autorizadas e a reconstrução das execuções dos agentes…»</td></tr>
+          <tr><td>Tabela vazia</td><td>Condição (sem e com o mecanismo) × episódios, ações não autorizadas, execuções reconstruídas, respostas corretas no prazo</td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p><strong>O aluno decide o recorte.</strong> Ele sugeriu a intrusão em área restrita como cenário principal e deixou claro: «essa escolha ainda é sua». M1–M3 seguem pendentes (0/16 itens de método) até a pergunta, os objetivos e a lacuna com duas revisões estarem registrados. «Bloquear tudo e registrar tudo não basta para demonstrar melhora da segurança.»</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="d04" data-title="Demonstração 4: retomar noutra conversa">
+  <div class="inner">
+    <div class="kicker-part rv">Demonstração<span>4 de 4 · retomada</span></div>
+    <h2 class="rv">Passo 4 — numa conversa nova: «Pesquisador, onde paramos?»</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/demo_04_retomar.gif" width="1200" height="585" alt="Animação: conversa nova no ChatGPT, a pergunta onde paramos e a resposta do Pesquisador com a fase 1, o que está registrado, a última pergunta e os itens M1 a M3 pendentes, com marcadores PROGRESSO nas fontes"></div><figcaption><b>Animação 4</b> Conversa nova, sem anexar nada. O Pesquisador localizou o <code>PROGRESSO.md</code> na biblioteca da conta e respondeu com fase atual, o que está registrado, a última pergunta em aberto e o que falta — cada afirmação com a fonte marcada.</figcaption></figure>
+      <div>
+        <div class="code"><div class="code-head">mensagem enviada</div><pre>@Pesquisa MirandasTech Pesquisador, onde paramos?</pre></div>
+        <ul class="bul">
+          <li>«Paramos na fase 1 — pergunta e delimitação»; «a fase 0 foi concluída em 09/09/2026». Nada foi inventado: cada frase traz o marcador <em>PROGRESSO</em> da fonte lida.</li>
+          <li>Repetiu o que está registrado (qualificação, orientador, ferramentas, simulador com três eventos) e a última pergunta em aberto, «ainda não aprovada por você».</li>
+          <li>Listou M1–M3 como pendentes e fechou com a próxima decisão: escolher o cenário principal do simulador.</li>
+          <li class="warn">No ChatGPT, os arquivos ficaram na biblioteca da conta e por isso a retomada funcionou sem anexo. Se a sua conta não guarda arquivos entre conversas, anexe ou cole o <code>PROGRESSO.md</code> na primeira mensagem; sem ele, a resposta correta é «não há estado a retomar».</li>
+        </ul>
+        <div class="note"><span class="blabel">O mesmo no Claude Code e no Codex</span><p>Lá não há biblioteca nem anexo: abra a sessão dentro da pasta do projeto e diga a mesma frase. O hook mostra o resumo do estado antes mesmo da pergunta (Parte 3).</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PARTE 5 ===================== -->
+<section class="slide divider" id="p5" data-title="Parte 5 · Manutenção"><div class="inner"><div class="kicker-part rv">Parte 5<span>Manutenção</span></div><h2 class="rv">Atualizar, publicar, resolver e saber o que ele faz com os seus dados</h2><p class="rv">Como o plugin se atualiza em cada cliente, como se gera uma nova versão para o diretório do Codex, os problemas conhecidos e a política de privacidade, os termos e a licença.</p></div><div class="num">05</div></section>
 
 <section class="slide" id="s24" data-title="Atualizar e publicar uma nova versão">
   <div class="inner">
@@ -1207,7 +1295,7 @@ codex plugin list</pre></div>
 </section>
 
 <!-- ===================== PARTE 5 ===================== -->
-<section class="slide divider" id="p5" data-title="Parte 5 · Fechamento"><div class="inner"><div class="kicker-part rv">Parte 5<span>Fechamento</span></div><h2 class="rv">Erros comuns, checklist, glossário e referências</h2><p class="rv">O que costuma dar errado e como corrigir, a lista para conferir a instalação e a primeira sessão, os termos, as fontes deste manual, o repositório — e como usar o plugin com os quatro manuais.</p></div><div class="num">05</div></section>
+<section class="slide divider" id="p6" data-title="Parte 6 · Fechamento"><div class="inner"><div class="kicker-part rv">Parte 6<span>Fechamento</span></div><h2 class="rv">Erros comuns, checklist, glossário e referências</h2><p class="rv">O que costuma dar errado e como corrigir, a lista para conferir a instalação e a primeira sessão, os termos, as fontes deste manual, o repositório — e como usar o plugin com os quatro manuais.</p></div><div class="num">06</div></section>
 
 <section class="slide" id="s27" data-title="Erros comuns">
   <div class="inner">
