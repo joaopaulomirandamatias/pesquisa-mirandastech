@@ -1,0 +1,14 @@
+{
+	admin off
+	auto_https off
+}
+:{$PORT}
+root * /srv
+encode zstd gzip
+file_server
+redir /pdf /manual.pdf 302
+header {
+	Cache-Control "public, max-age=300"
+	X-Content-Type-Options "nosniff"
+	Referrer-Policy "strict-origin-when-cross-origin"
+}

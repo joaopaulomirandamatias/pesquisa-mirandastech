@@ -1,0 +1,1478 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MirandasTech · Plugin Pesquisa para Claude e Codex</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+
+:root{
+  --paper:#F1F4F7; --surface:#FFFFFF; --surface-2:#F8FAFB;
+  --ink:#101720; --ink-2:#4A5866; --ink-3:#75828E;
+  --rule:#D3DAE1; --rule-2:#E5EAEF;
+  --blueprint:#17436B; --blueprint-2:#2C6396; --blueprint-soft:#E4EDF5;
+  --signal:#C4530E; --signal-soft:#FBEADD;
+  --go:#186B50; --go-soft:#E0EFE9;
+  --stop:#A0231C; --stop-soft:#F9E5E3;
+  --amber:#8A6000; --amber-soft:#F9EFD6;
+  --shadow:0 1px 2px rgba(16,23,32,.06),0 8px 24px -12px rgba(16,23,32,.18);
+  --serif:'Spectral',Georgia,'Times New Roman',serif;
+  --cond:'IBM Plex Sans Condensed','Helvetica Neue',Arial,sans-serif;
+  --mono:'IBM Plex Mono','SFMono-Regular',Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C1218; --surface:#131B23; --surface-2:#182129;
+    --ink:#E3E9EF; --ink-2:#94A3B1; --ink-3:#71808E;
+    --rule:#26313C; --rule-2:#1E2831;
+    --blueprint:#7DB2DF; --blueprint-2:#A3CAEB; --blueprint-soft:#15283A;
+    --signal:#EE8A46; --signal-soft:#33200F;
+    --go:#54C398; --go-soft:#0F2620;
+    --stop:#EC7B72; --stop-soft:#2D1614;
+    --amber:#DCAC3D; --amber-soft:#2A2110;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C1218; --surface:#131B23; --surface-2:#182129;
+  --ink:#E3E9EF; --ink-2:#94A3B1; --ink-3:#71808E;
+  --rule:#26313C; --rule-2:#1E2831;
+  --blueprint:#7DB2DF; --blueprint-2:#A3CAEB; --blueprint-soft:#15283A;
+  --signal:#EE8A46; --signal-soft:#33200F;
+  --go:#54C398; --go-soft:#0F2620;
+  --stop:#EC7B72; --stop-soft:#2D1614;
+  --amber:#DCAC3D; --amber-soft:#2A2110;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+:focus-visible{outline:2px solid var(--blueprint-2);outline-offset:3px;border-radius:2px}
+
+/* ---------- sections ---------- */
+.part{padding-top:56px}
+.part-head{display:flex;align-items:baseline;gap:14px;border-top:1px solid var(--rule);padding-top:14px;margin-bottom:8px}
+.part-num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--signal);font-weight:600}
+.part-label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+h2{font-family:var(--cond);font-weight:700;font-size:clamp(27px,3.6vw,38px);line-height:1.12;letter-spacing:-.012em;margin:6px 0 0;text-wrap:balance;max-width:22ch}
+h3{font-family:var(--cond);font-weight:600;font-size:22px;line-height:1.25;margin:40px 0 0;color:var(--ink);text-wrap:balance}
+h4{font-family:var(--cond);font-weight:600;font-size:17px;line-height:1.3;margin:26px 0 0;color:var(--blueprint);letter-spacing:.01em}
+p,ul,ol{max-width:68ch}
+p{margin:14px 0 0}
+ul,ol{margin:14px 0 0;padding-left:22px}
+li{margin:7px 0}
+li::marker{color:var(--blueprint)}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic}
+a{color:var(--blueprint);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px}
+code{font-family:var(--mono);font-size:.855em;background:var(--surface-2);border:1px solid var(--rule-2);padding:1px 5px;border-radius:3px;color:var(--ink)}
+.dek{font-size:18px;color:var(--ink-2);max-width:64ch;margin:16px 0 0;line-height:1.6}
+
+/* ---------- blocks ---------- */
+.rule-box,.trap,.case,.note{margin:24px 0 0;padding:16px 20px;border-radius:4px;max-width:74ch;border-left:3px solid}
+.rule-box{background:var(--blueprint-soft);border-left-color:var(--blueprint)}
+.trap{background:var(--signal-soft);border-left-color:var(--signal)}
+.case{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--go)}
+.note{background:var(--surface-2);border-left-color:var(--ink-3)}
+.blabel{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;font-weight:600;display:block;margin-bottom:7px}
+.rule-box .blabel{color:var(--blueprint)}
+.trap .blabel{color:var(--signal)}
+.case .blabel{color:var(--go)}
+.note .blabel{color:var(--ink-3)}
+.rule-box p:first-of-type,.trap p:first-of-type,.case p:first-of-type,.note p:first-of-type{margin-top:0}
+.rule-box p,.trap p,.case p,.rule-box li,.trap li,.case li,.note p,.note li{max-width:none;font-size:16px}
+.case .src{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:10px;display:block;line-height:1.5}
+
+/* ---------- figures ---------- */
+figure{margin:34px 0 0;max-width:none}
+figcaption{font-family:var(--cond);font-size:13.5px;color:var(--ink-2);margin-top:11px;line-height:1.5;max-width:76ch}
+figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--signal);font-weight:600;margin-right:7px}
+.frame{border:1px solid var(--rule);background:var(--surface);border-radius:4px;padding:24px;overflow-x:auto}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;margin:26px 0 0;border:1px solid var(--rule);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-family:var(--cond);font-size:14.5px;min-width:520px}
+th{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);font-weight:600;padding:11px 14px;border-bottom:1px solid var(--rule);background:var(--surface-2);vertical-align:bottom}
+td{padding:11px 14px;border-bottom:1px solid var(--rule-2);vertical-align:top;line-height:1.45;color:var(--ink)}
+tbody tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:13px;white-space:nowrap}
+td.mono{font-family:var(--mono);font-size:12.5px}
+.pill{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.06em;font-weight:600;text-transform:uppercase;padding:2.5px 8px;border-radius:20px;white-space:nowrap}
+.p-go{background:var(--go-soft);color:var(--go)}
+.p-amber{background:var(--amber-soft);color:var(--amber)}
+.p-stop{background:var(--stop-soft);color:var(--stop)}
+.p-blue{background:var(--blueprint-soft);color:var(--blueprint)}
+
+/* ---------- terminal ---------- */
+.term{background:#0B1219;border:1px solid #223040;border-radius:5px;overflow:hidden;margin:26px 0 0}
+.term-bar{display:flex;align-items:center;gap:7px;padding:8px 13px;background:#141F2B;border-bottom:1px solid #223040}
+.term-dot{width:9px;height:9px;border-radius:50%;background:#33445A}
+.term-title{font-family:var(--mono);font-size:10.5px;color:#7A8B9C;margin-left:8px;letter-spacing:.05em}
+.term pre{margin:0;padding:15px 16px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.62;color:#C9D6E2}
+.term .c-p{color:#5FA8DC}
+.term .c-o{color:#E8A055}
+.term .c-g{color:#5FC79A}
+.term .c-m{color:#71828F}
+.term .c-r{color:#E8776C}
+
+/* ---------- code ---------- */
+.code{background:var(--surface-2);border:1px solid var(--rule);border-radius:4px;margin:24px 0 0;overflow:hidden}
+.code-head{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);padding:8px 14px;border-bottom:1px solid var(--rule);background:var(--surface)}
+.code pre{margin:0;padding:14px 16px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.66;color:var(--ink)}
+.code .k{color:var(--blueprint);font-weight:500}
+.code .s{color:var(--go)}
+.code .cm{color:var(--ink-3);font-style:italic}
+
+/* ---------- charts ---------- */
+.bars{display:flex;flex-direction:column;gap:11px;margin:0}
+.bar-row{display:grid;grid-template-columns:minmax(96px,152px) minmax(0,1fr) 62px;gap:12px;align-items:center}
+.bar-lab{font-family:var(--cond);font-size:13.5px;color:var(--ink-2);line-height:1.25;text-align:right}
+.bar-track{background:var(--rule-2);border-radius:2px;height:22px;position:relative;overflow:hidden}
+.bar-fill{height:100%;border-radius:2px;background:var(--blueprint)}
+.bar-fill.f-signal{background:var(--signal)}
+.bar-fill.f-go{background:var(--go)}
+.bar-fill.f-stop{background:var(--stop)}
+.bar-fill.f-amber{background:var(--amber)}
+.bar-fill.f-mute{background:var(--ink-3)}
+.bar-val{font-family:var(--mono);font-size:12.5px;font-variant-numeric:tabular-nums;color:var(--ink);text-align:right;font-weight:500}
+.bar-zero{font-family:var(--mono);font-size:11px;color:var(--stop);font-weight:600;position:absolute;left:4px;top:50%;transform:translateY(-50%)}
+@media (max-width:560px){.bar-row{grid-template-columns:minmax(72px,102px) minmax(0,1fr) 52px;gap:8px}.bar-lab{font-size:12px}}
+
+/* funnel */
+.funnel{display:flex;flex-direction:column;gap:8px;align-items:center}
+.fstep{border:1px solid var(--rule);background:var(--surface-2);border-radius:4px;padding:12px 18px;text-align:center;width:100%;max-width:640px;position:relative}
+.fstep .fn{font-family:var(--mono);font-size:26px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1}
+.fstep .ft{font-family:var(--cond);font-size:13.5px;color:var(--ink-2);margin-top:5px;line-height:1.35}
+.fstep.hl{border-color:var(--signal);background:var(--signal-soft)}
+.fstep.hl .fn{color:var(--signal)}
+.fdrop{font-family:var(--mono);font-size:11.5px;color:var(--stop);text-align:center;line-height:1.4}
+
+/* flow map */
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:10px}
+.node{border:1px solid var(--rule);border-radius:4px;background:var(--surface-2);padding:12px 13px;display:flex;flex-direction:column;gap:6px}
+.node .nn{font-family:var(--mono);font-size:10px;letter-spacing:.11em;color:var(--ink-3);font-weight:600}
+.node .nt{font-family:var(--cond);font-size:15px;font-weight:600;line-height:1.22;color:var(--ink)}
+.node .nd{font-size:13px;color:var(--ink-2);line-height:1.45;font-family:var(--cond)}
+.node .tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}
+.node.gate{border-color:var(--stop);background:var(--stop-soft)}
+.node.gate .nn{color:var(--stop)}
+
+/* two-column compare */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:var(--surface)}
+.compare>div{padding:18px 20px}
+.compare>div:first-child{border-right:1px solid var(--rule)}
+.cmp-h{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;font-weight:600;margin-bottom:10px}
+.compare ul{margin:0;padding-left:18px;max-width:none}
+.compare li{font-family:var(--cond);font-size:14.5px;line-height:1.45;margin:8px 0;color:var(--ink)}
+@media (max-width:640px){.compare{grid-template-columns:1fr}.compare>div:first-child{border-right:0;border-bottom:1px solid var(--rule)}}
+
+/* ui schematic */
+.ui{border:1px solid var(--rule);border-radius:5px;overflow:hidden;background:var(--surface);font-family:var(--cond)}
+.ui-bar{background:var(--surface-2);border-bottom:1px solid var(--rule);padding:7px 12px;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.06em;display:flex;justify-content:space-between;align-items:center}
+.ui-body{display:grid;grid-template-columns:170px minmax(0,1fr);min-height:150px}
+.ui-side{border-right:1px solid var(--rule);padding:10px;background:var(--surface-2);font-size:13px;color:var(--ink-2)}
+.ui-side div{padding:3.5px 6px;border-radius:3px;line-height:1.3}
+.ui-side div.sel{background:var(--blueprint-soft);color:var(--blueprint);font-weight:600}
+.ui-main{padding:10px}
+.ui-row{display:grid;grid-template-columns:minmax(0,1fr) 78px 46px;gap:9px;padding:6px 7px;border-bottom:1px solid var(--rule-2);font-size:13px;align-items:center;color:var(--ink)}
+.ui-row.head{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);border-bottom:1px solid var(--rule)}
+.ui-row span:nth-child(2),.ui-row span:nth-child(3){font-family:var(--mono);font-size:11.5px;color:var(--ink-2)}
+.schematic-tag{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);border:1px dashed var(--rule);padding:2px 7px;border-radius:3px}
+@media (max-width:560px){.ui-body{grid-template-columns:1fr}.ui-side{border-right:0;border-bottom:1px solid var(--rule)}}
+
+/* checklist */
+.check{border:1px solid var(--rule);border-radius:4px;background:var(--surface);overflow:hidden}
+.check-item{display:flex;gap:12px;align-items:flex-start;padding:12px 16px;border-bottom:1px solid var(--rule-2)}
+.check-item:last-child{border-bottom:0}
+.check-item input{margin:4px 0 0;width:16px;height:16px;accent-color:var(--blueprint);flex:none;cursor:pointer}
+.check-item label{font-family:var(--cond);font-size:14.5px;line-height:1.45;cursor:pointer;color:var(--ink)}
+.check-item label b{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);font-weight:600;margin-bottom:2px}
+.check-item.done label{color:var(--ink-3);text-decoration:line-through}
+.check-foot{padding:10px 16px;background:var(--surface-2);border-top:1px solid var(--rule);font-family:var(--mono);font-size:11px;color:var(--ink-3);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.check-foot button{font-family:var(--mono);font-size:10.5px;background:none;border:1px solid var(--rule);color:var(--ink-2);padding:3px 10px;border-radius:3px;cursor:pointer;letter-spacing:.05em}
+.check-foot button:hover{border-color:var(--blueprint);color:var(--blueprint)}
+
+/* refs */
+.refs{margin:14px 0 0;padding-left:30px;list-style:decimal;max-width:none}
+.refs li{display:list-item;padding:6px 0 6px 4px;border-bottom:1px solid var(--rule-2);margin:0;font-family:var(--cond);font-size:13.5px;line-height:1.4}
+.refs li::marker{font-family:var(--mono);font-size:11px;color:var(--signal);font-weight:600}
+.refs li a{overflow-wrap:anywhere;font-family:var(--mono);font-size:11px;display:inline-block;margin-top:2px;color:var(--ink-3);text-decoration:none}
+.refs li a:hover{color:var(--blueprint);text-decoration:underline}
+.refs .rt{color:var(--ink);font-weight:500}
+
+.colophon{margin-top:70px;padding-top:22px;border-top:3px solid var(--blueprint);font-family:var(--mono);font-size:11.5px;color:var(--ink-3);line-height:1.75}
+.kicker{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-3);margin:36px 0 0;display:block;font-weight:600}
+
+
+
+/* ================= motor de slides ================= */
+html{scroll-snap-type:y proximity;scroll-behavior:smooth}
+body{margin:0}
+.slide{height:100vh;min-height:100vh;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:flex-start;padding:26px clamp(64px,6vw,96px) 26px;font-size:15.5px;overflow:hidden;position:relative;border-bottom:1px solid var(--rule-2);background:var(--paper)}
+.slide.alt{background:var(--surface-2)}
+.slide .inner{max-width:none;width:100%;margin:0;max-height:calc(100vh - 52px);overflow:auto;scrollbar-width:thin}
+.slide.fit .inner{overflow:visible}
+.slide h2{max-width:none;font-size:clamp(24px,3.2vw,38px);margin-top:6px}
+.slide .lead{font-size:clamp(15.5px,1.35vw,18px);color:var(--ink-2);max-width:none;margin:10px 0 0;line-height:1.5}
+.slide p,.slide ul,.slide ol,.slide .rule-box,.slide .trap,.slide .case,.slide .note,.slide .more,.slide figcaption,.slide .check,.slide .refs,.slide h2{max-width:none}
+.two{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(16px,2.4vw,34px);align-items:start;margin-top:16px}
+@media (max-width:900px){.two{grid-template-columns:1fr}}
+.two figure,.two .tw,.two .code,.two .term{margin-top:0}
+.kicker-part{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--signal);font-weight:600}
+.kicker-part span{color:var(--ink-3);font-weight:400;margin-left:10px}
+.more{margin-top:16px;max-width:76ch;border:1px solid var(--rule);border-radius:4px;background:var(--surface)}
+.more summary{cursor:pointer;font-family:var(--cond);font-weight:600;font-size:14px;padding:10px 14px;color:var(--blueprint);list-style:none;display:flex;align-items:center;gap:8px}
+.more summary::before{content:"+";font-family:var(--mono);width:16px;display:inline-block;text-align:center}
+.more[open] summary::before{content:"–"}
+.more>div{padding:0 16px 14px;font-size:15.5px}
+.more>div p,.more>div li{max-width:none;font-size:15.5px}
+.more .tw{margin-top:10px}
+.bul{list-style:none;padding:0;margin:18px 0 0;display:flex;flex-direction:column;gap:9px}
+.bul li{position:relative;padding-left:24px;font-size:15.5px;line-height:1.5;margin:0}
+.bul li::before{content:"";position:absolute;left:4px;top:9px;width:10px;height:10px;border-radius:2px;background:var(--blueprint)}
+.bul li.warn::before{background:var(--signal)}
+.bul li.stop::before{background:var(--stop)}
+.bul li.go::before{background:var(--go)}
+
+/* capa */
+.slide.cover{justify-content:center;background:var(--paper)}
+.slide.divider{justify-content:center}
+.brand{font-family:var(--cond);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:13px;color:var(--blueprint);display:inline-flex;align-items:center;gap:10px}
+.brand::before{content:"";width:22px;height:2px;background:var(--signal)}
+.cover h1{font-family:var(--cond);font-weight:700;font-size:clamp(42px,7.2vw,88px);line-height:.98;letter-spacing:-.02em;margin:22px 0 0;text-wrap:balance;max-width:none}
+.cover .lede{font-size:clamp(18px,1.9vw,23px);color:var(--ink-2);max-width:none;margin:22px 0 0;line-height:1.55}
+.cover-meta{margin-top:34px;display:flex;flex-wrap:wrap;gap:24px 40px;font-family:var(--mono);font-size:12px;color:var(--ink-3);letter-spacing:.04em}
+.cover-meta b{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px;font-weight:600}
+.cover-meta span{font-family:var(--cond);font-size:15px;color:var(--ink);letter-spacing:0}
+.hint{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);display:flex;align-items:center;gap:8px}
+.hint::after{content:"↓";animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+/* separador de parte */
+.slide.divider{justify-content:center;background:var(--blueprint);color:#F1F4F7;border-bottom:0}
+.slide.divider .kicker-part{color:#F4B07A}
+.slide.divider .kicker-part span{color:rgba(241,244,247,.6)}
+.slide.divider h2{color:#FFFFFF;font-size:clamp(40px,6vw,74px);max-width:none}
+.slide.divider p{color:rgba(241,244,247,.82);font-size:clamp(17px,1.7vw,21px);max-width:none}
+.slide.divider .num{font-family:var(--mono);font-size:clamp(90px,16vw,200px);font-weight:600;color:rgba(255,255,255,.08);position:absolute;right:4vw;bottom:-2vw;line-height:1;letter-spacing:-.04em;pointer-events:none}
+
+/* barra fixa, progresso, navegação */
+.topbar{position:fixed;top:0;left:0;right:0;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(14px,3vw,28px);background:color-mix(in srgb,var(--paper) 86%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--rule);z-index:40}
+.topbar .brand{font-size:12px}
+.topbar .where{font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.06em;display:flex;align-items:center;gap:12px}
+.topbar .where b{color:var(--ink);font-weight:600}
+.prog{position:fixed;top:0;left:0;height:3px;background:var(--signal);width:0;z-index:41;transition:width .25s ease}
+.navbtn{position:fixed;left:clamp(8px,1.2vw,18px);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:6px;z-index:40;align-items:center;opacity:.28;transition:opacity .25s ease}
+.navbtn:hover,.navbtn:focus-within{opacity:1}
+@media (hover:none){.navbtn{opacity:.85}}
+.navbtn .cnt{font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.04em;margin-top:2px}
+.navbtn .cnt b{color:var(--ink)}
+.navbtn button,.menubtn{font-family:var(--mono);font-size:13px;width:42px;height:42px;border-radius:4px;border:1px solid var(--rule);background:var(--surface);color:var(--ink);cursor:pointer;box-shadow:var(--shadow);display:inline-flex;align-items:center;justify-content:center}
+.navbtn button:hover,.menubtn:hover{border-color:var(--blueprint);color:var(--blueprint)}
+.menubtn{font-size:16px}
+.menu{position:fixed;inset:0 auto 0 0;width:min(360px,92vw);background:var(--surface);border-right:1px solid var(--rule);box-shadow:var(--shadow);z-index:45;overflow-y:auto;padding:14px 10px 40px;transform:translateX(-102%);transition:transform .28s ease}
+.menu.open{transform:none}
+.menu .grp{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);padding:14px 10px 4px;border-top:1px solid var(--rule-2);margin-top:6px}
+.menu .grp:first-child{border-top:0;margin-top:0}
+.menu a{display:flex;gap:10px;align-items:baseline;text-decoration:none;color:var(--ink-2);font-family:var(--cond);font-size:14px;padding:6px 10px;border-radius:3px;border-left:2px solid transparent}
+.menu a .n{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);min-width:20px;font-variant-numeric:tabular-nums}
+.menu a:hover{background:var(--blueprint-soft);color:var(--ink)}
+.menu a.on{border-left-color:var(--blueprint);color:var(--blueprint);background:var(--blueprint-soft);font-weight:600}
+.scrim{position:fixed;inset:0;background:rgba(16,23,32,.25);z-index:44;opacity:0;pointer-events:none;transition:opacity .25s}
+.scrim.on{opacity:1;pointer-events:auto}
+
+/* efeitos de entrada — estado de repouso legível; só deslocamento e leve fade */
+.rv{transform:translateY(16px);opacity:.55;transition:transform .55s cubic-bezier(.2,.7,.2,1),opacity .55s ease}
+.slide.in .rv{transform:none;opacity:1}
+.slide.in .rv:nth-child(2){transition-delay:.06s}.slide.in .rv:nth-child(3){transition-delay:.12s}.slide.in .rv:nth-child(4){transition-delay:.18s}.slide.in .rv:nth-child(5){transition-delay:.24s}.slide.in .rv:nth-child(6){transition-delay:.30s}
+.slide.cover .rv{transform:none;opacity:1}
+@media (prefers-reduced-motion:reduce){.rv{transform:none;opacity:1;transition:none}.hint::after{animation:none}.prog{transition:none}.menu{transition:none}}
+
+/* figuras leves */
+.shot{border:1px solid var(--rule);border-radius:5px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
+.shot img{display:block;width:100%;height:auto}
+.sets{position:relative;height:250px;max-width:520px;margin:0 auto;font-family:var(--cond)}
+.sets div{position:absolute;border-radius:50%;border:1.5px solid var(--rule);display:flex;align-items:flex-end;justify-content:center;padding-bottom:10px;font-size:13px;color:var(--ink-2);text-align:center;line-height:1.3}
+.sets .s1{inset:0;background:var(--surface-2)}
+.sets .s2{inset:12% 15% 8% 15%;background:var(--amber-soft);border-color:var(--amber)}
+.sets .s3{inset:38% 32% 14% 32%;background:var(--signal-soft);border-color:var(--signal);align-items:center;padding:0;font-weight:600;color:var(--signal)}
+.dec{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:20px}
+.dec div{border:1px solid var(--rule);border-radius:4px;padding:12px 14px;background:var(--surface)}
+.dec b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;margin-bottom:6px}
+.dec .h{border-left:3px solid var(--stop)}.dec .h b{color:var(--stop)}
+.dec .p{border-left:3px solid var(--amber)}.dec .p b{color:var(--amber)}
+.dec .m{border-left:3px solid var(--go)}.dec .m b{color:var(--go)}
+.dec ul{margin:0;padding-left:16px;max-width:none}
+.dec li{font-family:var(--cond);font-size:14px;line-height:1.4;margin:4px 0}
+
+/* impressão: um slide por página */
+@page{size:A4 landscape;margin:12mm}
+@media print{
+  html{scroll-snap-type:none}
+  body{background:#fff;color:#101720}
+  .prog,.navbtn,.menubtn,.menu,.scrim,.hint{display:none!important}
+  .slide{min-height:0;height:auto;break-after:page;padding:8mm 4mm;border:0;justify-content:flex-start;overflow:visible}
+  .slide .inner{max-height:none;overflow:visible;zoom:1!important}
+  .slide.divider{background:#17436B!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .rv{transform:none;opacity:1}
+  .more{display:block}.more>div{display:block}
+  .term{background:#0B1219!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .rule-box,.trap,.case,.note,.pill,.bar-fill,.bar-track,.node,.dec div,.sets div{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .code pre,.term pre{white-space:pre-wrap;word-break:break-word}
+  a{color:inherit;text-decoration:none}
+}
+
+/* limites de altura: um slide por tela */
+.slide .tw{max-height:none;overflow:auto}
+.slide .tw table{font-size:13.5px}
+.slide .tw td,.slide .tw th{padding:8px 11px}
+.slide figure{margin-top:14px}
+.slide .shot img{max-height:34vh;width:auto;max-width:100%;margin:0 auto}
+.slide .code pre,.slide .term pre{max-height:none;overflow:auto;font-size:12px}
+.slide .rule-box,.slide .trap,.slide .case,.slide .note{margin-top:14px;padding:12px 16px}
+.slide .rule-box p,.slide .trap p,.slide .case p,.slide .note p{font-size:14.5px}
+.slide ol,.slide ul{margin-top:10px}
+.slide li{margin:5px 0;font-size:15px}
+.slide h4{margin-top:14px}
+.slide .check{max-height:none}
+.slide .refs{max-height:none}
+.slide .refs li{font-size:13px;padding:6px 0 6px 4px}
+.slide figcaption{font-size:12.5px;margin-top:8px}
+.slide .dec ul{padding-left:14px}.slide .dec li{font-size:13.5px}
+.slide .frame{padding:16px}
+.slide .sets{height:210px}
+@media (max-height:760px){.slide .shot img{max-height:30vh}}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px}
+.three figure{margin:0}
+.three .shot img{max-height:none}
+@media (max-width:900px){.three{grid-template-columns:1fr}}
+.slide .node{padding:9px 11px;gap:4px}.slide .node .nt{font-size:14px}.slide .node .nd{font-size:12px}
+
+/* ================= celular e tablet ================= */
+@media (max-width:900px){
+  html{scroll-snap-type:none}
+  .slide{height:auto;min-height:0;overflow:visible;padding:26px 16px 30px;scroll-snap-align:none;font-size:15px}
+  .slide .inner{max-height:none;overflow:visible;zoom:1!important}
+  .slide.cover,.slide.divider{min-height:72vh;padding:40px 18px}
+  .cover h1{font-size:clamp(38px,11vw,60px)}
+  .cover .lede{font-size:17px}
+  .cover-meta{gap:14px 24px}
+  .hint{display:none}
+  .slide h2{font-size:clamp(23px,6.4vw,30px)}
+  .slide .lead{font-size:15.5px}
+  .kicker-part span{display:block;margin-left:0;margin-top:2px}
+  .two,.three{grid-template-columns:minmax(0,1fr);gap:14px}
+  .slide{max-width:100vw;overflow-x:hidden}
+  .slide .inner{min-width:0}
+  .two>*,.three>*{min-width:0}
+  .slide .tw{max-height:none}
+  .slide .tw table{min-width:560px;font-size:13px}
+  .slide .shot img{max-height:none}
+  .slide .code pre,.slide .term pre{max-height:none;font-size:11.5px}
+  .slide .refs,.slide .check{max-height:none}
+  .compare{grid-template-columns:minmax(0,1fr)}.compare>div:first-child{border-right:0;border-bottom:1px solid var(--rule)}
+  .dec{grid-template-columns:minmax(0,1fr)}
+  .flow{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+  .sets{height:200px}
+  .navbtn{left:auto;right:10px;top:auto;bottom:10px;transform:none;flex-direction:row;gap:6px;padding:6px;background:color-mix(in srgb,var(--surface) 92%,transparent);border:1px solid var(--rule);border-radius:6px;box-shadow:var(--shadow)}
+  .navbtn button,.menubtn{width:38px;height:38px;box-shadow:none}
+  .navbtn .cnt{margin:0 4px 0 2px}
+  .menu{width:100vw;inset:0 0 0 0}
+  .slide.divider .num{font-size:24vw;right:2vw;bottom:-3vw}
+  .rule-box,.trap,.case,.note{padding:12px 14px}
+}
+@media (max-width:480px){
+  .slide{padding:22px 12px 26px}
+  .plate div,.cover-meta div{width:100%}
+  .bar-row{grid-template-columns:minmax(64px,90px) minmax(0,1fr) 46px;gap:6px}
+  .ui-body{grid-template-columns:1fr}.ui-side{border-right:0;border-bottom:1px solid var(--rule)}
+}
+.gl4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:14px}
+.gl{column-count:1}
+.gl{margin:0;font-family:var(--cond);font-size:12.5px;line-height:1.38;columns:2;column-gap:18px}
+.gl dt{break-inside:avoid}.gl dd{break-inside:avoid}
+@media (max-width:640px){.gl{columns:1}}
+.gl dt{font-weight:600;color:var(--blueprint);margin-top:7px}
+.gl dd{margin:1px 0 0;color:var(--ink-2)}
+
+@media (max-width:640px){.gl4{grid-template-columns:minmax(0,1fr)}}
+.menu-head{display:flex;justify-content:space-between;align-items:center;padding:8px 10px 10px;border-bottom:1px solid var(--rule);margin-bottom:6px}
+.menu-head button{font-family:var(--mono);font-size:20px;line-height:1;width:34px;height:34px;border:1px solid var(--rule);border-radius:4px;background:var(--surface);color:var(--ink-2);cursor:pointer}
+.menu-head button:hover{border-color:var(--blueprint);color:var(--blueprint)}
+.modal{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:4vh 4vw;background:rgba(16,23,32,.45)}
+.modal.on{display:flex}
+.modal-box{background:var(--surface);color:var(--ink);border:1px solid var(--rule);border-radius:6px;box-shadow:var(--shadow);max-width:1100px;width:100%;max-height:92vh;display:flex;flex-direction:column}
+.modal-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--rule);font-family:var(--cond);font-weight:600;font-size:15px;color:var(--blueprint)}
+.modal-head button{font-family:var(--mono);font-size:20px;line-height:1;width:34px;height:34px;border:1px solid var(--rule);border-radius:4px;background:var(--surface);color:var(--ink-2);cursor:pointer}
+.modal-body{padding:14px 18px 20px;overflow:auto;font-size:15px}
+.modal-body p,.modal-body li{max-width:none;font-size:15px}
+.modal-body .tw{margin-top:10px}.modal-body .two{margin-top:8px}
+.modal-body .shot img{max-height:60vh;width:auto;max-width:100%}
+/* 4) botão de copiar */
+.code,.term{position:relative}
+.copy{position:absolute;top:6px;right:8px;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;padding:3px 8px;border-radius:3px;border:1px solid var(--rule);background:var(--surface);color:var(--ink-2);cursor:pointer;opacity:.75;z-index:2}
+.copy:hover{opacity:1;border-color:var(--blueprint);color:var(--blueprint)}
+.term .copy{background:#141F2B;border-color:#2B3B4C;color:#9FB1C2}
+.copy.ok{color:var(--go);border-color:var(--go)}
+.gterm{text-decoration:underline dotted var(--blueprint-2);text-decoration-thickness:1.5px;text-underline-offset:3px;cursor:help}
+.gterm:hover,.gterm:focus{background:var(--blueprint-soft);outline:none;border-radius:2px}
+.gpop{position:fixed;z-index:70;max-width:340px;background:var(--surface);color:var(--ink);border:1px solid var(--rule);border-left:3px solid var(--blueprint);border-radius:4px;box-shadow:var(--shadow);padding:10px 12px;font-family:var(--cond);font-size:13.5px;line-height:1.45;display:none;pointer-events:none}
+.gpop.on{display:block}
+.gpop b{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--blueprint);margin-bottom:4px}
+@media (hover:none){.gpop{pointer-events:auto}}
+.slide .check{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.slide .check .check-foot{grid-column:1/-1}
+.slide .check-item{border-right:1px solid var(--rule-2)}.slide .check-item:nth-child(even){border-right:0}
+.slide .refs{columns:2;column-gap:28px}.slide .refs li{break-inside:avoid}
+#s06 .tw td,#s06 .tw th{padding:6px 10px}
+@media (max-width:900px){.slide .check{grid-template-columns:minmax(0,1fr)}.slide .check-item{border-right:0}.slide .refs{columns:1}}
+
+/* extras deste manual */
+.gantt{display:grid;grid-template-columns:150px repeat(12,minmax(0,1fr));gap:4px 0;font-family:var(--cond);font-size:12.5px;align-items:center}
+.gantt .gl{padding-right:8px;color:var(--ink-2);text-align:right}
+.gantt .gm{font-family:var(--mono);font-size:10px;color:var(--ink-3);text-align:center;border-bottom:1px solid var(--rule);padding-bottom:3px}
+.gantt .gb{height:14px;border-radius:2px;background:var(--blueprint);margin:3px 1px}
+.gantt .gb.s{background:var(--signal)}.gantt .gb.g{background:var(--go)}.gantt .gb.a{background:var(--amber)}
+.cycle{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.cycle .node{align-items:center;text-align:center}
+.struct{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.struct>div{border:1px solid var(--rule);border-radius:4px;background:var(--surface);padding:10px 12px}
+.struct h5{margin:0 0 6px;font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--blueprint)}
+.struct ol,.struct ul{margin:0;padding-left:16px}.struct li{font-family:var(--cond);font-size:13px;line-height:1.35;margin:2px 0}
+@media (max-width:900px){.struct{grid-template-columns:minmax(0,1fr)}.gantt{grid-template-columns:110px repeat(12,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+
+<div class="prog" id="prog"></div>
+<div class="scrim" id="scrim"></div>
+<div class="gpop" id="gpop" role="tooltip"></div>
+<div class="modal" id="modal" role="dialog" aria-modal="true"><div class="modal-box"><div class="modal-head"><span id="modal-title">detalhes</span><button type="button" id="modal-close" aria-label="Fechar">×</button></div><div class="modal-body" id="modal-body"></div></div></div>
+<nav class="menu" id="menu" aria-label="Sumário"><div class="menu-head"><span class="brand">MirandasTech</span><button type="button" id="menuclose" aria-label="Fechar sumário">×</button></div><div id="menulist"></div></nav>
+<div class="navbtn"><button class="menubtn" id="menubtn" aria-label="Abrir sumário">☰</button><button id="prev" aria-label="Slide anterior">↑</button><button id="next" aria-label="Próximo slide">↓</button><span class="cnt"><b id="cur">1</b>/<span id="tot">–</span></span></div>
+
+
+<main id="deck">
+<!-- ===================== CAPA ===================== -->
+<section class="slide cover" id="s00" data-title="Capa">
+  <div class="inner">
+    <span class="brand rv">MirandasTech · Manual profissional</span>
+    <h1 class="rv">Plugin Pesquisa MirandasTech para Claude e Codex: passo a passo</h1>
+    <p class="lede rv">Instalar no Claude Code, no Claude Desktop, no Codex e no ChatGPT; criar a pasta do projeto; conduzir as onze fases com o Pesquisador, o Metodólogo, o Orientador e o Bibliotecário; usar o conector do Zotero; registrar e declarar — com um pacote que <strong>roda no seu computador e só fecha uma fase com evidência</strong>.</p>
+    <div class="cover-meta rv">
+      <div><b>Série</b><span>Manuais MirandasTech · ferramentas de pesquisa</span></div>
+      <div><b>Versão</b><span>1.0 (rascunho) · setembro de 2026</span></div>
+      <div><b>Formato</b><span><span id="nslides">–</span> slides</span></div>
+      <div><b>Licença</b><span>CC BY 4.0 — cite a fonte</span></div>
+    </div>
+  </div>
+  <div class="hint">role para começar</div>
+</section>
+
+<section class="slide" id="s01" data-title="Para quem é e o que você vai aprender">
+  <div class="inner">
+    <div class="kicker-part rv">Como usar<span>cada slide é um passo que você executa na tela ou no terminal</span></div>
+    <h2 class="rv">Para quem é — e o que você vai saber fazer ao final</h2>
+    <p class="lead rv">Este manual é para quem faz ou orienta uma pesquisa de pós-graduação — trabalho de conclusão, dissertação, tese, revisão sistemática — e já usa o <span class="gterm" tabindex="0" data-t="Diretório community (Claude)" data-d="Catálogo de plugins de terceiros da Anthropic, com revisão; submissão pelo Console. Quando aceito, instala-se por pesquisa@claude-community.">Claude</span> Code, o <span class="gterm" tabindex="0" data-t="Diretório community (Claude)" data-d="Catálogo de plugins de terceiros da Anthropic, com revisão; submissão pelo Console. Quando aceito, instala-se por pesquisa@claude-community.">Claude</span> Desktop, o Codex ou o ChatGPT. Ele mostra como colocar dentro dessas ferramentas os quatro papéis dos manuais MirandasTech, com regras que impedem inventar dado, referência ou decisão. Não exige programação: todos os comandos estão em blocos para copiar e colar.</p>
+    <div class="two rv">
+      <div>
+        <h4>Ao final, você vai conseguir</h4>
+        <ul class="bul">
+          <li><strong>Instalar</strong> o <span class="gterm" tabindex="0" data-t="Plugin" data-d="Pacote de arquivos de texto (agentes, skills, comandos, conector, hook, modelos) que um assistente de IA instala e lê antes de responder. O Pesquisa MirandasTech é um plugin para o Claude Code e para o Codex.">plugin</span> no cliente que usa: Claude Code (pacote completo), Claude Desktop (só o <span class="gterm" tabindex="0" data-t="Conector" data-d="Servidor MCP que expõe ferramentas. O zotero do plugin expõe sete, só de leitura, sobre a biblioteca do Zotero aberta no computador; no Claude Code aparece como plugin:pesquisa:zotero.">conector</span>), Codex (aplicativo e linha de <span class="gterm" tabindex="0" data-t="Comando" data-d="Atalho digitado com barra (/pesquisa:status) que dispara um roteiro pronto. No Codex, o equivalente são os prompts em ~/.codex/prompts (/pesquisador etc.).">comando</span>) e ChatGPT (<span class="gterm" tabindex="0" data-t="Diretório de plugins (ChatGPT/Codex)" data-d="Catálogo oficial da OpenAI, comum ao ChatGPT e ao Codex, com página por plugin e botão «Instalar plugin». O Pesquisa MirandasTech está lá desde 08/09/2026, tipo «Skills only».">diretório de plugins</span>).</li>
+          <li><strong>Criar</strong> a pasta do projeto com um <span class="gterm" tabindex="0" data-t="Comando" data-d="Atalho digitado com barra (/pesquisa:status) que dispara um roteiro pronto. No Codex, o equivalente são os prompts em ~/.codex/prompts (/pesquisador etc.).">comando</span> e reconhecer os arquivos que a governam: <code>PROGRESSO.md</code>, <code>DECISOES.md</code>, <code>USO_DE_IA.csv</code> e <code>AGENTS.md</code>.</li>
+          <li><strong>Conduzir</strong> as onze fases com o Pesquisador e chamar o especialista certo em cada uma — sabendo o que ele faz e o que ele se recusa a fazer.</li>
+          <li><strong>Usar</strong> o <span class="gterm" tabindex="0" data-t="Conector" data-d="Servidor MCP que expõe ferramentas. O zotero do plugin expõe sete, só de leitura, sobre a biblioteca do Zotero aberta no computador; no Claude Code aparece como plugin:pesquisa:zotero.">conector</span> do Zotero para auditar a biblioteca e gerar referências no estilo <span class="gterm" tabindex="0" data-t="ABNT · NBR" data-d="Associação Brasileira de Normas Técnicas e suas normas: 15287 (projeto), 14724 (trabalho acadêmico), 10520 (citações), 6023 (referências). Os estilos CSL do plugin geram as referências pelo Zotero.">ABNT</span> a partir da própria biblioteca, sem digitar referência de memória.</li>
+          <li><strong>Registrar</strong> decisões e uso de IA, <strong>declarar</strong> o uso no trabalho e <strong>manter</strong> o <span class="gterm" tabindex="0" data-t="Plugin" data-d="Pacote de arquivos de texto (agentes, skills, comandos, conector, hook, modelos) que um assistente de IA instala e lê antes de responder. O Pesquisa MirandasTech é um plugin para o Claude Code e para o Codex.">plugin</span> atualizado.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Todo comando aparece em bloco com botão «copiar». Nomes de menu e de botão são os da interface em português, observados em setembro de 2026; quando a sua tela divergir, vale a tela. Nada aqui foi inventado: os fatos vêm do repositório do plugin e dos diretórios em que ele está publicado.</p></div>
+        <div class="trap"><span class="blabel">Armadilha</span><p>O que a regra evita: tratar o plugin como quem faz a pesquisa. Ele formula, registra e confere; a decisão de método, a inclusão de estudos, a interpretação e o texto são seus. Isso não é um conselho: está escrito nas regras que os agentes leem antes de agir.</p></div>
+        <div class="note"><span class="blabel">Manuais irmãos</span><p>Este manual cuida da <em>instalação e do uso do plugin</em>. O conteúdo de cada papel está nos manuais de origem: <a href="https://metodologia.mirandastech.com.br/">Metodologia da pesquisa científica</a>, <a href="https://manual.mirandastech.com.br/">Uso de IA na pesquisa científica</a>, <a href="https://zotero.mirandastech.com.br/">Zotero para pesquisa científica</a> e <a href="https://notebook.mirandastech.com.br/">Gemini Notebook para pesquisa científica</a>. O hub que reúne todos: <a href="https://www.mirandastech.com.br/pesquisa">mirandastech.com.br/pesquisa</a>.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s02" data-title="O que o plugin é">
+  <div class="inner">
+    <div class="kicker-part rv">Introdução<span>1 de 3 · inventário conferido no repositório em 08/09/2026</span></div>
+    <h2 class="rv">O que o plugin é: quatro papéis, uma camada de leitura, sete comandos e um conector</h2>
+    <p class="lead rv">Um plugin é um pacote de arquivos de texto que um assistente de IA lê antes de responder: instruções de papel (agentes), roteiros por tarefa (skills), atalhos (comandos) e a ligação com um programa do seu computador (conector). O Pesquisa MirandasTech reúne num só pacote o que os quatro manuais ensinam, com as regras de cada um.</p>
+    <div class="tw rv"><table><thead><tr><th style="width:190px">Componente</th><th>O que faz</th><th style="width:210px">Onde entra</th></tr></thead><tbody>
+      <tr><td><b>Pesquisador</b> (<span class="gterm" tabindex="0" data-t="Agente" data-d="Instrução de papel que o Claude Code executa como um assistente separado, com as próprias ferramentas: Pesquisador, Metodólogo, Orientador, Bibliotecário.">agente</span>)</td><td>Gerente do projeto: conduz onze fases (diagnóstico → entrega), mantém um único <code>PROGRESSO.md</code>, chama o especialista certo e só fecha uma fase com <span class="gterm" tabindex="0" data-t="Evidência" data-d="O que comprova um item: arquivo existente, script executado sem erro, número medido. O agente lê ou roda antes de marcar.">evidência</span>. É o papel padrão — quem não sabe a quem perguntar, pergunta a ele.</td><td>Claude Code (<span class="gterm" tabindex="0" data-t="Agente" data-d="Instrução de papel que o Claude Code executa como um assistente separado, com as próprias ferramentas: Pesquisador, Metodólogo, Orientador, Bibliotecário.">agente</span>) · Codex (prompt principal e <span class="gterm" tabindex="0" data-t="Skill" data-d="Roteiro por tarefa (arquivo SKILL.md) que o assistente aplica quando o pedido combina com a descrição. No Codex, os quatro papéis são skills; o Pesquisador é o prompt principal.">skill</span>)</td></tr>
+      <tr><td><b>Metodólogo</b> (agente)</td><td>Pergunta, objetivos, classificação, desenho, amostra, instrumento, análise; projeto conforme a <span class="gterm" tabindex="0" data-t="ABNT · NBR" data-d="Associação Brasileira de Normas Técnicas e suas normas: 15287 (projeto), 14724 (trabalho acadêmico), 10520 (citações), 6023 (referências). Os estilos CSL do plugin geram as referências pelo Zotero.">NBR</span> 15287:2025; banca simulada.</td><td>Claude Code · Codex (<span class="gterm" tabindex="0" data-t="Skill" data-d="Roteiro por tarefa (arquivo SKILL.md) que o assistente aplica quando o pedido combina com a descrição. No Codex, os quatro papéis são skills; o Pesquisador é o prompt principal.">skill</span>)</td></tr>
+      <tr><td><b>Orientador</b> (agente)</td><td>O que pode ser delegado à IA em cada etapa, registro em <code>USO_DE_IA.csv</code>, triagem assistida com status preliminar, declaração de uso.</td><td>Claude Code · Codex (skill)</td></tr>
+      <tr><td><b>Bibliotecário</b> (agente)</td><td>Zotero: configuração, auditoria da biblioteca, referência <span class="gterm" tabindex="0" data-t="ABNT · NBR" data-d="Associação Brasileira de Normas Técnicas e suas normas: 15287 (projeto), 14724 (trabalho acadêmico), 10520 (citações), 6023 (referências). Os estilos CSL do plugin geram as referências pelo Zotero.">ABNT</span> gerada pelo próprio Zotero, exportação <span class="gterm" tabindex="0" data-t="Better BibTeX" data-d="Extensão do Zotero para exportar referências em BibTeX/BibLaTeX (LaTeX, Obsidian); ferramenta exportar_bbt.">Better BibTeX</span>.</td><td>Claude Code · Codex (skill)</td></tr>
+      <tr><td><b>Leitura</b> (skill)</td><td>Fluxos e prompts do <span class="gterm" tabindex="0" data-t="Gemini Notebook" data-d="Serviço do Google (antes NotebookLM) que responde só a partir das fontes enviadas; entra no plugin por arquivo, sem API.">Gemini Notebook</span>; conferência da <span class="gterm" tabindex="0" data-t="Matriz de síntese" data-d="Tabela em que cada linha é um estudo incluído e cada coluna uma pergunta do protocolo; primeira versão pelo notebook, conferida célula a célula.">matriz de síntese</span> célula a célula. Sem API: a ponte é por arquivo.</td><td>Claude Code · Codex</td></tr>
+      <tr><td><b>Conector <span class="gterm" tabindex="0" data-t="MCP" data-d="Model Context Protocol, protocolo de contexto de modelo: padrão que permite a um assistente de IA chamar ferramentas de um programa externo.">MCP</span> <code>zotero</code></b></td><td>Sete ferramentas, só de leitura, que falam com o Zotero aberto no seu computador: status, listar coleções, buscar, detalhar, referência ABNT, auditar, exportar BibTeX.</td><td>Claude Code · Claude Desktop · Codex</td></tr>
+      <tr><td><b>Sete comandos</b> <code>/pesquisa:…</code></td><td>iniciar, status, proxima, auditar, declarar, banca, entregar — atalhos para as fases do Pesquisador.</td><td>Claude Code (no Codex, prompts <code>/pesquisador</code> etc.)</td></tr>
+      <tr><td><b><span class="gterm" tabindex="0" data-t="Hook" data-d="Ação automática do Claude Code num evento. O do plugin roda no início da sessão (SessionStart): se há PROGRESSO.md, imprime as pendências.">Hook</span> de início de sessão</b></td><td>Ao abrir uma sessão numa pasta com <code>PROGRESSO.md</code>, mostra as pendências e lembra de chamar o Pesquisador.</td><td>Claude Code</td></tr>
+      <tr><td><b>Scripts e modelos</b></td><td>Criar o projeto, verificar citações e referências, calcular amostra, cronograma, auditar a biblioteca, exportar e fazer backup do Zotero; modelos de checklist, decisões, registro de IA, <span class="gterm" tabindex="0" data-t="TCLE" data-d="Termo de Consentimento Livre e Esclarecido: o modelo é copiado para 03_etica/TCLE.md.">TCLE</span>, <span class="gterm" tabindex="0" data-t="Matriz de síntese" data-d="Tabela em que cada linha é um estudo incluído e cada coluna uma pergunta do protocolo; primeira versão pelo notebook, conferida célula a célula.">matriz de síntese</span>, estilos ABNT.</td><td>Copiados para a pasta do projeto</td></tr>
+    </tbody></table></div>
+    <div class="rule-box rv"><span class="blabel">Regra</span><p><strong>Tudo é gratuito, aberto (CC BY 4.0) e roda no seu computador.</strong> Não há servidor da MirandasTech, conta, chave nem cota. O plugin não gasta créditos seus: o modelo é pago pela sua própria assinatura do Claude ou do Codex.</p></div>
+  </div>
+</section>
+
+<section class="slide" id="s03" data-title="Como os papéis se dividem">
+  <div class="inner">
+    <div class="kicker-part rv">Introdução<span>2 de 3</span></div>
+    <h2 class="rv">Como os papéis se dividem: quem responde o quê — e quem decide</h2>
+    <div class="two rv">
+      <div class="tw"><table><thead><tr><th>Pergunta que você faz</th><th style="width:150px">Quem responde</th><th style="width:170px">Quem decide</th></tr></thead><tbody>
+        <tr><td>«Onde paramos? O que falta? Qual o próximo passo?»</td><td><span class="pill p-blue">Pesquisador</span></td><td>Você, sobre a ordem; ele, sobre o que é <span class="gterm" tabindex="0" data-t="Evidência" data-d="O que comprova um item: arquivo existente, script executado sem erro, número medido. O agente lê ou roda antes de marcar.">evidência</span></td></tr>
+        <tr><td>«Minha pergunta está boa? Qual método? Que amostra? Como monto o projeto?»</td><td><span class="pill p-blue">Metodólogo</span></td><td>Você; ele apresenta alternativas com prós e contras</td></tr>
+        <tr><td>«Posso usar IA nesta etapa? Como registro? Como declaro?»</td><td><span class="pill p-amber">Orientador</span></td><td>Você e o orientador humano; ele redige o registro</td></tr>
+        <tr><td>«Por que a referência saiu errada? O que falta na biblioteca? Qual a referência ABNT deste item?»</td><td><span class="pill p-go">Bibliotecário</span></td><td>Ele corrige no item do Zotero, nunca na lista do documento</td></tr>
+        <tr><td>«Como leio esta pilha de PDFs? A matriz está certa?»</td><td><span class="pill p-go">Leitura</span></td><td>Você confere cada célula; ele orienta e verifica as linhas</td></tr>
+      </tbody></table></div>
+      <div>
+        <div class="compare">
+          <div><div class="cmp-h" style="color:var(--go)">O plugin faz</div><ul>
+            <li>Apresenta alternativas com prós e contras e faz a pergunta que decide.</li>
+            <li>Registra a sua escolha em <code>DECISOES.md</code>, numerada e datada, depois que você confirma.</li>
+            <li>Roda scripts, lê arquivos e confere evidência antes de marcar um item.</li>
+            <li>Chama o especialista certo na fase certa e aponta o manual e o slide.</li>
+          </ul></div>
+          <div><div class="cmp-h" style="color:var(--stop)">O plugin não faz</div><ul>
+            <li>Escolher método, critério de inclusão ou interpretação por você.</li>
+            <li>Escrever Resultados, Discussão ou Conclusão.</li>
+            <li>Inventar dado, número, referência ou <span class="gterm" tabindex="0" data-t="Crossref · DOI" data-d="Registro público de DOIs (identificadores persistentes de publicações); verificar_refs.py resolve cada DOI lá. Referência sem DOI resolvido não entra.">DOI</span>.</li>
+            <li>Marcar fase sem evidência; liberar coleta com pessoas sem parecer do comitê de ética.</li>
+          </ul></div>
+        </div>
+        <div class="rule-box"><span class="blabel">Regra</span><p><strong>O aluno decide; o agente formula.</strong> Quando dois especialistas divergem (o Orientador veta uma delegação que o Metodólogo sugeriu), vale a regra mais restritiva, e a divergência vai para <code>DECISOES.md</code>. Só o Pesquisador escreve na tabela de fases; cada especialista marca os itens da própria seção.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s03b" data-title="Roteiro">
+  <div class="inner">
+    <div class="kicker-part rv">Introdução<span>3 de 3</span></div>
+    <h2 class="rv">Roteiro: cinco partes, na ordem em que você vai usá-las</h2>
+    <div class="flow rv">
+      <div class="node"><span class="nn">Parte 1</span><span class="nt">Instalar no Claude</span><span class="nd">Claude Code pelo <span class="gterm" tabindex="0" data-t="Marketplace (catálogo)" data-d="Arquivo marketplace.json num repositório que lista plugins instaláveis. O catálogo mirandastech lista pesquisa e zotero-pesquisa. Instala-se por plugin@catálogo.">marketplace</span>, o inventário instalado, o script de instalação, o <span class="gterm" tabindex="0" data-t="Diretório community (Claude)" data-d="Catálogo de plugins de terceiros da Anthropic, com revisão; submissão pelo Console. Quando aceito, instala-se por pesquisa@claude-community.">diretório community</span> e o Claude Desktop (só o conector)</span></div>
+      <div class="node"><span class="nn">Parte 2</span><span class="nt">Instalar no Codex e no ChatGPT</span><span class="nd">Aplicativo do Codex pelo diretório, linha de comando pelo <span class="gterm" tabindex="0" data-t="Marketplace (catálogo)" data-d="Arquivo marketplace.json num repositório que lista plugins instaláveis. O catálogo mirandastech lista pesquisa e zotero-pesquisa. Instala-se por plugin@catálogo.">marketplace</span> próprio, conector e prompts, aprovação de ferramentas, ChatGPT com @menção</span></div>
+      <div class="node"><span class="nn">Parte 3</span><span class="nt">Usar</span><span class="nd">Criar o projeto, a árvore e o <code>PROGRESSO.md</code>, as onze fases e as portas, a sessão típica, os especialistas, os comandos, o conector, a leitura, as recusas, o registro</span></div>
+      <div class="node"><span class="nn">Parte 4</span><span class="nt">Manter</span><span class="nd">Atualizar e publicar nova versão, problemas conhecidos, privacidade, termos e licença</span></div>
+      <div class="node"><span class="nn">Parte 5</span><span class="nt">Fechamento</span><span class="nd">Erros comuns, checklist de instalação e primeira sessão, glossário, referências, repositório, os manuais juntos</span></div>
+    </div>
+    <div class="two rv">
+      <div class="rule-box"><span class="blabel">Como ler</span><p>Escolha o cliente que usa e siga só a parte dele (1 ou 2); todo mundo passa pela Parte 3. Se você já instalou, vá direto ao slide «Sessão típica» e volte quando um passo não estiver claro. A Parte 4 é para quem mantém o plugin ou quer entender o que ele faz com os seus dados.</p></div>
+      <div class="note"><span class="blabel">Convenções</span><p>Nomes de menu e de botão entre «aspas angulares». Comandos de terminal e de chat em blocos com botão «copiar». Siglas explicadas na primeira vez que aparecem e no glossário. Capturas em 1920 × 938, feitas em setembro de 2026, com a interface em português.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PARTE 1 ===================== -->
+<section class="slide divider" id="p1" data-title="Parte 1 · Instalar no Claude Code"><div class="inner"><div class="kicker-part rv">Parte 1<span>Instalar no Claude Code</span></div><h2 class="rv">Marketplace, plugin, inventário — e o Claude Desktop</h2><p class="rv">Dois comandos no Claude Code instalam tudo. Depois: ver o que entrou, o script que faz o mesmo pelo terminal, o <span class="gterm" tabindex="0" data-t="Diretório community (Claude)" data-d="Catálogo de plugins de terceiros da Anthropic, com revisão; submissão pelo Console. Quando aceito, instala-se por pesquisa@claude-community.">diretório community</span> e o que o Claude Desktop recebe (só o conector).</p></div><div class="num">01</div></section>
+
+<section class="slide" id="s04" data-title="Claude Code: adicionar o marketplace e instalar">
+  <div class="inner">
+    <div class="kicker-part rv">Claude Code<span>1 de 4</span></div>
+    <h2 class="rv">Claude Code: adicionar o marketplace e instalar o plugin</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/pl_09_claude_code_install.jpg" width="1920" height="938" alt="Terminal com o Claude Code executando /plugin marketplace add e /plugin install pesquisa@mirandastech"></div><figcaption><b>Figura 1</b> No Claude Code, os dois comandos: primeiro o catálogo («marketplace») do repositório, depois o plugin <code>pesquisa</code> desse catálogo.</figcaption></figure>
+      <div>
+        <ol>
+          <li>Abra o Claude Code no terminal (comando <code>claude</code>), em qualquer pasta.</li>
+          <li>Adicione o <span class="gterm" tabindex="0" data-t="Marketplace (catálogo)" data-d="Arquivo marketplace.json num repositório que lista plugins instaláveis. O catálogo mirandastech lista pesquisa e zotero-pesquisa. Instala-se por plugin@catálogo.">catálogo</span> do repositório (bloco abaixo, primeira linha). O <span class="gterm" tabindex="0" data-t="Marketplace (catálogo)" data-d="Arquivo marketplace.json num repositório que lista plugins instaláveis. O catálogo mirandastech lista pesquisa e zotero-pesquisa. Instala-se por plugin@catálogo.">catálogo</span> se chama <code>mirandastech</code>.</li>
+          <li>Instale o plugin <code>pesquisa</code> desse catálogo (segunda linha). O formato é sempre <code>plugin@catálogo</code>.</li>
+          <li>Confira o que entrou com <code>claude plugin details</code> (próximo slide).</li>
+        </ol>
+        <div class="code"><div class="code-head">Claude Code — instalar pelo marketplace</div><pre>/plugin marketplace add joaopaulomirandamatias/pesquisa-mirandastech
+/plugin install pesquisa@mirandastech</pre></div>
+        <div class="tw"><table><thead><tr><th style="width:140px">Requisito</th><th>Para quê</th></tr></thead><tbody>
+          <tr><td><b>Python 3 e Git</b></td><td>Scripts do projeto (criar a pasta, verificar citações) e controle de versão da pasta criada</td></tr>
+          <tr><td><b><code>uv</code></b></td><td>Executa o conector do Zotero (alternativa: <code>pip install mcp</code> e trocar o comando por <code>python3</code>)</td></tr>
+          <tr><td><b>Zotero 7 ou superior</b></td><td>Aberto, com a API local ligada em «Configurações» → «Avançado», para as ferramentas de biblioteca</td></tr>
+        </tbody></table></div>
+        <div class="note"><span class="blabel">O que é o marketplace</span><p>Um arquivo <code>marketplace.json</code> no repositório que lista plugins instaláveis. O catálogo <code>mirandastech</code> lista dois: <code>pesquisa</code> (o pacote completo deste manual) e <code>zotero-pesquisa</code> (só o Bibliotecário, para quem quer apenas o Zotero).</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s05" data-title="O que aparece: agentes, skills, comandos, conector, hook">
+  <div class="inner">
+    <div class="kicker-part rv">Claude Code<span>2 de 4</span></div>
+    <h2 class="rv">O que aparece depois de instalar: <code>claude plugin details</code></h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/pl_10_claude_code_details.jpg" width="1920" height="938" alt="Saída de claude plugin details pesquisa@mirandastech listando agentes, skills, comandos, conector MCP e hook"></div><figcaption><b>Figura 2</b> <code>claude plugin details pesquisa@mirandastech</code> mostra o inventário do plugin: quatro agentes, nove skills, sete comandos, o conector <code>zotero</code> e o hook de início de sessão.</figcaption></figure>
+      <div>
+        <div class="code"><div class="code-head">terminal — inventário e validação</div><pre>claude plugin details pesquisa@mirandastech
+claude plugin validate .</pre></div>
+        <div class="tw"><table><thead><tr><th style="width:120px">Tipo</th><th>O que entrou</th></tr></thead><tbody>
+          <tr><td><b>4 agentes</b></td><td><code>pesquisador</code>, <code>metodologo</code>, <code>orientador</code>, <code>bibliotecario</code></td></tr>
+          <tr><td><b>9 skills</b></td><td><code>pesquisador</code>, <code>metodologo-pesquisa</code>, <code>projeto-nbr15287</code>, <code>abnt-citacoes-referencias</code>, <code>banca-simulada</code>, <code>orientador-ia-pesquisa</code>, <code>triagem-assistida</code>, <code>bibliotecario-zotero</code>, <code>leitura-gemini-notebook</code></td></tr>
+          <tr><td><b>7 comandos</b></td><td><code>/pesquisa:iniciar</code> · <code>status</code> · <code>proxima</code> · <code>auditar</code> · <code>declarar</code> · <code>banca</code> · <code>entregar</code></td></tr>
+          <tr><td><b>1 conector <span class="gterm" tabindex="0" data-t="MCP" data-d="Model Context Protocol, protocolo de contexto de modelo: padrão que permite a um assistente de IA chamar ferramentas de um programa externo.">MCP</span></b></td><td><code>zotero</code>, que aparece como <code>plugin:pesquisa:zotero</code>; ferramentas <code>status</code>, <code>listar_colecoes</code>, <code>buscar_itens</code>, <code>detalhar_item</code>, <code>referencia_abnt</code>, <code>auditar</code>, <code>exportar_bbt</code></td></tr>
+          <tr><td><b>1 <span class="gterm" tabindex="0" data-t="Hook" data-d="Ação automática do Claude Code num evento. O do plugin roda no início da sessão (SessionStart): se há PROGRESSO.md, imprime as pendências.">hook</span></b></td><td><code>SessionStart</code>: se a pasta tem <code>PROGRESSO.md</code>, imprime as primeiras fases pendentes e lembra: «Diga: Pesquisador, onde paramos?»</td></tr>
+        </tbody></table></div>
+        <div class="note"><span class="blabel">Validar um clone</span><p><code>claude plugin validate .</code> confere os manifestos do plugin na pasta atual — útil para quem clonou o repositório e alterou um agente ou uma skill antes de instalar.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s06" data-title="O script instalar_claude.sh e o diretório community">
+  <div class="inner">
+    <div class="kicker-part rv">Claude Code<span>3 de 4 · submissão em 08/09/2026</span></div>
+    <h2 class="rv">Pelo terminal (<code>instalar_claude.sh</code>) — e o diretório community, quando for aceito</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/pl_17_console_claude_envio.jpg" width="1920" height="938" alt="Console da Anthropic, página Envios de plugin, com o envio pesquisa e o status Enviado e aguardando revisão"></div><figcaption><b>Figura 3</b> Console (platform.claude.com/plugins/submissions): o envio «pesquisa», feito em 08/09/2026, com o status «Enviado e aguardando revisão». O marketplace oficial da Anthropic não aceita submissão de terceiros; o caminho é o diretório community.</figcaption></figure>
+      <div>
+        <div class="code"><div class="code-head">terminal — clonar e instalar com o script</div><pre>git clone https://github.com/joaopaulomirandamatias/pesquisa-mirandastech.git
+cd pesquisa-mirandastech
+bash scripts/instalar_claude.sh</pre></div>
+        <div class="tw"><table><thead><tr><th style="width:190px">Caminho</th><th>Estado</th><th>Comando</th></tr></thead><tbody>
+          <tr><td><b>Marketplace próprio</b></td><td><span class="pill p-go">disponível</span></td><td class="mono">/plugin install pesquisa@mirandastech</td></tr>
+          <tr><td><b>Script pelo terminal</b></td><td><span class="pill p-go">disponível</span></td><td class="mono">bash scripts/instalar_claude.sh</td></tr>
+          <tr><td><b>Diretório community</b></td><td><span class="pill p-amber">aguardando revisão</span></td><td class="mono">/plugin install pesquisa@claude-community</td></tr>
+        </tbody></table></div>
+        <ul class="bul">
+          <li>O script adiciona o catálogo (ou o atualiza, se já existe), instala o plugin e avisa se o <code>uv</code> não está instalado.</li>
+          <li>Se encontra o arquivo de configuração do Claude Desktop, também registra nele o conector <code>zotero</code> (próximo slide).</li>
+          <li class="warn">O comando do diretório community só funciona depois que a submissão for aceita; até lá, use o marketplace próprio — o conteúdo é o mesmo.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s07" data-title="Claude Desktop: só o conector">
+  <div class="inner">
+    <div class="kicker-part rv">Claude Code<span>4 de 4 · Claude Desktop</span></div>
+    <h2 class="rv">Claude Desktop: só o conector do Zotero — sem agentes nem skills</h2>
+    <div class="two rv">
+      <div>
+        <ol>
+          <li>Rode <code>bash scripts/instalar_claude.sh</code> (slide anterior): se encontra o arquivo <code>claude_desktop_config.json</code>, ele escreve nele a entrada <code>zotero</code> (bloco ao lado). Se prefere fazer à mão, copie o bloco e troque o caminho.</li>
+          <li>Reinicie o Claude Desktop. O conector aparece entre os conectores da conversa, com as sete ferramentas (<code>status</code>, <code>listar_colecoes</code>, <code>buscar_itens</code>, <code>detalhar_item</code>, <code>referencia_abnt</code>, <code>auditar</code>, <code>exportar_bbt</code>).</li>
+          <li>Com o Zotero aberto e a API local ligada, peça: «Liste as coleções da minha biblioteca» — a resposta vem da ferramenta <code>listar_colecoes</code>.</li>
+        </ol>
+        <div class="trap"><span class="blabel">Armadilha</span><p><strong>Pedir «Pesquisador, onde paramos?» no Desktop.</strong> Não há agente nem skill ali; o Desktop recebe só as sete ferramentas do Zotero, para usar dentro de qualquer conversa. O fluxo por fases é no Claude Code (inclusive na aba «Code» do próprio Desktop) ou no Codex.</p></div>
+        <div class="note"><span class="blabel">Aba «Code» do Desktop</span><p>O Claude Desktop traz o Claude Code numa aba própria. Ali o plugin funciona por inteiro — agentes, comandos e hook — porque é o mesmo Claude Code do terminal, com a pasta do projeto aberta.</p></div>
+      </div>
+      <div>
+        <div class="code"><div class="code-head">claude_desktop_config.json — entrada escrita pelo script (para conferir ou fazer à mão)</div><pre>{
+  "mcpServers": {
+    "zotero": {
+      "command": "uv",
+      "args": ["run", "--with", "mcp", "python",
+               "/caminho/para/pesquisa-mirandastech/scripts/zotero_mcp.py"]
+    }
+  }
+}</pre></div>
+        <div class="tw"><table><thead><tr><th style="width:110px">Sistema</th><th>Onde fica o arquivo</th></tr></thead><tbody>
+          <tr><td>Linux</td><td class="mono">~/.config/Claude/claude_desktop_config.<span class="gterm" tabindex="0" data-t="TOML · JSON · CSV" data-d="Formatos de arquivo de configuração e dados: config.toml do Codex; claude_desktop_config.json do Claude Desktop; USO_DE_IA.csv do projeto.">json</span></td></tr>
+          <tr><td>macOS</td><td class="mono">~/Library/Application Support/Claude/claude_desktop_config.<span class="gterm" tabindex="0" data-t="TOML · JSON · CSV" data-d="Formatos de arquivo de configuração e dados: config.toml do Codex; claude_desktop_config.json do Claude Desktop; USO_DE_IA.csv do projeto.">json</span></td></tr>
+          <tr><td>Windows</td><td class="mono">%APPDATA%\Claude\claude_desktop_config.json</td></tr>
+        </tbody></table></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PARTE 2 ===================== -->
+<section class="slide divider" id="p2" data-title="Parte 2 · Instalar no Codex e no ChatGPT"><div class="inner"><div class="kicker-part rv">Parte 2<span>Instalar no Codex e no ChatGPT</span></div><h2 class="rv">Diretório oficial, marketplace próprio e a @menção</h2><p class="rv">No aplicativo do Codex e no ChatGPT, o plugin se instala pelo diretório oficial de plugins. Na linha de comando, pelo marketplace próprio — e o script registra o conector e os prompts.</p></div><div class="num">02</div></section>
+
+<section class="slide" id="s08" data-title="Codex (aplicativo): instalar pelo diretório">
+  <div class="inner">
+    <div class="kicker-part rv">Codex e ChatGPT<span>1 de 7 · publicado em 08/09/2026</span></div>
+    <h2 class="rv">Aplicativo do Codex: «Plugins» → «Procurar plugins» → a página do plugin</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/pl_05_codex_app_diretorio.jpg" width="1920" height="938" alt="Aplicativo do Codex, página Plugins, com a busca Pesquisa MirandasTech mostrando dois resultados"></div><figcaption><b>Figura 4</b> «Plugins» → caixa «Procurar plugins» → «Pesquisa MirandasTech». Aparecem dois resultados: o do marketplace próprio (ícone de ramificação, instalado pelo comando da linha de comando) e o do diretório oficial. Para quem só usa o aplicativo, vale o segundo.</figcaption></figure>
+      <figure><div class="shot"><img src="capturas/pl_06_codex_app_plugin.jpg" width="1920" height="938" alt="Página do plugin Pesquisa MirandasTech no aplicativo do Codex com os três pedidos de partida e o botão Testar agora"></div><figcaption><b>Figura 5</b> A página do plugin: subtítulo «Pesquisa por fases, na norma», os três pedidos de partida e a descrição. O botão principal instala; já instalado, ele vira «Testar agora» e abre o chat com a menção pronta.</figcaption></figure>
+      <div>
+        <ol>
+          <li>No aplicativo do Codex, abra «Plugins» (menu da esquerda).</li>
+          <li>Na caixa «Procurar plugins», digite «Pesquisa MirandasTech» e clique no resultado do diretório.</li>
+          <li>Clique no botão principal da página para instalar. Depois, «Testar agora» abre um chat com «@Pesquisa MirandasTech /pesquisador onde paramos» já escrito.</li>
+        </ol>
+        <div class="tw"><table><thead><tr><th style="width:130px">Fato</th><th>Na página do plugin</th></tr></thead><tbody>
+          <tr><td>Nome</td><td>Pesquisa MirandasTech</td></tr>
+          <tr><td>Subtítulo</td><td>«Pesquisa por fases, na norma»</td></tr>
+          <tr><td>Categoria</td><td>Education &amp; Research (Educação e pesquisa)</td></tr>
+          <tr><td>Tipo</td><td>Skills only — nove skills</td></tr>
+        </tbody></table></div>
+        <div class="note"><span class="blabel">O que «Skills only» significa</span><p>O Codex não tem subagentes: os quatro papéis viram skills chamadas pelo nome, o Pesquisador vira o prompt principal e as regras comuns ficam em <code>AGENTS.md</code>, lido na pasta do projeto.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s09" data-title="Codex (aplicativo): usar no chat com @menção">
+  <div class="inner">
+    <div class="kicker-part rv">Codex e ChatGPT<span>2 de 7</span></div>
+    <h2 class="rv">Aplicativo do Codex: escolher a pasta do projeto e chamar @Pesquisa MirandasTech</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/pl_07a_codex_app_composer.jpg" width="1920" height="938" alt="Caixa de mensagem do aplicativo do Codex com a pasta proj escolhida e a menção @Pesquisa MirandasTech /pesquisador onde paramos"></div><figcaption><b>Figura 6</b> A caixa de mensagem com a pasta do projeto escolhida (etiquetas «proj · Local · main») e a menção pronta. Sem pasta escolhida, o botão de enviar fica desativado.</figcaption></figure>
+      <figure><div class="shot"><img src="capturas/pl_07_codex_app_chat.jpg" width="1920" height="938" alt="Chat do aplicativo do Codex com a resposta do Pesquisador: fase 0 incompleta, o que já está registrado e a pergunta sobre o orientador"></div><figcaption><b>Figura 7</b> A resposta: o Codex leu o <code>PROGRESSO.md</code> da pasta e respondeu como o Pesquisador — fase 0 ainda incompleta, o que já está registrado, o que falta e a pergunta seguinte («Quem é o orientador deste projeto?»).</figcaption></figure>
+      <div>
+        <ol>
+          <li>Na caixa de mensagem, use o seletor de projeto (à esquerda, acima do texto) para escolher a pasta do projeto — ou «Novo projeto» para adicioná-la. Sem pasta, o Codex não envia.</li>
+          <li>No chat, digite <code>@Pesquisa MirandasTech</code> e, na mesma mensagem, o pedido.</li>
+          <li>Para chamar um especialista, diga o papel no pedido («como Metodólogo, …») — no Codex, os papéis são skills, não agentes separados.</li>
+        </ol>
+        <div class="code"><div class="code-head">chat do Codex — pedidos de partida</div><pre>@Pesquisa MirandasTech onde paramos
+@Pesquisa MirandasTech começar minha pesquisa sobre manutenção preditiva em portos
+@Pesquisa MirandasTech auditar a biblioteca e as citações</pre></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>O Codex lê <code>AGENTS.md</code> da pasta aberta. É esse arquivo que carrega as proibições absolutas e os gates humanos do projeto — por isso o fluxo completo exige a pasta do projeto aberta, não um chat solto.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s10" data-title="Codex (linha de comando): marketplace próprio, conector e prompts">
+  <div class="inner">
+    <div class="kicker-part rv">Codex e ChatGPT<span>3 de 7</span></div>
+    <h2 class="rv">Codex pela linha de comando: marketplace próprio, conector <code>zotero</code> e prompts</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/pl_08_codex_cli.jpg" width="1920" height="938" alt="Terminal com os comandos codex plugin marketplace add e codex plugin add pesquisa-mirandastech@mirandastech"></div><figcaption><b>Figura 8</b> No terminal: o catálogo do repositório e o plugin <code>pesquisa-mirandastech</code>. O script <code>instalar_codex.sh</code> faz isso e ainda registra o conector e os prompts.</figcaption></figure>
+      <div>
+        <div class="code"><div class="code-head">terminal — instalar pelo marketplace próprio</div><pre>codex plugin marketplace add joaopaulomirandamatias/pesquisa-mirandastech
+codex plugin add pesquisa-mirandastech@mirandastech</pre></div>
+        <div class="code"><div class="code-head">terminal — ou tudo de uma vez, com o script</div><pre>git clone https://github.com/joaopaulomirandamatias/pesquisa-mirandastech.git
+cd pesquisa-mirandastech
+bash scripts/instalar_codex.sh
+codex plugin list</pre></div>
+        <div class="tw"><table><thead><tr><th>O que o script faz</th><th>Onde</th></tr></thead><tbody>
+          <tr><td>Adiciona (ou atualiza) o catálogo e instala o plugin</td><td>Codex</td></tr>
+          <tr><td>Registra o conector com <code>codex mcp add zotero -- uv run --with mcp python scripts/zotero_mcp.py</code></td><td class="mono">~/.codex/config.<span class="gterm" tabindex="0" data-t="TOML · JSON · CSV" data-d="Formatos de arquivo de configuração e dados: config.toml do Codex; claude_desktop_config.json do Claude Desktop; USO_DE_IA.csv do projeto.">toml</span></td></tr>
+          <tr><td>Copia os prompts <code>/pesquisador</code>, <code>/metodologo</code>, <code>/orientador</code>, <code>/bibliotecario</code></td><td class="mono">~/.codex/prompts/</td></tr>
+          <tr><td>Se o comando <code>codex</code> não existe, acrescenta a seção <code>[mcp_servers.zotero]</code> à mão</td><td class="mono">~/.codex/config.<span class="gterm" tabindex="0" data-t="TOML · JSON · CSV" data-d="Formatos de arquivo de configuração e dados: config.toml do Codex; claude_desktop_config.json do Claude Desktop; USO_DE_IA.csv do projeto.">toml</span></td></tr>
+        </tbody></table></div>
+        <div class="note"><span class="blabel">Nomes diferentes nos dois clientes</span><p>No Claude Code o plugin se chama <code>pesquisa</code>; no Codex, <code>pesquisa-mirandastech</code>. O catálogo se chama <code>mirandastech</code> nos dois. O repositório é o mesmo.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s11" data-title="Codex: aprovação das ferramentas do conector">
+  <div class="inner">
+    <div class="kicker-part rv">Codex e ChatGPT<span>4 de 7</span></div>
+    <h2 class="rv">No Codex, cada chamada ao conector pede aprovação — como liberar as ferramentas que só leem</h2>
+    <div class="two rv">
+      <div>
+        <p class="lead">Por padrão, o Codex pede a sua aprovação a cada chamada de ferramenta de um conector MCP. As sete ferramentas do <code>zotero</code> apenas leem a biblioteca; nenhuma escreve nem envia nada para fora do computador. Se quiser dispensar a pergunta, libere ferramenta por ferramenta no arquivo de configuração.</p>
+        <div class="code"><div class="code-head">~/.codex/config.toml — liberar ferramentas do conector, uma a uma</div><pre>[mcp_servers.zotero.tools.status]
+approval_mode = "auto"
+
+[mcp_servers.zotero.tools.listar_colecoes]
+approval_mode = "auto"
+
+[mcp_servers.zotero.tools.buscar_itens]
+approval_mode = "auto"
+
+[mcp_servers.zotero.tools.auditar]
+approval_mode = "auto"
+
+[mcp_servers.zotero.tools.referencia_abnt]
+approval_mode = "auto"</pre></div>
+      </div>
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:150px">Ferramenta</th><th>O que faz</th><th style="width:90px">Escreve?</th></tr></thead><tbody>
+          <tr><td class="mono">status</td><td>Confirma que o Zotero está aberto e a API local responde</td><td><span class="pill p-go">não</span></td></tr>
+          <tr><td class="mono">listar_colecoes</td><td>Lista as coleções da biblioteca</td><td><span class="pill p-go">não</span></td></tr>
+          <tr><td class="mono">buscar_itens</td><td>Busca itens por texto, coleção ou etiqueta</td><td><span class="pill p-go">não</span></td></tr>
+          <tr><td class="mono">detalhar_item</td><td>Metadados completos de um item, pela chave</td><td><span class="pill p-go">não</span></td></tr>
+          <tr><td class="mono">referencia_abnt</td><td>Referência no estilo ABNT gerada pelo Zotero, de itens ou de uma coleção</td><td><span class="pill p-go">não</span></td></tr>
+          <tr><td class="mono">auditar</td><td>Pendências por item: sem <span class="gterm" tabindex="0" data-t="Crossref · DOI" data-d="Registro público de DOIs (identificadores persistentes de publicações); verificar_refs.py resolve cada DOI lá. Referência sem DOI resolvido não entra.">DOI</span>, sem PDF, caixa alta, duplicados</td><td><span class="pill p-go">não</span></td></tr>
+          <tr><td class="mono">exportar_bbt</td><td>Exporta uma coleção em BibTeX/BibLaTeX pelo <span class="gterm" tabindex="0" data-t="Better BibTeX" data-d="Extensão do Zotero para exportar referências em BibTeX/BibLaTeX (LaTeX, Obsidian); ferramenta exportar_bbt.">Better BibTeX</span></td><td><span class="pill p-go">não</span></td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Libere só o que você entende. A tabela existe para isso: cada ferramenta só lê. Se um dia o conector ganhar uma ferramenta que escreva, ela não estará na sua lista de <code>approval_mode = "auto"</code> — e o Codex voltará a perguntar.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s12" data-title="ChatGPT (web): instalar pelo diretório">
+  <div class="inner">
+    <div class="kicker-part rv">Codex e ChatGPT<span>5 de 7</span></div>
+    <h2 class="rv">ChatGPT no navegador: a página do plugin e o botão «Instalar plugin»</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/pl_01_chatgpt_diretorio.jpg" width="1920" height="938" alt="Página do plugin Pesquisa MirandasTech no diretório de plugins do ChatGPT"></div><figcaption><b>Figura 9</b> A página do plugin no diretório do ChatGPT: nome, subtítulo, categoria, as nove skills e o botão «Instalar plugin».</figcaption></figure>
+      <figure><div class="shot"><img src="capturas/pl_02_chatgpt_instalado.jpg" width="1920" height="938" alt="ChatGPT confirmando que o plugin Pesquisa MirandasTech foi instalado"></div><figcaption><b>Figura 10</b> Depois do clique, o plugin aparece como instalado na sua conta.</figcaption></figure>
+      <div>
+        <ol>
+          <li>Abra a página do plugin no diretório (endereço abaixo) com a sua conta do ChatGPT.</li>
+          <li>Clique em «Instalar plugin».</li>
+          <li>Volte ao chat: o plugin passa a responder à @menção (próximo slide).</li>
+        </ol>
+        <div class="code"><div class="code-head">endereço — página do plugin no diretório do ChatGPT/Codex</div><pre>https://chatgpt.com/plugins/plugins_6aa0a0320a248191b33a514a3a52325b</pre></div>
+        <div class="note"><span class="blabel">Mesmo diretório</span><p>O <span class="gterm" tabindex="0" data-t="Diretório de plugins (ChatGPT/Codex)" data-d="Catálogo oficial da OpenAI, comum ao ChatGPT e ao Codex, com página por plugin e botão «Instalar plugin». O Pesquisa MirandasTech está lá desde 08/09/2026, tipo «Skills only».">diretório de plugins</span> é um só para o ChatGPT e para o Codex. O que você instala aqui é o mesmo pacote «Skills only» do aplicativo do Codex: as nove skills e as regras dos quatro papéis.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s13" data-title="ChatGPT (web): usar com @Pesquisa MirandasTech">
+  <div class="inner">
+    <div class="kicker-part rv">Codex e ChatGPT<span>6 de 7</span></div>
+    <h2 class="rv">ChatGPT no navegador: @Pesquisa MirandasTech seguido do pedido</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/pl_03_chatgpt_mencao.jpg" width="1920" height="938" alt="Caixa de mensagem do ChatGPT com a menção @Pesquisa MirandasTech e um pedido"></div><figcaption><b>Figura 11</b> Digite «@», escolha «Pesquisa MirandasTech» e escreva o pedido na mesma mensagem.</figcaption></figure>
+      <figure><div class="shot"><img src="capturas/pl_04_chatgpt_resposta.jpg" width="1920" height="938" alt="Resposta do ChatGPT como Pesquisador MirandasTech, com as perguntas do diagnóstico"></div><figcaption><b>Figura 12</b> A resposta segue o roteiro do Pesquisador: uma pergunta do diagnóstico por vez, sem decidir por você.</figcaption></figure>
+      <div>
+        <div class="code"><div class="code-head">chat do ChatGPT — exemplos</div><pre>@Pesquisa MirandasTech começar minha pesquisa sobre manutenção preditiva em portos
+@Pesquisa MirandasTech como Metodólogo: minha pergunta é «como a IA melhora a manutenção?» — está boa?
+@Pesquisa MirandasTech como Orientador: posso usar IA na triagem de resumos? como registro?</pre></div>
+        <div class="tw"><table><thead><tr><th>No ChatGPT você tem</th><th>Só no Codex (aplicativo ou linha de comando) e no Claude Code</th></tr></thead><tbody>
+          <tr><td>As nove skills: roteiros, regras, perguntas de diagnóstico, checklists por papel; os arquivos que ele produz vêm como anexos para baixar (ex.: <code>DECISOES_METODO.md</code>, um <code>.zip</code> com a estrutura de pastas)</td><td>A pasta do projeto lida e escrita <em>no seu computador</em> (<code>PROGRESSO.md</code>, <code>DECISOES.md</code>, <code>USO_DE_IA.csv</code>), sem baixar nada</td></tr>
+          <tr><td>Os quatro papéis, chamados pelo nome no pedido</td><td>O conector <code>zotero</code> e os scripts (auditar biblioteca, verificar citações, criar o projeto)</td></tr>
+        </tbody></table></div>
+        <div class="trap"><span class="blabel">Armadilha</span><p><strong>Esperar que o ChatGPT audite o seu Zotero.</strong> O conector roda no seu computador e é registrado pelo <code>instalar_codex.sh</code> ou pelo <code>instalar_claude.sh</code>; o pacote do diretório traz as skills. Para o fluxo com pasta, scripts e biblioteca, use o Codex ou o Claude Code na pasta do projeto.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s13b" data-title="ChatGPT (web): chamar o Metodólogo">
+  <div class="inner">
+    <div class="kicker-part rv">Codex e ChatGPT<span>7 de 7</span></div>
+    <h2 class="rv">ChatGPT no navegador: chamar um especialista — o Metodólogo reformula a pergunta e cobra a tabela vazia</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/pl_04b_chatgpt_metodologo.jpg" width="1920" height="938" alt="Resposta do Metodólogo no ChatGPT: pergunta de pesquisa reformulada, tabela M1 a M3 com evidência necessária e situação atual, e a tabela vazia do resultado"></div><figcaption><b>Figura 13</b> «Metodólogo, minha pergunta é …, está boa?». Ele diz que ainda precisa de refinamento, propõe uma versão provisória, lista o que fecha M1–M3 (evidência necessária × situação atual) e monta a <strong>tabela vazia do resultado</strong> — as colunas que os estudos terão de preencher.</figcaption></figure>
+      <figure><div class="shot"><img src="capturas/pl_04c_chatgpt_arquivo.jpg" width="1920" height="938" alt="Fim da resposta do Metodólogo no ChatGPT com o objetivo geral provisório, o arquivo DECISOES_METODO.md anexado e a pergunta sobre o grupo de equipamentos"></div><figcaption><b>Figura 14</b> O fim da resposta: objetivo geral provisório, o arquivo <code>DECISOES_METODO.md</code> como anexo, «a fase 1 permanece aberta» e a pergunta que ele faz antes de seguir. Ele não fecha a fase sozinho.</figcaption></figure>
+      <div>
+        <ol>
+          <li>Na mesma conversa, chame o papel pelo nome depois da @menção: «Metodólogo, …», «Orientador, …», «Bibliotecário, …».</li>
+          <li>Leia a tabela «Evidência necessária × Situação atual»: é o checklist da fase, no formato do <code>PROGRESSO.md</code>.</li>
+          <li>Baixe o anexo para <code>00_projeto/</code> (no Codex ou no Claude Code ele já nasce lá).</li>
+          <li>Responda à pergunta final — cada resposta sua fecha um item; ele não avança sem ela.</li>
+        </ol>
+        <div class="tw"><table><thead><tr><th style="width:140px">O que apareceu</th><th>O que significa</th></tr></thead><tbody>
+          <tr><td><b>«Ainda precisa de refinamento»</b></td><td>A pergunta original («como a IA melhora a manutenção em portos?») pressupõe o benefício que a revisão deveria investigar; ele propõe uma versão neutra e delimitada</td></tr>
+          <tr><td><b>M1–M3 abertos</b></td><td>Pergunta, objetivos e justificativa dependem do recorte (equipamentos, contexto, período) e de duas revisões pertinentes ainda não examinadas</td></tr>
+          <tr><td><b>Tabela vazia do resultado</b></td><td>Estudo · equipamento e contexto · dados e tarefa · abordagem de IA · comparador · validação · resultados · limitações. Ele separa desempenho preditivo de efeito operacional: prever bem não prova redução de paradas</td></tr>
+        </tbody></table></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PARTE 3 ===================== -->
+<section class="slide divider" id="p3" data-title="Parte 3 · Usar"><div class="inner"><div class="kicker-part rv">Parte 3<span>Usar</span></div><h2 class="rv">Do projeto à entrega, uma fase por vez</h2><p class="rv">Criar a pasta, entender o <code>PROGRESSO.md</code>, as onze fases e as portas, a sessão típica, os especialistas, os sete comandos, o conector do Zotero em uso, a camada de leitura, o que o plugin recusa e o registro de decisões e de uso de IA.</p></div><div class="num">03</div></section>
+
+<section class="slide" id="s14" data-title="Criar o projeto">
+  <div class="inner">
+    <div class="kicker-part rv">Usar<span>1 de 10</span></div>
+    <h2 class="rv">Criar o projeto: <code>iniciar_projeto.py</code> pelo terminal ou <code>/pesquisa:iniciar</code> no Claude Code</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/pl_13_projeto_arvore.jpg" width="1920" height="938" alt="Terminal mostrando a árvore de pastas e arquivos criada por iniciar_projeto.py"></div><figcaption><b>Figura 15</b> O script imprime cada arquivo criado (prefixo «+»), inicializa o Git e termina com a instrução para a primeira sessão.</figcaption></figure>
+      <div>
+        <div class="code"><div class="code-head">terminal — criar a pasta do projeto (na pasta do repositório clonado)</div><pre>python3 scripts/iniciar_projeto.py minha-pesquisa \
+  --tema "manutenção preditiva em terminais portuários" \
+  --metodo "revisão sistemática" --programa "PPGEE" --prazo 2027-03
+cd minha-pesquisa</pre></div>
+        <div class="code"><div class="code-head">Claude Code — o mesmo, com diagnóstico guiado (fase 0)</div><pre>/pesquisa:iniciar</pre></div>
+        <div class="tw"><table><thead><tr><th style="width:36px">#</th><th>Pergunta do diagnóstico (uma por mensagem)</th></tr></thead><tbody>
+          <tr><td class="num">1</td><td>Tema em uma frase e o que já existe (nada, projeto, dados, texto)</td></tr>
+          <tr><td class="num">2</td><td>Programa, orientador e prazo (qualificação, defesa, submissão)</td></tr>
+          <tr><td class="num">3</td><td>Tipo provável de pesquisa (revisão, empírica com pessoas, experimental, documental, mista)</td></tr>
+          <tr><td class="num">4</td><td>Ferramentas: Zotero? <span class="gterm" tabindex="0" data-t="Gemini Notebook" data-d="Serviço do Google (antes NotebookLM) que responde só a partir das fontes enviadas; entra no plugin por arquivo, sem API.">Gemini Notebook</span>? Conta pessoal ou institucional? Editor de texto?</td></tr>
+          <tr><td class="num">5</td><td>Coautores e orientador vão usar os mesmos agentes? (grupo no Zotero, acordo de uso de IA)</td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p><strong>Nunca sobrescreve.</strong> Se a pasta já existe, o script só acrescenta o que falta. Pasta criada pelos manuais antigos (com <code>PROGRESSO_IA.md</code>, <code>PROGRESSO_METODOLOGIA.md</code> ou <code>PROGRESSO_ZOTERO.md</code>) tem os itens marcados migrados para o <code>PROGRESSO.md</code>; os arquivos antigos ficam como histórico.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s15" data-title="A árvore criada e o PROGRESSO.md único">
+  <div class="inner">
+    <div class="kicker-part rv">Usar<span>2 de 10</span></div>
+    <h2 class="rv">A árvore criada — e o <code>PROGRESSO.md</code> único, com as fases e os quatro checklists</h2>
+    <div class="two rv">
+      <div>
+        <div class="code"><div class="code-head">árvore — o que iniciar_projeto.py cria</div><pre>minha-pesquisa/
+├── PROGRESSO.md            estado único: fases + checklists M, I, B, L
+├── DECISOES.md             decisões numeradas e datadas
+├── USO_DE_IA.csv           uma linha por influência de IA
+├── AGENTS.md               regras lidas por qualquer agente
+├── ACORDO_ORIENTADOR.md    acordo sobre uso de IA
+├── .gitignore              dados_FORA_DO_GIT/, *.pdf, *.xlsx, .env
+├── 00_projeto/             DECISOES_METODO.md · cronograma.csv
+├── 00_protocolo/           protocolo.md (12 seções + emendas)
+├── 01_buscas/              buscas.csv · registro_exportacoes.csv
+├── 01_revisao/fichas/      fichas de leitura com página
+├── 02_instrumentos/        tabela_operacionalizacao.csv
+├── 02_triagem/             codebook, lotes, números do PRISMA
+├── 03_etica/               TCLE.md · parecer do CEP
+├── 03_extracao/  04_sintese/matriz_sintese.csv
+├── 05_analise/livro_de_codigos.csv  06_texto/  07_banca/
+├── tools/                  estrutura e etiquetas do Zotero; prompts e
+│                           estrutura dos notebooks
+└── dados_FORA_DO_GIT/      dado pessoal e material licenciado (fora do Git)</pre></div>
+      </div>
+      <div>
+        <figure><div class="shot"><img src="capturas/pl_14_progresso_md.jpg" width="1920" height="938" alt="PROGRESSO.md aberto, com a tabela de fases e as seções Método, Uso de IA, Biblioteca e Leitura"></div><figcaption><b>Figura 16</b> <code>PROGRESSO.md</code>: no alto, a tabela das onze fases (porta de saída, quem conduz, estado, data, evidência); abaixo, as quatro seções de checklist, cada item com os slides do manual de origem.</figcaption></figure>
+        <div class="tw"><table><thead><tr><th style="width:150px">Seção</th><th>Itens</th><th>Quem marca</th></tr></thead><tbody>
+          <tr><td><b>Fases</b></td><td>0 a 10</td><td>Só o Pesquisador</td></tr>
+          <tr><td><b>Método</b> (M1–M16)</td><td>Pergunta, objetivos, justificativa… defesa</td><td>Metodólogo</td></tr>
+          <tr><td><b>Uso de IA</b> (I1–I16)</td><td>Governança, dados, busca, triagem… declaração, entrega</td><td>Orientador</td></tr>
+          <tr><td><b>Biblioteca</b> (B1–B12)</td><td>Instalação, conta, estilo… backup, grupo</td><td>Bibliotecário</td></tr>
+          <tr><td><b>Leitura e síntese</b> (L1–L7)</td><td>Conta, fontes, ingestão, citações, matriz, dados sensíveis, declaração</td><td>Leitura</td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>Um item só recebe <code>[x]</code> depois que o agente responsável conferiu a evidência (arquivo, script, número) — e anota data e evidência ao lado. É a regra escrita no cabeçalho do próprio arquivo.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s16" data-title="As onze fases e as portas de saída">
+  <div class="inner">
+    <div class="kicker-part rv">Usar<span>3 de 10</span></div>
+    <h2 class="rv">As onze fases e a porta de saída de cada uma — o que precisa existir para a fase fechar</h2>
+    <div class="tw rv"><table><thead><tr><th style="width:150px">Fase</th><th>Porta de saída (evidência)</th><th style="width:170px">Quem conduz</th><th style="width:190px">Manual de origem</th></tr></thead><tbody>
+      <tr><td><b>0 Diagnóstico</b></td><td>Pasta criada; tema, prazo, programa, orientador, ferramentas e tipo de conta em <code>PROGRESSO.md</code></td><td>Pesquisador</td><td>—</td></tr>
+      <tr><td><b>1 Pergunta</b></td><td><code>00_projeto/DECISOES_METODO.md</code> com tema delimitado, problema, pergunta com «tabela vazia do resultado», objetivos</td><td>Metodólogo</td><td>Metodologia 7–9</td></tr>
+      <tr><td><b>2 Método</b></td><td>Classificação nos quatro eixos; «escolhi X porque…; descartei Y porque…»; amostra, instrumento e análise; o que a IA pode fazer registrado</td><td>Metodólogo · Orientador</td><td>Metodologia 12–22 · IA 6–11, 37</td></tr>
+      <tr><td><b>3 Projeto e ética</b></td><td>Projeto <span class="gterm" tabindex="0" data-t="ABNT · NBR" data-d="Associação Brasileira de Normas Técnicas e suas normas: 15287 (projeto), 14724 (trabalho acadêmico), 10520 (citações), 6023 (referências). Os estilos CSL do plugin geram as referências pelo Zotero.">NBR</span> 15287:2025 em <code>06_texto/</code>; com pessoas: parecer do <span class="gterm" tabindex="0" data-t="CEP · CAAE" data-d="Comitê de Ética em Pesquisa e Certificado de Apresentação de Apreciação Ética: o parecer com CAAE em 03_etica/ é a porta da fase 3 quando há pessoas.">CEP</span> com <span class="gterm" tabindex="0" data-t="CEP · CAAE" data-d="Comitê de Ética em Pesquisa e Certificado de Apresentação de Apreciação Ética: o parecer com CAAE em 03_etica/ é a porta da fase 3 quando há pessoas.">CAAE</span> em <code>03_etica/</code> e <span class="gterm" tabindex="0" data-t="TCLE" data-d="Termo de Consentimento Livre e Esclarecido: o modelo é copiado para 03_etica/TCLE.md.">TCLE</span>; acordo com o orientador</td><td>Metodólogo</td><td>Metodologia 25–28 · IA 6, 17</td></tr>
+      <tr><td><b>4 Busca e biblioteca</b></td><td><span class="gterm" tabindex="0" data-t="Protocolo congelado" data-d="Versão datada do protocolo da revisão, fechada antes da primeira busca; muda só por emenda registrada.">Protocolo congelado</span> e datado; strings verbatim com data, filtros, total e hash em <code>01_buscas/</code>; coleção por base e data; auditoria sem pendência crítica</td><td>Metodólogo · Bibliotecário</td><td>IA 18–22 · Zotero 16, 20–23, 49</td></tr>
+      <tr><td><b>5 Triagem</b></td><td>Duplicados mesclados; codebook versionado; triagem assistida com status preliminar e decisão humana por registro; concordância (κ) com intervalo; números do <span class="gterm" tabindex="0" data-t="PRISMA" data-d="Guia de relato de revisões sistemáticas; os números da triagem em 02_triagem/ alimentam o diagrama.">PRISMA</span></td><td>Orientador · Bibliotecário</td><td>IA 23–31 · Zotero 23, 40</td></tr>
+      <tr><td><b>6 Leitura e síntese</b></td><td>PDFs dos incluídos no notebook; inventário rodado; fichas com página; <code>04_sintese/matriz_sintese.csv</code> com colunas do protocolo e cada célula conferida</td><td>Leitura · Bibliotecário</td><td>Gemini Notebook 11–23, 32–34 · IA 32–33</td></tr>
+      <tr><td><b>7 Análise</b></td><td>Técnica decidida antes; pressupostos; efeito com intervalo ou categorias com trecho; scripts e dados guardados; figuras por script</td><td>Metodólogo · Orientador</td><td>Metodologia 21–24 · IA 34</td></tr>
+      <tr><td><b>8 Escrita ABNT</b></td><td>NBR 14724:2024; <code>verificar_citacoes.py</code> e <code>verificar_refs.py</code> sem erro; referências pelo Zotero (NBR 6023:2025); marcas de IA removidas</td><td>Bibliotecário · scripts</td><td>Metodologia 25, 30–32 · IA 40–44 · Zotero 30–33</td></tr>
+      <tr><td><b>9 Pré-banca</b></td><td>Cinco objeções com resposta; perguntas prováveis a partir da tese, com página; ensaio</td><td>Metodólogo · Leitura</td><td>Metodologia 34 · Gemini Notebook 36</td></tr>
+      <tr><td><b>10 Entrega</b></td><td><span class="gterm" tabindex="0" data-t="Declaração de uso de IA" data-d="Trecho do trabalho com ferramenta, fase, finalidade, validação e o que a IA não fez; montada por /pesquisa:declarar a partir de USO_DE_IA.csv.">Declaração de uso de IA</span> aprovada; guia de relato conferido; backup do Zotero e biblioteca congelada; checklist final sem pendência</td><td>Orientador · Bibliotecário</td><td>IA 43, 16 · Zotero 41</td></tr>
+    </tbody></table></div>
+    <div class="trap rv"><span class="blabel">Portas fechadas</span><p>Quatro portas não se abrem por pedido: coleta com pessoas sem parecer do <span class="gterm" tabindex="0" data-t="CEP · CAAE" data-d="Comitê de Ética em Pesquisa e Certificado de Apresentação de Apreciação Ética: o parecer com CAAE em 03_etica/ é a porta da fase 3 quando há pessoas.">CEP</span> (Comitê de Ética em Pesquisa); busca sem <span class="gterm" tabindex="0" data-t="Protocolo congelado" data-d="Versão datada do protocolo da revisão, fechada antes da primeira busca; muda só por emenda registrada.">protocolo congelado</span>; síntese sem matriz com colunas do protocolo; entrega sem <span class="gterm" tabindex="0" data-t="Declaração de uso de IA" data-d="Trecho do trabalho com ferramenta, fase, finalidade, validação e o que a IA não fez; montada por /pesquisa:declarar a partir de USO_DE_IA.csv.">declaração de uso de IA</span> aprovada por você. E não se pula fase: uma pergunta mal formulada invalida tudo o que vem depois.</p></div>
+  </div>
+</section>
+
+<section class="slide alt" id="s17" data-title="Sessão típica: «Pesquisador, onde paramos?»">
+  <div class="inner">
+    <div class="kicker-part rv">Usar<span>4 de 10</span></div>
+    <h2 class="rv">Sessão típica: começa por «onde paramos» e termina por «o próximo passo, em uma frase»</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/pl_11_claude_code_sessao.jpg" width="1920" height="938" alt="Claude Code na pasta do projeto: o agente Pesquisador responde a onde paramos com a fase atual, o que já está feito, o que falta para fechar a fase e a pergunta seguinte"></div><figcaption><b>Figura 17</b> «Pesquisador, onde paramos?» na pasta do projeto: o agente lê <code>PROGRESSO.md</code>, <code>DECISOES.md</code> e <code>USO_DE_IA.csv</code> e responde com a fase atual, o que está feito, o que falta para fechar a fase e a pergunta que decide agora — sem marcar nada como concluído.</figcaption></figure>
+      <div>
+        <ol>
+          <li>Abra o Claude Code <em>dentro</em> da pasta do projeto (<code>cd minha-pesquisa</code> e depois <code>claude</code>). O hook detecta o <code>PROGRESSO.md</code>.</li>
+          <li>Diga a frase de abertura (bloco abaixo). O Pesquisador lê <code>PROGRESSO.md</code> e responde: fase atual, feito, o que falta e a próxima pergunta.</li>
+          <li>Trabalhe a fase atual: ele chama o especialista, faz uma pergunta por vez e registra a sua escolha só depois que você confirma.</li>
+          <li>Ao encerrar, peça o próximo passo — ele fica na sua cabeça e no <code>PROGRESSO.md</code>, não na conversa.</li>
+        </ol>
+        <div class="code"><div class="code-head">Claude Code — abertura e fechamento da sessão</div><pre>Pesquisador, onde paramos?
+Pesquisador, qual é o próximo passo, em uma frase?</pre></div>
+        <div class="code"><div class="code-head">Codex — o equivalente</div><pre>/pesquisador onde paramos</pre></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p><strong>Estado primeiro.</strong> Se o <code>PROGRESSO.md</code> não existe, ele não inventa um: faz o diagnóstico da fase 0 e cria o projeto. Se existe material de fases posteriores, ele registra, mas fecha as anteriores antes.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s18" data-title="Chamar cada especialista">
+  <div class="inner">
+    <div class="kicker-part rv">Usar<span>5 de 10</span></div>
+    <h2 class="rv">Chamar cada especialista: quando, com que pedido e o que ele registra</h2>
+    <div class="tw rv"><table><thead><tr><th style="width:130px">Papel</th><th>Chame quando…</th><th>Exemplo de pedido (Claude Code)</th><th style="width:150px">No Codex</th><th>O que ele registra</th></tr></thead><tbody>
+      <tr><td><span class="pill p-blue">Pesquisador</span></td><td>Não sabe a quem perguntar; quer o estado, o que falta, o próximo passo</td><td class="mono">Pesquisador, onde paramos?<br>Pesquisador, o que falta para fechar a fase 4?</td><td class="mono">/pesquisador …</td><td>Tabela de fases em <code>PROGRESSO.md</code>; decisões em <code>DECISOES.md</code></td></tr>
+      <tr><td><span class="pill p-blue">Metodólogo</span></td><td>Pergunta, objetivos, método, amostra, instrumento, análise, projeto, banca</td><td class="mono">Metodólogo, minha pergunta é «…». Ela tem tabela vazia do resultado?<br>Metodólogo, monte o projeto conforme a NBR 15287 a partir de DECISOES_METODO.md</td><td class="mono">/metodologo …</td><td>Seção Método (M); <code>00_projeto/DECISOES_METODO.md</code></td></tr>
+      <tr><td><span class="pill p-amber">Orientador</span></td><td>Dúvida sobre usar IA numa etapa; triagem assistida; declaração</td><td class="mono">Orientador, posso usar IA para agrupar os resumos da triagem? Como registro?<br>Orientador, monte a declaração de uso de IA</td><td class="mono">/orientador …</td><td>Seção Uso de IA (I); linhas em <code>USO_DE_IA.csv</code></td></tr>
+      <tr><td><span class="pill p-go">Bibliotecário</span></td><td>Zotero: configurar, auditar, referência errada, exportar, backup</td><td class="mono">Bibliotecário, audite a coleção «2 Incluídos»<br>Bibliotecário, por que esta referência saiu com o nome em caixa alta?</td><td class="mono">/bibliotecario …</td><td>Seção Biblioteca (B); correção no item do Zotero</td></tr>
+      <tr><td><span class="pill p-go">Leitura</span></td><td>Ler a pilha de PDFs, fichamento, matriz de síntese, perguntas de banca a partir da tese</td><td class="mono">Pesquisador, quero começar a leitura dos incluídos no Gemini Notebook<br>Confira a matriz que exportei em 04_sintese/</td><td class="mono">/pesquisador … (skill leitura-gemini-notebook)</td><td>Seção Leitura (L); <code>04_sintese/matriz_sintese.csv</code></td></tr>
+    </tbody></table></div>
+    <div class="two rv">
+      <div class="rule-box"><span class="blabel">Regra</span><p>Pergunta fora da fase atual recebe uma resposta de uma frase e a volta à fase: «isso é da fase 6; estamos na 4 — fecho a 4 primeiro, porque…». Não é teimosia: é a ordem que impede retrabalho.</p></div>
+      <div class="note"><span class="blabel">Como o Pesquisador chama os outros</span><p>No Claude Code, ele delega pela ferramenta de agentes: o Metodólogo responde como agente separado. No Codex, não há subagentes: o próprio Pesquisador aplica a skill do especialista. O conteúdo é o mesmo; muda quem «fala».</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s19" data-title="Os sete comandos /pesquisa">
+  <div class="inner">
+    <div class="kicker-part rv">Usar<span>6 de 10</span></div>
+    <h2 class="rv">Os sete comandos <code>/pesquisa:…</code> — atalhos para as fases do Pesquisador</h2>
+    <div class="two rv">
+      <div class="tw"><table><thead><tr><th style="width:170px">Comando</th><th>O que faz</th><th>O que lê ou gera</th></tr></thead><tbody>
+        <tr><td class="mono">/pesquisa:iniciar</td><td>Diagnóstico da fase 0, uma pergunta por mensagem, e criação da pasta</td><td>Roda <code>iniciar_projeto.py</code>; mostra a árvore</td></tr>
+        <tr><td class="mono">/pesquisa:status</td><td>Resumo de uma página para o orientador humano: fase e portas, últimas cinco decisões, pendências por checklist, uso de IA por etapa, próximo passo. Não marca nada</td><td>Lê <code>PROGRESSO.md</code>, <code>DECISOES.md</code>, <code>USO_DE_IA.csv</code></td></tr>
+        <tr><td class="mono">/pesquisa:proxima</td><td>O próximo passo da fase atual em até cinco linhas: quem conduz (e o chama), manual e slide, evidência que vai comprovar</td><td>Lê <code>PROGRESSO.md</code></td></tr>
+        <tr><td class="mono">/pesquisa:auditar</td><td>Roda as verificações automáticas e resume as pendências por gravidade, sem corrigir nada</td><td><code>auditar_biblioteca.py</code>, <code>verificar_citacoes.py</code> em <code>06_texto/</code>, <code>verificar_refs.py</code>; conector <code>zotero</code></td></tr>
+        <tr><td class="mono">/pesquisa:declarar</td><td>Chama o Orientador e monta a declaração de uso de IA; aponta linhas faltantes antes de redigir</td><td>Lê <code>USO_DE_IA.csv</code></td></tr>
+        <tr><td class="mono">/pesquisa:banca</td><td>Cinco objeções com resposta (Metodólogo) e perguntas prováveis a partir da tese no notebook (Leitura)</td><td>Consolida em <code>07_banca/</code> com a página da tese</td></tr>
+        <tr><td class="mono">/pesquisa:entregar</td><td>Percorre a fase 10 e as portas anteriores; lista o que bloqueia, com evidência esperada e quem conduz</td><td>Lê <code>PROGRESSO.md</code></td></tr>
+      </tbody></table></div>
+      <div>
+        <div class="code"><div class="code-head">Claude Code — os sete comandos (aceitam texto adicional depois do nome)</div><pre>/pesquisa:iniciar
+/pesquisa:status
+/pesquisa:proxima
+/pesquisa:auditar
+/pesquisa:declarar
+/pesquisa:banca
+/pesquisa:entregar</pre></div>
+        <div class="code"><div class="code-head">Codex — os prompts instalados em ~/.codex/prompts</div><pre>/pesquisador onde paramos
+/metodologo minha pergunta é «…»
+/orientador posso usar IA nesta etapa?
+/bibliotecario audite a coleção «2 Incluídos»</pre></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p><code>/pesquisa:status</code> é o que o orientador humano lê. Gere-o antes de cada reunião: uma página, sem marcar nada, com o que foi decidido, o que falta e o que a IA fez.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s20" data-title="O conector Zotero em uso">
+  <div class="inner">
+    <div class="kicker-part rv">Usar<span>7 de 10</span></div>
+    <h2 class="rv">O conector do Zotero em uso: auditar a biblioteca e gerar a referência ABNT a partir do próprio Zotero</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/pl_15_conector_zotero.jpg" width="1920" height="938" alt="Claude Code chamando as ferramentas status, buscar_itens e referencia_abnt do conector zotero e mostrando o resultado"></div><figcaption><b>Figura 18</b> Três chamadas ao conector: <code>status</code> confirma o Zotero acessível; <code>buscar_itens</code> acha o PRISMA 2020 em duas versões; <code>referencia_abnt</code> devolve a referência gerada pelo próprio Zotero com o estilo ABNT instalado — não de memória. O Bibliotecário aponta a duplicata e pergunta antes de etiquetar.</figcaption></figure>
+      <div>
+        <ol>
+          <li>Abra o Zotero 7 (ou superior). Em «Configurações» → «Avançado», ligue «Permitir que outros aplicativos neste computador se comuniquem com o Zotero».</li>
+          <li>Na sessão, confirme: «Bibliotecário, o Zotero está acessível?» — ele chama <code>status</code>.</li>
+          <li>Peça a busca ou a auditoria de uma coleção e, depois, a referência de um item (bloco abaixo).</li>
+          <li>Corrija o que a auditoria apontou <em>no item do Zotero</em>; gere a referência de novo.</li>
+        </ol>
+        <div class="code"><div class="code-head">Claude Code ou Codex — pedidos que acionam o conector</div><pre>Bibliotecário, o PRISMA 2020 está na minha biblioteca? Me dá a referência ABNT.
+Bibliotecário, audite a coleção «2 Incluídos» e liste as pendências por item.
+Bibliotecário, exporte a coleção «2 Incluídos» em BibLaTeX pelo Better BibTeX.</pre></div>
+        <div class="tw"><table><thead><tr><th>A auditoria aponta</th><th>Onde corrigir</th></tr></thead><tbody>
+          <tr><td>Item sem DOI; sem PDF anexado; autor em caixa alta; duplicados</td><td>No item, no Zotero — nunca na lista de referências do documento</td></tr>
+        </tbody></table></div>
+        <div class="trap"><span class="blabel">Armadilha</span><p><strong>Conector «desconectado».</strong> Três causas: Zotero fechado, API local desligada ou <code>uv</code> ausente. Abra o Zotero, ligue a API; instale o <code>uv</code> ou troque o comando do conector por <code>python3</code> com <code>pip install mcp</code>. O conector só lê pela API local (<code>127.0.0.1:23119</code>) e nunca escreve na biblioteca.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s21" data-title="A camada de leitura (Gemini Notebook)">
+  <div class="inner">
+    <div class="kicker-part rv">Usar<span>8 de 10</span></div>
+    <h2 class="rv">A camada de leitura: o Gemini Notebook entra por arquivo, e a matriz volta conferida célula a célula</h2>
+    <div class="two rv">
+      <div>
+        <p class="lead">O Gemini Notebook não tem API pública nem extensão oficial (setembro de 2026). A skill <code>leitura-gemini-notebook</code> não opera o notebook: ela orienta o que enviar, dá os prompts de cada fluxo e confere o que sai. A ponte é por arquivo — PDFs do Zotero para dentro; planilha e notas para fora.</p>
+        <div class="tw"><table><thead><tr><th style="width:56px">Fluxo</th><th>O que entra</th><th>O que sai — e para onde vai</th></tr></thead><tbody>
+          <tr><td class="mono">A</td><td>Pilha de PDFs da busca</td><td>Tabela de inventário → planilha com «decisão» e «motivo» preenchidas por você</td></tr>
+          <tr><td class="mono">B</td><td>Um artigo (fonte única selecionada)</td><td>Fichamento <span class="gterm" tabindex="0" data-t="IMRaD" data-d="Introdução, Métodos, Resultados e Discussão — estrutura do artigo e do fichamento guiado.">IMRaD</span> → nota no item do Zotero, com página</td></tr>
+          <tr><td class="mono">C</td><td>PDFs dos incluídos</td><td>Matriz de síntese → planilha conferida → só então perguntas transversais</td></tr>
+          <tr><td class="mono">D</td><td>Textos-base de uma aula</td><td>Mapa mental como estrutura; slides como esqueleto; material revisado item a item</td></tr>
+          <tr><td class="mono">E</td><td>PDF da tese</td><td>Vinte perguntas prováveis com trecho → respostas com página em <code>07_banca/</code></td></tr>
+          <tr><td class="mono">F</td><td>Coleção «incluídos» do Zotero</td><td>PDFs exportados; fichas e matriz voltam ao Zotero como nota do item</td></tr>
+        </tbody></table></div>
+      </div>
+      <div>
+        <ul class="bul">
+          <li>Um notebook por pergunta de pesquisa ou etapa; fontes são os PDFs renomeados pelo Zotero («Autor - Ano - Título.pdf»), nunca a URL da editora, nunca PDF escaneado sem OCR (reconhecimento óptico de caracteres).</li>
+          <li>A primeira pergunta é sempre o inventário (<code>tools/prompts_gemini_notebook.md</code>): revela fonte vazia antes de qualquer síntese.</li>
+          <li>Frase sem número de citação é conjectura. A citação do notebook é endereço interno; a referência sai do Zotero.</li>
+          <li class="warn">Dados sensíveis: nada identificável, transcrições anonimizadas, sem feedback em conversas com dados; conta institucional quando existir.</li>
+        </ul>
+        <div class="rule-box"><span class="blabel">O que a skill confere na matriz exportada</span><p>Para cada linha: a fonte existe na coleção do Zotero? (ferramentas <code>auditar</code> e <code>buscar_itens</code>). Para uma amostra de células: você abre o trecho e confirma. Linha de estudo que não é fonte — vinda de uma citação dentro de um PDF — é o erro mais comum. Só depois disso o item L5 fecha, e o uso vai para <code>USO_DE_IA.csv</code> com validação «trecho conferido».</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s22" data-title="O que o plugin recusa — e por quê">
+  <div class="inner">
+    <div class="kicker-part rv">Usar<span>9 de 10</span></div>
+    <h2 class="rv">O que o plugin recusa — em uma frase, com a regra e o caminho certo</h2>
+    <div class="tw rv"><table><thead><tr><th>Pedido</th><th>O que acontece</th><th>Por quê (regra em <code>AGENTS.md</code> e nos agentes)</th></tr></thead><tbody>
+      <tr><td>«Escreva a Discussão da minha dissertação»</td><td><span class="pill p-stop">recusa</span> e oferece a estrutura por objetivo, com os seus dados</td><td>Resultados, Discussão e Conclusão são de autoria do aluno; o agente não os escreve</td></tr>
+      <tr><td>«Invente três referências sobre o tema para eu completar depois»</td><td><span class="pill p-stop">recusa</span></td><td>Referência só entra depois de resolvida na <span class="gterm" tabindex="0" data-t="Crossref · DOI" data-d="Registro público de DOIs (identificadores persistentes de publicações); verificar_refs.py resolve cada DOI lá. Referência sem DOI resolvido não entra.">Crossref</span> e registrada no Zotero; DOI não se inventa</td></tr>
+      <tr><td>«Marque a fase 3 como concluída, já tenho o parecer do CEP»</td><td><span class="pill p-amber">não marca</span>; pede o arquivo em <code>03_etica/</code></td><td>Item e fase só fecham com evidência conferida (arquivo, script, número)</td></tr>
+      <tr><td>«Coloque a planilha com os nomes dos entrevistados no repositório»</td><td><span class="pill p-stop">recusa</span>; indica <code>dados_FORA_DO_GIT/</code></td><td>Dado pessoal, resumo licenciado de base assinada, manuscrito de terceiros e PDF pago ficam fora do Git</td></tr>
+      <tr><td>«Pode começar as entrevistas enquanto o comitê não responde»</td><td><span class="pill p-stop"><span class="gterm" tabindex="0" data-t="Porta fechada · gate humano" data-d="Passagem que exige decisão ou documento de uma pessoa: parecer do CEP, protocolo congelado, decisão de triagem por registro, aprovação dos coautores, declaração aprovada.">porta fechada</span></span></td><td>Coleta com pessoas não passa sem parecer do CEP registrado em <code>03_etica/</code></td></tr>
+      <tr><td>«Escolha o método por mim»</td><td><span class="pill p-amber">apresenta alternativas</span> com prós e contras e faz a pergunta que decide</td><td>O aluno decide; o agente formula e registra depois da confirmação</td></tr>
+      <tr><td>«Ajuste esse número para bater com o texto»</td><td><span class="pill p-stop">recusa</span></td><td>Todo número tem tabela ou script de origem; mudança é anotada, nunca silenciosa</td></tr>
+      <tr><td>«Muda o critério de inclusão, já que apareceu pouco resultado»</td><td><span class="pill p-amber">só por emenda</span> datada no protocolo</td><td>Protocolo congelado antes da primeira busca; alteração é emenda registrada</td></tr>
+    </tbody></table></div>
+    <div class="two rv">
+      <div class="rule-box"><span class="blabel">Regra</span><p>A recusa é curta por desenho: uma frase, a regra, o slide do manual e o caminho certo. Não é um bloqueio do modelo; é a regra do projeto, escrita em <code>AGENTS.md</code>, que qualquer agente que abra a pasta lê antes de agir.</p></div>
+      <div class="note"><span class="blabel">Gates humanos</span><p>Cinco passagens exigem uma pessoa: protocolo congelado antes da primeira busca; decisão de triagem por registro; validação da extração no PDF; aprovação do texto por todos os coautores; declaração de uso de IA aprovada antes da submissão.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s23" data-title="Registro: DECISOES.md e USO_DE_IA.csv">
+  <div class="inner">
+    <div class="kicker-part rv">Usar<span>10 de 10</span></div>
+    <h2 class="rv">Registro: toda decisão em <code>DECISOES.md</code>, toda influência de IA em <code>USO_DE_IA.csv</code></h2>
+    <div class="two rv">
+      <div>
+        <h4>DECISOES.md — decisões numeradas, datadas, com a sua justificativa</h4>
+        <div class="code"><div class="code-head">DECISOES.md — formato de uma entrada (o agente escreve depois que você confirma)</div><pre>## D001 — Bases de busca
+**Data:** 2026-09-08 · **Responsável:** (você) ·
+**Decisão:** Scopus, Web of Science e SciELO ·
+**Justificativa:** cobertura da área + literatura em português ·
+**Impacto medido:** (preencher após a busca)</pre></div>
+        <ul class="bul">
+          <li>Nunca se apaga uma decisão: uma nova a substitui e aponta para a anterior.</li>
+          <li>Nada é registrado sem a sua confirmação — o agente formula, pergunta e só então escreve.</li>
+          <li>Conflito entre especialistas vai para cá, com a regra mais restritiva prevalecendo.</li>
+        </ul>
+      </div>
+      <div>
+        <h4>USO_DE_IA.csv — uma linha por influência de IA em decisão ou texto</h4>
+        <div class="code"><div class="code-head">USO_DE_IA.csv — cabeçalho e uma linha de exemplo (do modelo do plugin)</div><pre>data,etapa,ferramenta,modelo_versao,finalidade,dados_enviados,prompt_ou_consulta,validacao,decisao_humana,declara,quem
+2026-03-04,triagem,Claude,claude-sonnet-5,agrupar registros pela regra do codebook,identificadores e títulos; resumos ficaram locais,"agrupar o lote pelas regras R1-R6; não decidir",autor decidiu um a um; script grava só com --gravar,sim por registro,declare,JPM</pre></div>
+        <div class="tw"><table><thead><tr><th>Quem acrescenta a linha</th><th>Quando</th></tr></thead><tbody>
+          <tr><td>O Pesquisador e cada especialista</td><td>Toda vez que influenciam uma decisão ou um texto — «você também é IA», diz a regra do Pesquisador</td></tr>
+          <tr><td>Você</td><td>Quando usa o Gemini Notebook, o ChatGPT ou outra ferramenta fora do plugin</td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>A declaração de uso de IA do trabalho (<code>/pesquisa:declarar</code>) é montada <em>a partir deste arquivo</em>: ferramenta, fase, finalidade, validação e o que a IA não fez. Linha que falta hoje é parágrafo que não existe na declaração — o Orientador aponta as faltas antes de redigir.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PARTE 4 ===================== -->
+<section class="slide divider" id="p4" data-title="Parte 4 · Manutenção"><div class="inner"><div class="kicker-part rv">Parte 4<span>Manutenção</span></div><h2 class="rv">Atualizar, publicar, resolver e saber o que ele faz com os seus dados</h2><p class="rv">Como o plugin se atualiza em cada cliente, como se gera uma nova versão para o diretório do Codex, os problemas conhecidos e a política de privacidade, os termos e a licença.</p></div><div class="num">04</div></section>
+
+<section class="slide" id="s24" data-title="Atualizar e publicar uma nova versão">
+  <div class="inner">
+    <div class="kicker-part rv">Manutenção<span>1 de 3 · versão atual 1.0.0</span></div>
+    <h2 class="rv">Atualizar e publicar: no Claude Code basta o <em>push</em>; para o Codex, <code>empacotar_codex.py</code> gera o ZIP</h2>
+    <div class="two rv">
+      <figure><div class="shot"><img src="capturas/pl_16_portal_codex_publicado.jpg" width="1920" height="938" alt="Portal de plugins da OpenAI com o plugin Pesquisa MirandasTech publicado"></div><figcaption><b>Figura 19</b> O portal de plugins com o Pesquisa MirandasTech publicado (08/09/2026). Uma nova versão é um novo ZIP enviado aqui, com o número de versão maior.</figcaption></figure>
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:150px">Cliente</th><th>Como atualiza</th></tr></thead><tbody>
+          <tr><td><b>Claude Code</b></td><td>O marketplace aponta para o repositório: depois de um <em>push</em> no GitHub, o plugin se atualiza pelo catálogo (o script usa <code>claude plugin marketplace update mirandastech</code> quando o catálogo já existe)</td></tr>
+          <tr><td><b>Codex (marketplace próprio)</b></td><td>Mesmo repositório; o script usa <code>codex plugin marketplace upgrade mirandastech</code></td></tr>
+          <tr><td><b>Diretório do <span class="gterm" tabindex="0" data-t="Diretório de plugins (ChatGPT/Codex)" data-d="Catálogo oficial da OpenAI, comum ao ChatGPT e ao Codex, com página por plugin e botão «Instalar plugin». O Pesquisa MirandasTech está lá desde 08/09/2026, tipo «Skills only».">ChatGPT/Codex</span></b></td><td>Gerar o ZIP com a versão nova e reenviar no portal</td></tr>
+        </tbody></table></div>
+        <div class="code"><div class="code-head">terminal — nova versão para o diretório do Codex</div><pre>python3 scripts/empacotar_codex.py --versao 1.1.0
+ls dist/
+# → dist/pesquisa-mirandastech-1.1.0.zip</pre></div>
+        <ul class="bul">
+          <li>O empacotador sobe a versão nos manifestos e valida, antes de gerar o ZIP, o que o portal recusaria: campos obrigatórios, subtítulo com até 30 caracteres, ícones PNG quadrados, versão no formato X.Y.Z e o cabeçalho de cada skill.</li>
+          <li>O ZIP leva só o que o Codex precisa (<span class="gterm" tabindex="0" data-t="Manifesto" data-d="Arquivo que descreve o plugin (nome, versão, descrição, o que contém): .claude-plugin/plugin.json no Claude Code e .codex-plugin/plugin.json no Codex. O empacotador o valida antes de gerar o ZIP.">manifesto</span>, ícones, skills, scripts, modelos, prompts, <code>AGENTS.md</code>, README, LICENSE) — sem <code>.git</code> nem arquivos do plugin do Claude Code.</li>
+          <li class="warn">Sem <code>--versao</code>, o empacotador usa a versão que está no <span class="gterm" tabindex="0" data-t="Manifesto" data-d="Arquivo que descreve o plugin (nome, versão, descrição, o que contém): .claude-plugin/plugin.json no Claude Code e .codex-plugin/plugin.json no Codex. O empacotador o valida antes de gerar o ZIP.">manifesto</span>: para uma versão nova, passe sempre um número maior (X.Y.Z) — ele atualiza os dois manifestos antes de gerar o ZIP.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s25" data-title="Problemas conhecidos e suporte">
+  <div class="inner">
+    <div class="kicker-part rv">Manutenção<span>2 de 3 · docs/SUPORTE.md</span></div>
+    <h2 class="rv">Problemas conhecidos — e como pedir ajuda</h2>
+    <div class="two rv">
+      <div class="tw"><table><thead><tr><th>Sintoma</th><th>Causa</th><th>Solução</th></tr></thead><tbody>
+        <tr><td>O conector <code>zotero</code> aparece desconectado</td><td>Zotero fechado, API local desligada ou <code>uv</code> ausente</td><td>Abra o Zotero e ligue a API local; instale o <code>uv</code> ou troque o comando do conector por <code>python3</code> com <code>pip install mcp</code></td></tr>
+        <tr><td>No Codex, cada chamada ao conector pede aprovação</td><td>Política padrão do Codex para ferramentas MCP</td><td>Em <code>~/.codex/config.toml</code>, por ferramenta: <code>[mcp_servers.zotero.tools.auditar]</code> e <code>approval_mode = "auto"</code> (slide 15)</td></tr>
+        <tr><td><code>verificar_refs.py</code> não resolve os DOIs</td><td>O script consulta a <span class="gterm" tabindex="0" data-t="Crossref · DOI" data-d="Registro público de DOIs (identificadores persistentes de publicações); verificar_refs.py resolve cada DOI lá. Referência sem DOI resolvido não entra.">Crossref</span> pela internet</td><td>Rode com rede; sem rede ele só valida o formato</td></tr>
+        <tr><td><code>PROGRESSO_IA.md</code> e <code>PROGRESSO_METODOLOGIA.md</code> antigos na pasta</td><td>Projeto criado pelos manuais anteriores</td><td><code>iniciar_projeto.py</code> migra os itens marcados para <code>PROGRESSO.md</code> e mantém os antigos como histórico</td></tr>
+        <tr><td>«Pesquisador, onde paramos?» não funciona no Claude Desktop</td><td>O Desktop recebe só o conector</td><td>Use o Claude Code ou o Codex na pasta do projeto</td></tr>
+        <tr><td><code>/plugin install pesquisa@claude-community</code> falha</td><td>Submissão ainda em revisão</td><td>Use <code>pesquisa@mirandastech</code>; o conteúdo é o mesmo</td></tr>
+      </tbody></table></div>
+      <div>
+        <h4>Antes de abrir uma issue</h4>
+        <div class="code"><div class="code-head">terminal — o que rodar e anexar ao pedido de ajuda</div><pre>claude plugin validate .
+claude plugin details pesquisa@mirandastech
+codex plugin list</pre></div>
+        <ul class="bul">
+          <li>Confirme que o Zotero está aberto com a API local ligada e que o <code>uv</code> está instalado.</li>
+          <li>Abra uma <em>issue</em> no repositório (português ou inglês) dizendo o cliente (Claude Code, Claude Desktop, Codex aplicativo ou linha de comando, ChatGPT), o sistema operacional e o que aconteceu.</li>
+          <li>Ou escreva para <a href="mailto:contato@mirandastech.com.br">contato@mirandastech.com.br</a>.</li>
+        </ul>
+        <div class="note"><span class="blabel">Onde está tudo</span><p>Suporte: <code>docs/SUPORTE.md</code> · Privacidade: <code>docs/PRIVACIDADE.md</code> · Termos: <code>docs/TERMOS.md</code> · Textos de submissão: <code>docs/DESCRICAO.md</code> · Plano: <code>docs/PLANO.md</code>. Hub: <a href="https://www.mirandastech.com.br/pesquisa">mirandastech.com.br/pesquisa</a>.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s26" data-title="Privacidade, termos e licença">
+  <div class="inner">
+    <div class="kicker-part rv">Manutenção<span>3 de 3 · política e termos versão 1.0, 08/09/2026</span></div>
+    <h2 class="rv">Privacidade, termos e licença: o que sai do seu computador (quase nada) e de quem é a responsabilidade</h2>
+    <div class="two rv">
+      <div class="tw"><table><thead><tr><th style="width:190px">Situação</th><th>O que acontece</th></tr></thead><tbody>
+        <tr><td><b>Agentes, skills, comandos, scripts, conector</b></td><td>Arquivos instalados localmente. Não há servidor da MirandasTech, conta, chave, cadastro ou telemetria; nada é enviado à MirandasTech</td></tr>
+        <tr><td><b>Conector <code>zotero</code></b></td><td>Lê a biblioteca pela API local (<code>127.0.0.1:23119</code>), só quando você o usa; não escreve nem envia nada para fora</td></tr>
+        <tr><td><b><code>verificar_refs.py</code></b></td><td>Quando você o executa, consulta a API pública da Crossref enviando apenas DOIs ou títulos</td></tr>
+        <tr><td><b>Arquivos do projeto</b></td><td>Ficam na sua pasta, sob o seu controle; o <code>.gitignore</code> gerado mantém <code>dados_FORA_DO_GIT/</code>, PDFs e planilhas fora do Git</td></tr>
+        <tr><td><b>Provedores de IA</b></td><td>O que você escreve no Claude Code ou no Codex — inclusive o conteúdo dos arquivos que os agentes leem — é processado pela Anthropic ou pela OpenAI sob os termos <em>deles</em>. Verifique as configurações de retenção e treinamento da sua conta; o plugin não as altera</td></tr>
+        <tr><td><b>Distribuição</b></td><td>Pelo GitHub e pelos diretórios, que registram acessos conforme as próprias políticas</td></tr>
+      </tbody></table></div>
+      <div>
+        <div class="dec">
+          <div class="m"><b>Licença</b><ul><li>Conteúdo e scripts: CC BY 4.0 — use, copie, adapte e redistribua com atribuição à MirandasTech e link para o repositório</li><li>Estilos ABNT em CSL incluídos: licença original CC BY-SA 3.0</li></ul></div>
+          <div class="p"><b>Sem garantia</b><ul><li>Normas ABNT, políticas de comitês, regras de programas e as ferramentas mudam; os manuais registram a data de verificação de cada fato</li><li>Nenhum vínculo ou endosso de Zotero, Google, Anthropic, OpenAI ou Crossref</li></ul></div>
+          <div class="h"><b>Responsabilidade acadêmica</b><ul><li>Método, inclusão de estudos, interpretação, texto e declaração de uso de IA são seus e seguem o programa, o orientador e o comitê de ética</li><li>Conduta: nada de dado ou referência fabricada, comitê burlado, material licenciado ou dado pessoal redistribuído</li></ul></div>
+        </div>
+        <div class="rule-box"><span class="blabel">Regra</span><p>A decisão de enviar qualquer conteúdo a um provedor de IA é sua e deve seguir o termo de consentimento e o comitê de ética do seu projeto. O plugin foi desenhado para não precisar de dado pessoal de participante; os manuais orientam a conta institucional quando existir. Para os fins da LGPD (Lei Geral de Proteção de Dados), do que você produz com o plugin, o controlador é você.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PARTE 5 ===================== -->
+<section class="slide divider" id="p5" data-title="Parte 5 · Fechamento"><div class="inner"><div class="kicker-part rv">Parte 5<span>Fechamento</span></div><h2 class="rv">Erros comuns, checklist, glossário e referências</h2><p class="rv">O que costuma dar errado e como corrigir, a lista para conferir a instalação e a primeira sessão, os termos, as fontes deste manual, o repositório — e como usar o plugin com os quatro manuais.</p></div><div class="num">05</div></section>
+
+<section class="slide" id="s27" data-title="Erros comuns">
+  <div class="inner">
+    <div class="kicker-part rv">Fechamento<span>1 de 6</span></div>
+    <h2 class="rv">Erros comuns — como aparecem e como corrigir</h2>
+    <div class="tw rv"><table><thead><tr><th>Erro</th><th>Como aparece</th><th>Causa</th><th style="width:240px">Correção</th></tr></thead><tbody>
+      <tr><td>Instalar o plugin sem o catálogo</td><td><code>/plugin install pesquisa@mirandastech</code> não encontra o plugin</td><td>O marketplace <code>mirandastech</code> não foi adicionado</td><td><span class="pill p-blue">rodar antes o /plugin marketplace add</span></td></tr>
+      <tr><td>Nome do plugin trocado entre clientes</td><td><code>codex plugin add pesquisa@mirandastech</code> falha</td><td>No Codex o plugin se chama <code>pesquisa-mirandastech</code></td><td><span class="pill p-blue">pesquisa@… no Claude; pesquisa-mirandastech@… no Codex</span></td></tr>
+      <tr><td>Sessão aberta fora da pasta do projeto</td><td>«Onde paramos?» começa um diagnóstico do zero</td><td>Sem <code>PROGRESSO.md</code> na pasta atual, o Pesquisador presume projeto novo</td><td><span class="pill p-blue">cd minha-pesquisa antes de abrir o Claude Code ou o Codex</span></td></tr>
+      <tr><td>Conector desconectado</td><td>Ferramentas do <code>zotero</code> não respondem</td><td>Zotero fechado, API local desligada, <code>uv</code> ausente</td><td><span class="pill p-blue">abrir o Zotero; ligar a API; instalar o uv</span></td></tr>
+      <tr><td>Corrigir a referência no documento</td><td>A mesma referência sai errada de novo na próxima geração</td><td>O erro está no item do Zotero</td><td><span class="pill p-stop">corrigir no item; gerar de novo</span></td></tr>
+      <tr><td>Pedir para marcar sem evidência</td><td>O agente pede o arquivo ou o script</td><td>Regra de evidência</td><td><span class="pill p-amber">produzir a evidência; ele marca</span></td></tr>
+      <tr><td>Pular para a escrita com a pergunta aberta</td><td>O Pesquisador volta à fase 1</td><td>Fases são sequenciais</td><td><span class="pill p-amber">fechar a pergunta; o resto fica registrado</span></td></tr>
+      <tr><td>Dado pessoal na pasta versionada</td><td>Recusa do agente; alerta sobre <code>dados_FORA_DO_GIT/</code></td><td>Regra de dados</td><td><span class="pill p-stop">mover para <span class="gterm" tabindex="0" data-t="dados_FORA_DO_GIT/" data-d="Pasta do projeto excluída do controle de versão, para dado pessoal, resumo licenciado e PDF pago.">dados_FORA_DO_GIT/</span>; anonimizar</span></td></tr>
+      <tr><td>Usar o Claude Desktop para o fluxo por fases</td><td>Nenhum agente responde</td><td>O Desktop recebe só o conector</td><td><span class="pill p-blue">Claude Code ou Codex na pasta</span></td></tr>
+      <tr><td>Esperar o conector no ChatGPT web</td><td>«Auditar a biblioteca» não chama ferramenta</td><td>O pacote do diretório é «Skills only»; o conector é local</td><td><span class="pill p-blue">Codex (app ou linha de comando) ou Claude Code</span></td></tr>
+      <tr><td>Uso de IA sem linha no registro</td><td>A declaração sai incompleta; o Orientador aponta as faltas</td><td><code>USO_DE_IA.csv</code> não foi alimentado</td><td><span class="pill p-amber">acrescentar as linhas; gerar de novo</span></td></tr>
+      <tr><td>ZIP gerado sem subir a versão</td><td>O pacote sai com o mesmo número da versão já publicada</td><td><code>empacotar_codex.py</code> rodado sem <code>--versao</code> usa a versão do manifesto</td><td><span class="pill p-blue">rodar com --versao X.Y.Z maior</span></td></tr>
+    </tbody></table></div>
+  </div>
+</section>
+
+<section class="slide alt" id="s28" data-title="Checklist de instalação e primeira sessão">
+  <div class="inner">
+    <div class="kicker-part rv">Fechamento<span>2 de 6</span></div>
+    <h2 class="rv">Checklist: instalação e primeira sessão</h2>
+    <p class="lead rv">Marque conforme concluir. O estado fica salvo neste navegador — não é compartilhado nem enviado a lugar nenhum.</p>
+    <div class="check rv" id="checklist">
+      <div class="check-item"><input type="checkbox" id="c01"><label for="c01"><b>Requisitos</b>Python 3, Git e <code>uv</code> instalados; Zotero 7 ou superior aberto com a API local ligada em «Configurações» → «Avançado»</label></div>
+      <div class="check-item"><input type="checkbox" id="c02"><label for="c02"><b>Claude Code</b>Catálogo <code>mirandastech</code> adicionado; <code>pesquisa@mirandastech</code> instalado; <code>claude plugin details</code> mostra 4 agentes, 9 skills, 7 comandos, conector e hook</label></div>
+      <div class="check-item"><input type="checkbox" id="c03"><label for="c03"><b>Claude Desktop</b>Se usa: conector <code>zotero</code> em <code>claude_desktop_config.json</code>; aplicativo reiniciado; «liste as coleções» responde</label></div>
+      <div class="check-item"><input type="checkbox" id="c04"><label for="c04"><b>Codex (aplicativo)</b>Plugin instalado pelo diretório («Plugins» → «Explorar diretório»); @Pesquisa MirandasTech responde no chat com a pasta do projeto aberta</label></div>
+      <div class="check-item"><input type="checkbox" id="c05"><label for="c05"><b>Codex (linha de comando)</b><code>instalar_codex.sh</code> rodado; <code>codex plugin list</code> mostra o plugin; conector em <code>~/.codex/config.toml</code>; prompts em <code>~/.codex/prompts</code></label></div>
+      <div class="check-item"><input type="checkbox" id="c06"><label for="c06"><b>Aprovações</b>No Codex, ferramentas do conector liberadas com <code>approval_mode = "auto"</code> só depois de entender que todas apenas leem</label></div>
+      <div class="check-item"><input type="checkbox" id="c07"><label for="c07"><b>ChatGPT</b>Se usa: plugin instalado pela página do diretório; @Pesquisa MirandasTech responde; sabe que o conector e a pasta ficam no Codex ou no Claude Code</label></div>
+      <div class="check-item"><input type="checkbox" id="c08"><label for="c08"><b>Projeto</b>Pasta criada por <code>iniciar_projeto.py</code> ou <code>/pesquisa:iniciar</code>; <code>PROGRESSO.md</code>, <code>DECISOES.md</code>, <code>USO_DE_IA.csv</code>, <code>AGENTS.md</code> presentes; Git iniciado</label></div>
+      <div class="check-item"><input type="checkbox" id="c09"><label for="c09"><b>Diagnóstico</b>As cinco perguntas da fase 0 respondidas; tema, prazo, programa, orientador, ferramentas e tipo de conta em <code>PROGRESSO.md</code></label></div>
+      <div class="check-item"><input type="checkbox" id="c10"><label for="c10"><b>Sessão</b>Claude Code ou Codex aberto <em>dentro</em> da pasta; o hook mostrou as pendências; «Pesquisador, onde paramos?» respondeu em três linhas</label></div>
+      <div class="check-item"><input type="checkbox" id="c11"><label for="c11"><b>Conector em uso</b>«Bibliotecário, audite a coleção …» chamou <code>auditar</code>; uma referência ABNT gerada por <code>referencia_abnt</code>; correção feita no item do Zotero</label></div>
+      <div class="check-item"><input type="checkbox" id="c12"><label for="c12"><b>Registro</b>Primeira decisão em <code>DECISOES.md</code> (numerada, datada, com a sua justificativa); primeira linha em <code>USO_DE_IA.csv</code></label></div>
+      <div class="check-item"><input type="checkbox" id="c13"><label for="c13"><b>Dados</b><code>dados_FORA_DO_GIT/</code> existe e está no <code>.gitignore</code>; nenhum dado pessoal, resumo licenciado ou PDF pago na pasta versionada</label></div>
+      <div class="check-item"><input type="checkbox" id="c14"><label for="c14"><b>Orientador humano</b>Acordo em <code>ACORDO_ORIENTADOR.md</code> conversado; <code>/pesquisa:status</code> gerado antes da primeira reunião</label></div>
+      <div class="check-foot"><span id="check-status">0 de 14</span><button type="button" id="check-reset">limpar</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s29" data-title="Glossário">
+  <div class="inner">
+    <div class="kicker-part rv">Fechamento<span>3 de 6</span></div>
+    <h2 class="rv">Glossário</h2>
+    <p class="lead rv">Tudo que aparece no manual sem ser explicado no próprio slide.</p>
+    <div class="gl4 rv"><div><h4 style="margin-top:0">Plugin e clientes</h4><dl class="gl"><dt>Plugin</dt><dd>Pacote de arquivos de texto (agentes, skills, comandos, conector, hook, modelos) que um assistente de IA instala e lê antes de responder. O Pesquisa MirandasTech é um plugin para o Claude Code e para o Codex.</dd><dt>Marketplace (catálogo)</dt><dd>Arquivo <code>marketplace.json</code> num repositório que lista plugins instaláveis. O catálogo <code>mirandastech</code> lista <code>pesquisa</code> e <code>zotero-pesquisa</code>. Instala-se por <code>plugin@catálogo</code>.</dd><dt>Manifesto</dt><dd>Arquivo que descreve o plugin (nome, versão, descrição, o que contém): <code>.claude-plugin/plugin.json</code> no Claude Code e <code>.codex-plugin/plugin.json</code> no Codex. O empacotador o valida antes de gerar o ZIP.</dd><dt>Agente</dt><dd>Instrução de papel que o Claude Code executa como um assistente separado, com as próprias ferramentas: Pesquisador, Metodólogo, Orientador, Bibliotecário.</dd><dt>Skill</dt><dd>Roteiro por tarefa (arquivo <code>SKILL.md</code>) que o assistente aplica quando o pedido combina com a descrição. No Codex, os quatro papéis são skills; o Pesquisador é o prompt principal.</dd><dt>Comando</dt><dd>Atalho digitado com barra (<code>/pesquisa:status</code>) que dispara um roteiro pronto. No Codex, o equivalente são os prompts em <code>~/.codex/prompts</code> (<code>/pesquisador</code> etc.).</dd><dt>Hook</dt><dd>Ação automática do Claude Code num evento. O do plugin roda no início da sessão (<code>SessionStart</code>): se há <code>PROGRESSO.md</code>, imprime as pendências.</dd><dt>MCP</dt><dd>Model Context Protocol, protocolo de contexto de modelo: padrão que permite a um assistente de IA chamar ferramentas de um programa externo.</dd><dt>Conector</dt><dd>Servidor MCP que expõe ferramentas. O <code>zotero</code> do plugin expõe sete, só de leitura, sobre a biblioteca do Zotero aberta no computador; no Claude Code aparece como <code>plugin:pesquisa:zotero</code>.</dd><dt>API local do Zotero</dt><dd>Porta em que o Zotero 7 aceita consultas de outros programas do mesmo computador (<code>127.0.0.1:23119</code>); liga-se em «Configurações» → «Avançado».</dd><dt>Diretório community (Claude)</dt><dd>Catálogo de plugins de terceiros da Anthropic, com revisão; submissão pelo Console. Quando aceito, instala-se por <code>pesquisa@claude-community</code>.</dd><dt>Diretório de plugins (ChatGPT/Codex)</dt><dd>Catálogo oficial da OpenAI, comum ao ChatGPT e ao Codex, com página por plugin e botão «Instalar plugin». O Pesquisa MirandasTech está lá desde 08/09/2026, tipo «Skills only».</dd><dt>CLI</dt><dd>Command-line interface, interface de linha de comando: o programa usado no terminal (<code>claude</code>, <code>codex</code>).</dd><dt>TOML · JSON · CSV</dt><dd>Formatos de arquivo de configuração e dados: <code>config.toml</code> do Codex; <code>claude_desktop_config.json</code> do Claude Desktop; <code>USO_DE_IA.csv</code> do projeto.</dd><dt>uv</dt><dd>Gerenciador de ambientes Python usado para executar o conector sem instalar dependências à mão; alternativa: <code>pip install mcp</code> e <code>python3</code>.</dd></dl></div><div><h4 style="margin-top:0">Projeto e pesquisa</h4><dl class="gl"><dt>PROGRESSO.md</dt><dd>Estado único do projeto: tabela das onze fases e quatro checklists (Método, Uso de IA, Biblioteca, Leitura). Só recebe <code>[x]</code> com evidência conferida.</dd><dt>Porta de saída (de fase)</dt><dd>A evidência que precisa existir para a fase fechar — arquivo, script sem erro ou número. Sem ela, o Pesquisador não avança.</dd><dt>Porta fechada · gate humano</dt><dd>Passagem que exige decisão ou documento de uma pessoa: parecer do CEP, protocolo congelado, decisão de triagem por registro, aprovação dos coautores, declaração aprovada.</dd><dt>DECISOES.md</dt><dd>Registro de decisões numeradas e datadas, com a justificativa do aluno; uma decisão nova substitui a anterior sem apagá-la.</dd><dt>USO_DE_IA.csv</dt><dd>Uma linha por influência de IA em decisão ou texto (data, etapa, ferramenta, finalidade, dados enviados, validação, quem decidiu). Alimenta a declaração de uso de IA.</dd><dt>AGENTS.md</dt><dd>Regras do projeto lidas por qualquer agente que abra a pasta: proibições absolutas, gates humanos, registro. O Codex o lê automaticamente.</dd><dt>Evidência</dt><dd>O que comprova um item: arquivo existente, script executado sem erro, número medido. O agente lê ou roda antes de marcar.</dd><dt>CEP · CAAE</dt><dd>Comitê de Ética em Pesquisa e Certificado de Apresentação de Apreciação Ética: o parecer com CAAE em <code>03_etica/</code> é a porta da fase 3 quando há pessoas.</dd><dt>TCLE</dt><dd>Termo de Consentimento Livre e Esclarecido: o modelo é copiado para <code>03_etica/TCLE.md</code>.</dd><dt>Protocolo congelado</dt><dd>Versão datada do protocolo da revisão, fechada antes da primeira busca; muda só por emenda registrada.</dd><dt>PRISMA</dt><dd>Guia de relato de revisões sistemáticas; os números da triagem em <code>02_triagem/</code> alimentam o diagrama.</dd><dt>ABNT · NBR</dt><dd>Associação Brasileira de Normas Técnicas e suas normas: 15287 (projeto), 14724 (trabalho acadêmico), 10520 (citações), 6023 (referências). Os estilos CSL do plugin geram as referências pelo Zotero.</dd><dt>Better BibTeX</dt><dd>Extensão do Zotero para exportar referências em BibTeX/BibLaTeX (LaTeX, Obsidian); ferramenta <code>exportar_bbt</code>.</dd><dt>Crossref · DOI</dt><dd>Registro público de DOIs (identificadores persistentes de publicações); <code>verificar_refs.py</code> resolve cada DOI lá. Referência sem DOI resolvido não entra.</dd><dt>Matriz de síntese</dt><dd>Tabela em que cada linha é um estudo incluído e cada coluna uma pergunta do protocolo; primeira versão pelo notebook, conferida célula a célula.</dd><dt>IMRaD</dt><dd>Introdução, Métodos, Resultados e Discussão — estrutura do artigo e do fichamento guiado.</dd><dt>Gemini Notebook</dt><dd>Serviço do Google (antes NotebookLM) que responde só a partir das fontes enviadas; entra no plugin por arquivo, sem API.</dd><dt>Declaração de uso de IA</dt><dd>Trecho do trabalho com ferramenta, fase, finalidade, validação e o que a IA não fez; montada por <code>/pesquisa:declarar</code> a partir de <code>USO_DE_IA.csv</code>.</dd><dt>dados_FORA_DO_GIT/</dt><dd>Pasta do projeto excluída do controle de versão, para dado pessoal, resumo licenciado e PDF pago.</dd></dl></div></div>
+  </div>
+</section>
+
+<section class="slide alt" id="s30" data-title="Referências">
+  <div class="inner">
+    <div class="kicker-part rv">Fechamento<span>4 de 6 · endereços conferidos em 08/09/2026</span></div>
+    <h2 class="rv">Referências — documentação oficial, diretórios e o repositório</h2>
+    <ol class="refs rv">
+      <li><span class="rt">ANTHROPIC. Claude Code — Plugins (o que é um plugin, o que contém, como instalar).</span><a href="https://code.claude.com/docs/en/plugins">code.claude.com/docs/en/plugins</a></li>
+      <li><span class="rt">ANTHROPIC. Claude Code — Plugin marketplaces (catálogos, <code>marketplace.json</code>, <code>plugin@catálogo</code>).</span><a href="https://code.claude.com/docs/en/plugin-marketplaces">code.claude.com/docs/en/plugin-marketplaces</a></li>
+      <li><span class="rt">ANTHROPIC. Claude Code — Discover plugins (diretórios oficial e community).</span><a href="https://code.claude.com/docs/en/discover-plugins">code.claude.com/docs/en/discover-plugins</a></li>
+      <li><span class="rt">ANTHROPIC. Submit a plugin to the community directory (Console).</span><a href="https://claude.com/docs/plugins/submit">claude.com/docs/plugins/submit</a></li>
+      <li><span class="rt">OPENAI. Codex — Build plugins (manifesto, skills, marketplace, <code>codex plugin</code>).</span><a href="https://developers.openai.com/codex/plugins/build">developers.openai.com/codex/plugins/build</a></li>
+      <li><span class="rt">OPENAI. Plugins — Submission (portal, tipo «Skills only», ZIP, revisão).</span><a href="https://developers.openai.com/plugins/deploy/submission">developers.openai.com/plugins/deploy/submission</a></li>
+      <li><span class="rt">OPENAI. Pesquisa MirandasTech no diretório de plugins do ChatGPT/Codex (publicado em 08/09/2026).</span><a href="https://chatgpt.com/plugins/plugins_6aa0a0320a248191b33a514a3a52325b">chatgpt.com/plugins/plugins_6aa0a0320a248191b33a514a3a52325b</a></li>
+      <li><span class="rt">MIRANDASTECH. Repositório do plugin Pesquisa MirandasTech (código, manifestos, docs, plano, privacidade, termos, suporte).</span><a href="https://github.com/joaopaulomirandamatias/pesquisa-mirandastech">github.com/joaopaulomirandamatias/pesquisa-mirandastech</a></li>
+      <li><span class="rt">MIRANDASTECH. Hub de pesquisa (manuais, plugin e novidades).</span><a href="https://www.mirandastech.com.br/pesquisa">mirandastech.com.br/pesquisa</a></li>
+      <li><span class="rt">MIRANDASTECH. Metodologia da pesquisa científica: passo a passo.</span><a href="https://metodologia.mirandastech.com.br/">metodologia.mirandastech.com.br</a></li>
+      <li><span class="rt">MIRANDASTECH. Uso de IA na pesquisa científica: passo a passo.</span><a href="https://manual.mirandastech.com.br/">manual.mirandastech.com.br</a></li>
+      <li><span class="rt">MIRANDASTECH. Zotero para pesquisa científica: passo a passo.</span><a href="https://zotero.mirandastech.com.br/">zotero.mirandastech.com.br</a></li>
+      <li><span class="rt">MIRANDASTECH. Gemini Notebook para pesquisa científica: passo a passo.</span><a href="https://notebook.mirandastech.com.br/">notebook.mirandastech.com.br</a></li>
+      <li><span class="rt">ZOTERO. Documentação do Zotero 7 (API local em «Configurações» → «Avançado»).</span><a href="https://www.zotero.org/support/">zotero.org/support</a></li>
+      <li><span class="rt">ASTRAL. uv — gerenciador de pacotes e ambientes Python (usado pelo conector).</span><a href="https://docs.astral.sh/uv/">docs.astral.sh/uv</a></li>
+    </ol>
+  </div>
+</section>
+
+<section class="slide" id="s31" data-title="Repositório">
+  <div class="inner">
+    <div class="kicker-part rv">Fechamento<span>5 de 6</span></div>
+    <h2 class="rv">Repositório público — o que há em cada pasta</h2>
+    <div class="two rv">
+      <div>
+        <div class="case"><span class="blabel">Manual on-line e repositório público</span><p><strong>Repositório do plugin:</strong> <a href="https://github.com/joaopaulomirandamatias/pesquisa-mirandastech">github.com/joaopaulomirandamatias/pesquisa-mirandastech</a><br>Código do plugin (manifestos para os dois clientes), agentes, skills, comandos, conector, scripts, modelos, prompts do Codex, o plano, os textos de submissão, política de privacidade, termos e suporte. Este manual, com as capturas datadas, fica no hub: <a href="https://www.mirandastech.com.br/pesquisa">mirandastech.com.br/pesquisa</a>.</p><span class="src">Como citar: MIRANDASTECH. Plugin Pesquisa MirandasTech para Claude e Codex: passo a passo. v1.0 (rascunho), set. 2026. CC BY 4.0.</span></div>
+        <div class="code"><div class="code-head">terminal — clonar</div><pre>git clone https://github.com/joaopaulomirandamatias/pesquisa-mirandastech.git</pre></div>
+        <div class="colophon" style="margin-top:12px;font-size:11px">Rascunho escrito com assistência de IA (Claude, Anthropic) na estruturação, redação e verificação de fatos, sob as regras do manual de uso de IA. Comandos, nomes de componentes, inventário instalado, ferramentas do conector, fases e portas, textos de submissão e políticas conferidos no repositório do plugin e nos diretórios em 08/09/2026. Capturas a substituir pelas reais antes da publicação.</div>
+      </div>
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:230px">Pasta / arquivo</th><th>O que é</th></tr></thead><tbody>
+          <tr><td class="mono">.claude-plugin/</td><td>Manifesto do plugin <code>pesquisa</code> e o catálogo <code>mirandastech</code> (lista também o plugin só-Zotero)</td></tr>
+          <tr><td class="mono">agents/</td><td><code>pesquisador.md</code>, <code>metodologo.md</code>, <code>orientador.md</code>, <code>bibliotecario.md</code></td></tr>
+          <tr><td class="mono">skills/</td><td>As nove skills, uma pasta com <code>SKILL.md</code> cada</td></tr>
+          <tr><td class="mono">commands/</td><td>Os sete comandos <code>/pesquisa:…</code></td></tr>
+          <tr><td class="mono">.mcp.json · scripts/zotero_mcp.py</td><td>Conector MCP da biblioteca Zotero (sete ferramentas, só leitura)</td></tr>
+          <tr><td class="mono">hooks/hooks.json</td><td>Hook de início de sessão</td></tr>
+          <tr><td class="mono">scripts/</td><td><code>iniciar_projeto.py</code>, <code>verificar_citacoes.py</code>, <code>verificar_refs.py</code>, <code>tamanho_amostra.py</code>, <code>cronograma.py</code>, <code>auditar_biblioteca.py</code>, <code>exportar_bbt.sh</code>, <code>backup_zotero.sh</code>, <code>instalar_claude.sh</code>, <code>instalar_codex.sh</code>, <code>empacotar_codex.py</code></td></tr>
+          <tr><td class="mono">modelos/</td><td>Arquivos copiados para o projeto; estilos ABNT (.csl); prompts do Gemini Notebook</td></tr>
+          <tr><td class="mono">.codex-plugin/ · .agents/plugins/ · <span class="gterm" tabindex="0" data-t="AGENTS.md" data-d="Regras do projeto lidas por qualquer agente que abra a pasta: proibições absolutas, gates humanos, registro. O Codex o lê automaticamente.">AGENTS.md</span> · codex/prompts/</td><td>Pacote do Codex: manifesto, catálogo, instruções e os quatro prompts</td></tr>
+          <tr><td class="mono">docs/</td><td><code>PLANO.md</code>, <code>DESCRICAO.md</code> (textos de submissão), <code>PRIVACIDADE.md</code>, <code>TERMOS.md</code>, <code>SUPORTE.md</code></td></tr>
+          <tr><td class="mono">dist/</td><td>ZIP da versão enviada ao diretório do Codex (<code>pesquisa-mirandastech-1.0.0.zip</code>)</td></tr>
+          <tr><td class="mono">.github/workflows/verificar.yml</td><td>Verificação contínua: manifestos, cabeçalhos de agentes, skills e comandos, scripts</td></tr>
+        </tbody></table></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide alt" id="s99" data-title="Como usar com os quatro manuais">
+  <div class="inner">
+    <div class="kicker-part rv">Fechamento · último slide<span>método + uso de IA + referências + leitura, dentro da mesma ferramenta</span></div>
+    <h2 class="rv">Como usar o plugin com os quatro manuais</h2>
+    <p class="lead rv">Cada manual ensina uma coisa: <strong>Metodologia</strong> decide, <strong>Uso de IA</strong> delega e declara, <strong>Zotero</strong> registra, <strong>Gemini Notebook</strong> lê com o trecho ao alcance. O plugin é o lugar onde os quatro papéis convivem, com um estado só (<code>PROGRESSO.md</code>) e um gerente (o Pesquisador) que sabe a ordem, chama o especialista certo e exige evidência. Os manuais continuam sendo a fonte: cada item do checklist aponta o slide de origem.</p>
+    <div class="two rv">
+      <div>
+        <div class="tw"><table><thead><tr><th>Pergunta</th><th>Quem responde</th></tr></thead><tbody>
+          <tr><td>«Onde paramos? O que falta? Qual o próximo passo?»</td><td><span class="pill p-blue">Pesquisador</span> · este manual</td></tr>
+          <tr><td>«Qual método? Quais colunas? Qual critério de inclusão?»</td><td><span class="pill p-blue">Metodólogo</span> · <a href="https://metodologia.mirandastech.com.br/">metodologia.mirandastech.com.br</a></td></tr>
+          <tr><td>«Posso usar IA nisto? Como declaro?»</td><td><span class="pill p-amber">Orientador</span> · <a href="https://manual.mirandastech.com.br/">manual.mirandastech.com.br</a></td></tr>
+          <tr><td>«Onde está o PDF? Por que a referência saiu errada?»</td><td><span class="pill p-go">Bibliotecário</span> · <a href="https://zotero.mirandastech.com.br/">zotero.mirandastech.com.br</a></td></tr>
+          <tr><td>«Onde clico para perguntar às fontes? Como confiro o trecho?»</td><td><span class="pill p-go">Leitura</span> · <a href="https://notebook.mirandastech.com.br/">notebook.mirandastech.com.br</a></td></tr>
+        </tbody></table></div>
+        <div class="rule-box"><span class="blabel">Regra dos quatro, mais um</span><p>Decidir (Metodologia), delegar (IA), registrar (Zotero) e ler com o trecho ao alcance (Gemini Notebook) são quatro ações distintas sobre a mesma etapa. O plugin não substitui nenhuma: ele as coloca na ordem certa, com a porta de cada fase, e registra quem decidiu o quê. A passagem entre elas continua sendo por arquivo, com conferência.</p></div>
+      </div>
+      <div>
+        <div class="tw"><table><thead><tr><th style="width:110px">Fase</th><th>Metodologia decide</th><th>IA delega ou não</th><th>Zotero registra</th><th>Gemini Notebook faz</th><th>O plugin exige</th></tr></thead><tbody>
+          <tr><td><b>4 Busca</b></td><td>Bases, string, critérios</td><td>Sugestão de termos, com registro</td><td>Coleção por base e data</td><td>Nada</td><td>Protocolo congelado; strings verbatim; auditoria sem pendência</td></tr>
+          <tr><td><b>5 Triagem</b></td><td>Critérios; dois revisores</td><td>Triagem assistida, status preliminar</td><td>Etiquetas por revisor</td><td>Tabela de inventário dos PDFs</td><td>Decisão humana por registro; números do <span class="gterm" tabindex="0" data-t="PRISMA" data-d="Guia de relato de revisões sistemáticas; os números da triagem em 02_triagem/ alimentam o diagrama.">PRISMA</span></td></tr>
+          <tr><td><b>6 Leitura</b></td><td>Fichamento; matriz</td><td>Resumo de apoio, nunca substituto</td><td>Notas com página</td><td>Perguntas por seção; matriz para a planilha</td><td>Cada célula conferida; L5 fechado</td></tr>
+          <tr><td><b>8 Escrita</b></td><td>Normas e estrutura</td><td>Revisão de forma; declaração</td><td>Citações vivas; lista gerada</td><td>Nada no texto</td><td><code>verificar_citacoes.py</code> e <code>verificar_refs.py</code> sem erro</td></tr>
+          <tr><td><b>9 Defesa</b></td><td>Roteiro da banca</td><td>Simulação com registro</td><td>Biblioteca congelada</td><td>Perguntas prováveis a partir da tese</td><td>Objeções e respostas com página em <code>07_banca/</code></td></tr>
+        </tbody></table></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<script>
+
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var tot = slides.length; document.getElementById('tot').textContent = tot; var ns = document.getElementById('nslides'); if (ns) ns.textContent = tot;
+  var cur = document.getElementById('cur'), prog = document.getElementById('prog');
+  var menu = document.getElementById('menu'), scrim = document.getElementById('scrim'), menubtn = document.getElementById('menubtn');
+
+  /* sumário gerado a partir dos slides */
+  var html = '', grp = '';
+  slides.forEach(function(s, i){
+    var t = s.getAttribute('data-title') || ('Slide ' + (i+1));
+    if (s.classList.contains('divider')) { html += '<div class="grp">' + t + '</div>'; return; }
+    if (s.classList.contains('cover')) { html += '<div class="grp">Início</div>'; }
+    html += '<a href="#' + s.id + '" data-i="' + i + '"><span class="n">' + String(i+1).padStart(2,'0') + '</span><span>' + t + '</span></a>';
+  });
+  document.getElementById('menulist').innerHTML = html;
+  document.getElementById('menuclose').addEventListener('click', function(){ toggleMenu(false); });
+  var links = Array.prototype.slice.call(menu.querySelectorAll('a'));
+  function toggleMenu(open){ menu.classList.toggle('open', open); scrim.classList.toggle('on', open); }
+  menubtn.addEventListener('click', function(){ toggleMenu(!menu.classList.contains('open')); });
+  scrim.addEventListener('click', function(){ toggleMenu(false); });
+  links.forEach(function(a){ a.addEventListener('click', function(){ toggleMenu(false); }); });
+
+  /* slide ativo: contador, progresso, revelação, sumário */
+  var active = 0;
+  function setActive(i){
+    active = i; cur.textContent = i + 1; prog.style.width = ((i+1)/tot*100) + '%';
+    links.forEach(function(a){ a.classList.toggle('on', +a.getAttribute('data-i') === i); });
+    var on = menu.querySelector('a.on'); if (on && menu.classList.contains('open')) on.scrollIntoView({block:'nearest'});
+  }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.12 });
+    slides.forEach(function(s){ io.observe(s); });
+  } else { slides.forEach(function(s){ s.classList.add('in'); }); }
+  /* slide ativo = o que ocupa mais área visível */
+  var ticking = false;
+  function recompute(){
+    ticking = false; var vh = window.innerHeight, best = 0, bi = active;
+    slides.forEach(function(s, i){ var r = s.getBoundingClientRect(); var vis = Math.min(r.bottom, vh) - Math.max(r.top, 0); if (vis > best) { best = vis; bi = i; } });
+    if (bi !== active) setActive(bi);
+  }
+  window.addEventListener('scroll', function(){ if (!ticking) { ticking = true; requestAnimationFrame(recompute); } }, { passive: true });
+  window.addEventListener('resize', recompute); recompute(); slides[0].classList.add('in');
+
+  /* ajuste de escala: cada slide cabe na tela (como num programa de apresentação) */
+  function fitAll(){
+    if (window.innerWidth <= 900) { slides.forEach(function(s){ var i = s.querySelector('.inner'); if (i) i.style.zoom = ''; s.classList.add('fit'); }); return; }
+    var avail = window.innerHeight - 52;
+    slides.forEach(function(s){
+      var inner = s.querySelector('.inner'); if (!inner || s.classList.contains('divider') || s.classList.contains('cover')) return;
+      inner.style.zoom = '1'; s.classList.remove('fit');
+      var need = inner.scrollHeight; if (need <= avail) { s.classList.add('fit'); return; }
+      var z = Math.max(0.75, avail / need); inner.style.zoom = z.toFixed(3);
+      if (inner.scrollHeight * z <= avail + 2) s.classList.add('fit');
+    });
+  }
+  window.addEventListener('resize', fitAll); window.addEventListener('load', fitAll); fitAll();
+  /* cards expansíveis abrem em janela sobreposta, sem mudar a altura do slide */
+  var modal = document.getElementById('modal'), mbody = document.getElementById('modal-body'), mtitle = document.getElementById('modal-title');
+  function closeModal(){ modal.classList.remove('on'); mbody.innerHTML = ''; }
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  modal.addEventListener('click', function(ev){ if (ev.target === modal) closeModal(); });
+  document.querySelectorAll('details.more').forEach(function(d){
+    var s = d.querySelector('summary'), body = d.querySelector(':scope > div');
+    s.addEventListener('click', function(ev){
+      if (window.matchMedia('print').matches) return;
+      ev.preventDefault(); d.open = false;
+      mtitle.textContent = s.textContent.replace(/^detalhes\s*—\s*/i, '').trim() || 'detalhes';
+      mbody.innerHTML = body.innerHTML; modal.classList.add('on'); attachCopy(mbody);
+    });
+  });
+  /* botão de copiar em código, terminal e prompt */
+  function attachCopy(root){
+    root.querySelectorAll('.code, .term').forEach(function(box){
+      if (box.querySelector(':scope > .copy')) return;
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'copy'; b.textContent = 'copiar'; b.setAttribute('aria-label', 'Copiar conteúdo');
+      b.addEventListener('click', function(){
+        var pre = box.querySelector('pre'); var txt = pre ? pre.innerText : box.innerText;
+        function done(){ b.textContent = 'copiado ✓'; b.classList.add('ok'); setTimeout(function(){ b.textContent = 'copiar'; b.classList.remove('ok'); }, 1600); }
+        if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(txt).then(done, function(){ fallback(txt); done(); }); } else { fallback(txt); done(); }
+      });
+      box.appendChild(b);
+    });
+  }
+  function fallback(txt){ var ta = document.createElement('textarea'); ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch(e){} document.body.removeChild(ta); }
+  attachCopy(document);
+  /* popover do glossário */
+  var gpop = document.getElementById('gpop'), gcur = null;
+  function showPop(el){ gpop.innerHTML = '<b>' + el.getAttribute('data-t') + '</b>' + el.getAttribute('data-d'); gpop.classList.add('on');
+    var r = el.getBoundingClientRect(), pw = Math.min(340, window.innerWidth - 24); gpop.style.maxWidth = pw + 'px';
+    var left = Math.max(12, Math.min(r.left, window.innerWidth - pw - 12)); gpop.style.left = left + 'px';
+    var ph = gpop.offsetHeight; var top = r.bottom + 8; if (top + ph > window.innerHeight - 8) top = Math.max(8, r.top - ph - 8); gpop.style.top = top + 'px'; gcur = el; }
+  function hidePop(){ gpop.classList.remove('on'); gcur = null; }
+  document.querySelectorAll('.gterm').forEach(function(el){
+    el.addEventListener('mouseenter', function(){ showPop(el); }); el.addEventListener('mouseleave', hidePop);
+    el.addEventListener('focus', function(){ showPop(el); }); el.addEventListener('blur', hidePop);
+    el.addEventListener('click', function(ev){ ev.stopPropagation(); if (gcur === el) hidePop(); else showPop(el); });
+  });
+  document.addEventListener('click', function(){ if (gcur) hidePop(); }); window.addEventListener('scroll', function(){ if (gcur) hidePop(); }, { passive: true });
+
+  function go(i){ i = Math.max(0, Math.min(tot-1, i)); window.scrollTo({ top: slides[i].offsetTop, behavior: 'smooth' }); }
+  document.getElementById('prev').addEventListener('click', function(){ go(active-1); });
+  document.getElementById('next').addEventListener('click', function(){ go(active+1); });
+  document.addEventListener('keydown', function(ev){
+    if (ev.target && /input|textarea|select/i.test(ev.target.tagName)) return;
+    if (ev.key === 'ArrowDown' || ev.key === 'PageDown' || ev.key === ' ' || ev.key === 'ArrowRight') { ev.preventDefault(); go(active+1); }
+    else if (ev.key === 'ArrowUp' || ev.key === 'PageUp' || ev.key === 'ArrowLeft') { ev.preventDefault(); go(active-1); }
+    else if (ev.key === 'Home') { go(0); } else if (ev.key === 'End') { go(tot-1); }
+    else if (ev.key === 'Escape') { toggleMenu(false); closeModal(); }
+  });
+
+  /* checklist — conveniência por leitor, só neste navegador */
+  var KEY = 'mirandastech-plugin-checklist-v1';
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('#checklist input[type=checkbox]'));
+  var status = document.getElementById('check-status');
+  function load(){ try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e){ return {}; } }
+  function save(st){ try { localStorage.setItem(KEY, JSON.stringify(st)); } catch(e){} }
+  function paint(){ var n = 0; boxes.forEach(function(b){ var it = b.closest('.check-item'); if (b.checked) { n++; it.classList.add('done'); } else { it.classList.remove('done'); } }); if (status) status.textContent = n + ' de ' + boxes.length; }
+  var st = load(); boxes.forEach(function(b){ b.checked = !!st[b.id]; b.addEventListener('change', function(){ var s = load(); s[b.id] = b.checked; save(s); paint(); }); }); paint();
+  var reset = document.getElementById('check-reset'); if (reset) reset.addEventListener('click', function(){ boxes.forEach(function(b){ b.checked = false; }); save({}); paint(); });
+})();
+</script>
+
+</body>
+</html>

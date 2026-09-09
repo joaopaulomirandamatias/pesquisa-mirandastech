@@ -14,6 +14,10 @@ Um só pacote com os quatro papéis dos manuais MirandasTech, para conduzir uma 
 
 Tudo nesta versão é **gratuito, aberto (CC BY 4.0) e roda no computador do aluno**. Não há servidor, chave nem cota. O plano completo, inclusive a camada paga prevista para depois, está em [`docs/PLANO.md`](docs/PLANO.md).
 
+## Manual passo a passo
+
+Slides com capturas reais de cada cliente (Claude Code, Claude Desktop, Codex app e CLI, ChatGPT): [`manual/site/index.html`](manual/site/index.html) · [PDF](manual/site/manual.pdf). Publicado no hub: https://www.mirandastech.com.br/pesquisa
+
 ## Instalar
 
 **Claude Code** (plugin completo: agentes, skills, comandos, conector, hook):
@@ -23,7 +27,7 @@ Tudo nesta versão é **gratuito, aberto (CC BY 4.0) e roda no computador do alu
 ```
 ou `bash scripts/instalar_claude.sh` (também registra o conector Zotero no Claude Desktop, se existir).
 
-**Codex** (app e CLI): o plugin está publicado no diretório oficial de plugins do ChatGPT/Codex — no app, Plugins → Explorar diretório → «Pesquisa MirandasTech» → Instalar. Alternativa pelo marketplace próprio:
+**Codex** (app e CLI): o plugin está publicado no diretório oficial de plugins do ChatGPT/Codex — no app, Plugins → «Procurar plugins» → «Pesquisa MirandasTech» → instalar (página no diretório: https://chatgpt.com/plugins/plugins_6aa0a0320a248191b33a514a3a52325b). Alternativa pelo marketplace próprio:
 ```
 codex plugin marketplace add joaopaulomirandamatias/pesquisa-mirandastech
 codex plugin add pesquisa-mirandastech@mirandastech
