@@ -1,5 +1,10 @@
 # Histórico de versões
 
+## 1.0.14 — 2026-09-09
+- Nova skill `submissao-orcid-lattes`: escolha do periódico (Think. Check. Submit., Qualis na Sucupira, DOAJ, COPE, Open policy finder), checklist de submissão com evidência, carta de apresentação, resposta ponto a ponto aos revisores, ORCID e Lattes coerentes, ligada ao manual https://submissao.mirandastech.com.br/.
+- Novos `scripts/checklist_submissao.py`, `scripts/carta_apresentacao.py`, `scripts/resposta_revisores.py` e `scripts/orcid_lattes_diff.py` (lê a API pública da ORCID e o XML exportado do Lattes; não altera registros).
+- `sincronizar_manuais.py` sincroniza também o repositório `submissao-orcid-lattes-pesquisa-cientifica`.
+
 ## 1.0.13 — 2026-09-09
 - Nova skill `ensino-pesquisa`: plano de ensino semana a semana ligado aos manuais, rubricas por entrega com o arquivo que prova, painel da turma, uso de IA na disciplina, estágio de docência, ligada ao manual https://professor.mirandastech.com.br/.
 - Novos `scripts/plano_de_ensino.py`, `scripts/rubrica.py` e `scripts/turma_progresso.py`.

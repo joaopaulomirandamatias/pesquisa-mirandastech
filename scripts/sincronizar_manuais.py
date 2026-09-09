@@ -92,6 +92,11 @@ REPOS = {
                "subs": [],
                "arquivos": [("skills/ensino-pesquisa/SKILL.md", "skills/ensino-pesquisa/SKILL.md"),
                             ("scripts/plano_de_ensino.py", "scripts/plano_de_ensino.py"), ("scripts/rubrica.py", "scripts/rubrica.py"), ("scripts/turma_progresso.py", "scripts/turma_progresso.py")]},
+    "submissao": {"git": "submissao-orcid-lattes-pesquisa-cientifica", "local": PLUGIN.parent / "manual_submissao/repo_publico",
+               "subs": [],
+               "arquivos": [("skills/submissao-orcid-lattes/SKILL.md", "skills/submissao-orcid-lattes/SKILL.md"),
+                            ("scripts/checklist_submissao.py", "scripts/checklist_submissao.py"), ("scripts/carta_apresentacao.py", "scripts/carta_apresentacao.py"),
+                            ("scripts/resposta_revisores.py", "scripts/resposta_revisores.py"), ("scripts/orcid_lattes_diff.py", "scripts/orcid_lattes_diff.py")]},
 }
 
 def transformar(texto, subs):
