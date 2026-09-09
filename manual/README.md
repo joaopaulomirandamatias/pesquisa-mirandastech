@@ -13,4 +13,4 @@ Regenerar depois de editar o fonte:
 cd manual/fonte && python3 gerar_deck.py && cp Manual_Plugin_Pesquisa_Claude_Codex_MirandasTech.html ../site/index.html && cp Manual_Plugin_Pesquisa_Claude_Codex_MirandasTech.pdf ../site/manual.pdf
 ```
 
-Hub com todos os manuais: https://www.mirandastech.com.br/pesquisa
+Publicado em https://plugin.mirandastech.com.br/ (PDF em /pdf). Hub com todos os manuais: https://www.mirandastech.com.br/pesquisa

@@ -16,7 +16,7 @@ Tudo nesta versão é **gratuito, aberto (CC BY 4.0) e roda no computador do alu
 
 ## Manual passo a passo
 
-Slides com capturas reais de cada cliente (Claude Code, Claude Desktop, Codex app e CLI, ChatGPT): [`manual/site/index.html`](manual/site/index.html) · [PDF](manual/site/manual.pdf). Publicado no hub: https://www.mirandastech.com.br/pesquisa
+Slides com capturas reais de cada cliente (Claude Code, Claude Desktop, Codex app e CLI, ChatGPT): **https://plugin.mirandastech.com.br/** · [PDF](https://plugin.mirandastech.com.br/pdf) · fonte em [`manual/`](manual/). Publicado no hub: https://www.mirandastech.com.br/pesquisa
 
 ## Instalar
 
