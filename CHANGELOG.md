@@ -1,5 +1,10 @@
 # Histórico de versões
 
+## 1.0.15 — 2026-10-13
+- `revisao-sistematica-prisma`: a decisão de usar IA entra já no protocolo (declaração conjunta Cochrane, Campbell, JBI e CEE, 2025, https://doi.org/10.11124/JBIES-25-00480); ao definir o limiar do ASReview, o aluno é avisado de que o RAISE 3 (v.4, 23/09/2026, rascunho em revisão, https://osf.io/fwaud/) classifica a triagem priorizada com parada antecipada como «Requires validation within the review»; relato pelo item 4.9 do RAISE 1; PRISMA-trAIce só como lista de conferência, sem endosso da direção do PRISMA (Moher et al., 2026, https://doi.org/10.2196/104210); nova recusa: LLM sintetizando achados entre estudos («not acceptable» no RAISE 3).
+- `triagem-assistida`: antes do lote inteiro, as propostas da IA são validadas num subconjunto da própria revisão, com limiar definido antes (RAISE 3, Tabela 2: LLM na triagem = «Requires validation within the review»).
+- Manual do plugin (https://plugin.mirandastech.com.br/) no padrão visual do site e do blog: tela escura, Geist, Geist Mono e Instrument Serif, cabeçalho e rodapé da marca, Laboratório em https://lab.mirandastech.com.br/; o PDF continua claro.
+
 ## 1.0.14 — 2026-09-09
 - Nova skill `submissao-orcid-lattes`: escolha do periódico (Think. Check. Submit., Qualis na Sucupira, DOAJ, COPE, Open policy finder), checklist de submissão com evidência, carta de apresentação, resposta ponto a ponto aos revisores, ORCID e Lattes coerentes, ligada ao manual https://submissao.mirandastech.com.br/.
 - Novos `scripts/checklist_submissao.py`, `scripts/carta_apresentacao.py`, `scripts/resposta_revisores.py` e `scripts/orcid_lattes_diff.py` (lê a API pública da ORCID e o XML exportado do Lattes; não altera registros).

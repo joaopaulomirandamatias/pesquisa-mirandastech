@@ -12,6 +12,9 @@ description: Prepara lotes de triagem de título e resumo para decisão do autor
 5. Parar. Esperar a decisão do autor, registro a registro.
 6. Só depois, e só com instrução explícita, rodar `python3 tools/registrar_lote.py lote.tsv --gravar`.
 
+## Validar antes de valer para o lote inteiro
+Proposta de triagem feita por LLM é «Requires validation within the review» no RAISE 3 (v.4, 23/09/2026, rascunho em revisão; https://osf.io/fwaud/, Tabela 2): o desempenho tem de ser medido nesta revisão, num subconjunto dos próprios dados, contra um limiar definido antes para a tarefa. Antes do primeiro lote grande, proponha ao autor esse teste (subconjunto já decidido por ele, propostas comparadas com as decisões dele) e registre o limiar, o resultado e a versão do modelo em `DECISOES.md` e `USO_DE_IA.csv`. Mesmo validada, a proposta segue `PRELIMINARY_AI_ASSISTED_REQUIRES_HUMAN_CONFIRMATION`: a declaração conjunta Cochrane/Campbell/JBI/CEE pede supervisão humana e relato de todo uso que «makes or suggests judgments» (Flemyng et al., 2025, https://doi.org/10.11124/JBIES-25-00480).
+
 ## Nunca
 - decidir um MAYBE;
 - gravar sem `--gravar` explícito na instrução do autor;

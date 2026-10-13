@@ -4,7 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>MirandasTech · Plugin Pesquisa para Claude e Codex</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Math&amp;family=Noto+Sans+Symbols+2&amp;family=Noto+Sans+Mono&amp;text=%CE%BA%E2%86%92%E2%86%97%E2%94%80%E2%94%82%E2%94%94%E2%94%9C%E2%98%B0&amp;display=swap">
 <style>
 
 :root{
@@ -46,7 +49,7 @@
   --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.7);
 }
 *{box-sizing:border-box}
-body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 html{scroll-behavior:smooth}
 :focus-visible{outline:2px solid var(--blueprint-2);outline-offset:3px;border-radius:2px}
@@ -56,9 +59,9 @@ html{scroll-behavior:smooth}
 .part-head{display:flex;align-items:baseline;gap:14px;border-top:1px solid var(--rule);padding-top:14px;margin-bottom:8px}
 .part-num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--signal);font-weight:600}
 .part-label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
-h2{font-family:var(--cond);font-weight:700;font-size:clamp(27px,3.6vw,38px);line-height:1.12;letter-spacing:-.012em;margin:6px 0 0;text-wrap:balance;max-width:22ch}
-h3{font-family:var(--cond);font-weight:600;font-size:22px;line-height:1.25;margin:40px 0 0;color:var(--ink);text-wrap:balance}
-h4{font-family:var(--cond);font-weight:600;font-size:17px;line-height:1.3;margin:26px 0 0;color:var(--blueprint);letter-spacing:.01em}
+h2{font-family:var(--sans);font-weight:700;font-size:clamp(27px,3.6vw,38px);line-height:1.12;letter-spacing:-.012em;margin:6px 0 0;text-wrap:balance;max-width:22ch}
+h3{font-family:var(--sans);font-weight:600;font-size:22px;line-height:1.25;margin:40px 0 0;color:var(--ink);text-wrap:balance}
+h4{font-family:var(--sans);font-weight:600;font-size:17px;line-height:1.3;margin:26px 0 0;color:var(--blueprint);letter-spacing:.01em}
 p,ul,ol{max-width:68ch}
 p{margin:14px 0 0}
 ul,ol{margin:14px 0 0;padding-left:22px}
@@ -87,13 +90,13 @@ code{font-family:var(--mono);font-size:.855em;background:var(--surface-2);border
 
 /* ---------- figures ---------- */
 figure{margin:34px 0 0;max-width:none}
-figcaption{font-family:var(--cond);font-size:13.5px;color:var(--ink-2);margin-top:11px;line-height:1.5;max-width:76ch}
+figcaption{font-family:var(--sans);font-size:13.5px;color:var(--ink-2);margin-top:11px;line-height:1.5;max-width:76ch}
 figcaption b{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--signal);font-weight:600;margin-right:7px}
 .frame{border:1px solid var(--rule);background:var(--surface);border-radius:4px;padding:24px;overflow-x:auto}
 
 /* ---------- tables ---------- */
 .tw{overflow-x:auto;margin:26px 0 0;border:1px solid var(--rule);border-radius:4px;background:var(--surface)}
-table{border-collapse:collapse;width:100%;font-family:var(--cond);font-size:14.5px;min-width:520px}
+table{border-collapse:collapse;width:100%;font-family:var(--sans);font-size:14.5px;min-width:520px}
 th{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);font-weight:600;padding:11px 14px;border-bottom:1px solid var(--rule);background:var(--surface-2);vertical-align:bottom}
 td{padding:11px 14px;border-bottom:1px solid var(--rule-2);vertical-align:top;line-height:1.45;color:var(--ink)}
 tbody tr:last-child td{border-bottom:0}
@@ -128,7 +131,7 @@ td.mono{font-family:var(--mono);font-size:12.5px}
 /* ---------- charts ---------- */
 .bars{display:flex;flex-direction:column;gap:11px;margin:0}
 .bar-row{display:grid;grid-template-columns:minmax(96px,152px) minmax(0,1fr) 62px;gap:12px;align-items:center}
-.bar-lab{font-family:var(--cond);font-size:13.5px;color:var(--ink-2);line-height:1.25;text-align:right}
+.bar-lab{font-family:var(--sans);font-size:13.5px;color:var(--ink-2);line-height:1.25;text-align:right}
 .bar-track{background:var(--rule-2);border-radius:2px;height:22px;position:relative;overflow:hidden}
 .bar-fill{height:100%;border-radius:2px;background:var(--blueprint)}
 .bar-fill.f-signal{background:var(--signal)}
@@ -144,7 +147,7 @@ td.mono{font-family:var(--mono);font-size:12.5px}
 .funnel{display:flex;flex-direction:column;gap:8px;align-items:center}
 .fstep{border:1px solid var(--rule);background:var(--surface-2);border-radius:4px;padding:12px 18px;text-align:center;width:100%;max-width:640px;position:relative}
 .fstep .fn{font-family:var(--mono);font-size:26px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1}
-.fstep .ft{font-family:var(--cond);font-size:13.5px;color:var(--ink-2);margin-top:5px;line-height:1.35}
+.fstep .ft{font-family:var(--sans);font-size:13.5px;color:var(--ink-2);margin-top:5px;line-height:1.35}
 .fstep.hl{border-color:var(--signal);background:var(--signal-soft)}
 .fstep.hl .fn{color:var(--signal)}
 .fdrop{font-family:var(--mono);font-size:11.5px;color:var(--stop);text-align:center;line-height:1.4}
@@ -153,8 +156,8 @@ td.mono{font-family:var(--mono);font-size:12.5px}
 .flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:10px}
 .node{border:1px solid var(--rule);border-radius:4px;background:var(--surface-2);padding:12px 13px;display:flex;flex-direction:column;gap:6px}
 .node .nn{font-family:var(--mono);font-size:10px;letter-spacing:.11em;color:var(--ink-3);font-weight:600}
-.node .nt{font-family:var(--cond);font-size:15px;font-weight:600;line-height:1.22;color:var(--ink)}
-.node .nd{font-size:13px;color:var(--ink-2);line-height:1.45;font-family:var(--cond)}
+.node .nt{font-family:var(--sans);font-size:15px;font-weight:600;line-height:1.22;color:var(--ink)}
+.node .nd{font-size:13px;color:var(--ink-2);line-height:1.45;font-family:var(--sans)}
 .node .tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}
 .node.gate{border-color:var(--stop);background:var(--stop-soft)}
 .node.gate .nn{color:var(--stop)}
@@ -165,11 +168,11 @@ td.mono{font-family:var(--mono);font-size:12.5px}
 .compare>div:first-child{border-right:1px solid var(--rule)}
 .cmp-h{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;font-weight:600;margin-bottom:10px}
 .compare ul{margin:0;padding-left:18px;max-width:none}
-.compare li{font-family:var(--cond);font-size:14.5px;line-height:1.45;margin:8px 0;color:var(--ink)}
+.compare li{font-family:var(--sans);font-size:14.5px;line-height:1.45;margin:8px 0;color:var(--ink)}
 @media (max-width:640px){.compare{grid-template-columns:1fr}.compare>div:first-child{border-right:0;border-bottom:1px solid var(--rule)}}
 
 /* ui schematic */
-.ui{border:1px solid var(--rule);border-radius:5px;overflow:hidden;background:var(--surface);font-family:var(--cond)}
+.ui{border:1px solid var(--rule);border-radius:5px;overflow:hidden;background:var(--surface);font-family:var(--sans)}
 .ui-bar{background:var(--surface-2);border-bottom:1px solid var(--rule);padding:7px 12px;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.06em;display:flex;justify-content:space-between;align-items:center}
 .ui-body{display:grid;grid-template-columns:170px minmax(0,1fr);min-height:150px}
 .ui-side{border-right:1px solid var(--rule);padding:10px;background:var(--surface-2);font-size:13px;color:var(--ink-2)}
@@ -187,7 +190,7 @@ td.mono{font-family:var(--mono);font-size:12.5px}
 .check-item{display:flex;gap:12px;align-items:flex-start;padding:12px 16px;border-bottom:1px solid var(--rule-2)}
 .check-item:last-child{border-bottom:0}
 .check-item input{margin:4px 0 0;width:16px;height:16px;accent-color:var(--blueprint);flex:none;cursor:pointer}
-.check-item label{font-family:var(--cond);font-size:14.5px;line-height:1.45;cursor:pointer;color:var(--ink)}
+.check-item label{font-family:var(--sans);font-size:14.5px;line-height:1.45;cursor:pointer;color:var(--ink)}
 .check-item label b{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);font-weight:600;margin-bottom:2px}
 .check-item.done label{color:var(--ink-3);text-decoration:line-through}
 .check-foot{padding:10px 16px;background:var(--surface-2);border-top:1px solid var(--rule);font-family:var(--mono);font-size:11px;color:var(--ink-3);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
@@ -196,7 +199,7 @@ td.mono{font-family:var(--mono);font-size:12.5px}
 
 /* refs */
 .refs{margin:14px 0 0;padding-left:30px;list-style:decimal;max-width:none}
-.refs li{display:list-item;padding:6px 0 6px 4px;border-bottom:1px solid var(--rule-2);margin:0;font-family:var(--cond);font-size:13.5px;line-height:1.4}
+.refs li{display:list-item;padding:6px 0 6px 4px;border-bottom:1px solid var(--rule-2);margin:0;font-family:var(--sans);font-size:13.5px;line-height:1.4}
 .refs li::marker{font-family:var(--mono);font-size:11px;color:var(--signal);font-weight:600}
 .refs li a{overflow-wrap:anywhere;font-family:var(--mono);font-size:11px;display:inline-block;margin-top:2px;color:var(--ink-3);text-decoration:none}
 .refs li a:hover{color:var(--blueprint);text-decoration:underline}
@@ -223,7 +226,7 @@ body{margin:0}
 .kicker-part{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--signal);font-weight:600}
 .kicker-part span{color:var(--ink-3);font-weight:400;margin-left:10px}
 .more{margin-top:16px;max-width:76ch;border:1px solid var(--rule);border-radius:4px;background:var(--surface)}
-.more summary{cursor:pointer;font-family:var(--cond);font-weight:600;font-size:14px;padding:10px 14px;color:var(--blueprint);list-style:none;display:flex;align-items:center;gap:8px}
+.more summary{cursor:pointer;font-family:var(--sans);font-weight:600;font-size:14px;padding:10px 14px;color:var(--blueprint);list-style:none;display:flex;align-items:center;gap:8px}
 .more summary::before{content:"+";font-family:var(--mono);width:16px;display:inline-block;text-align:center}
 .more[open] summary::before{content:"–"}
 .more>div{padding:0 16px 14px;font-size:15.5px}
@@ -239,13 +242,13 @@ body{margin:0}
 /* capa */
 .slide.cover{justify-content:center;background:var(--paper)}
 .slide.divider{justify-content:center}
-.brand{font-family:var(--cond);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:13px;color:var(--blueprint);display:inline-flex;align-items:center;gap:10px}
+.brand{font-family:var(--sans);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:13px;color:var(--blueprint);display:inline-flex;align-items:center;gap:10px}
 .brand::before{content:"";width:22px;height:2px;background:var(--signal)}
-.cover h1{font-family:var(--cond);font-weight:700;font-size:clamp(42px,7.2vw,88px);line-height:.98;letter-spacing:-.02em;margin:22px 0 0;text-wrap:balance;max-width:none}
+.cover h1{font-family:var(--sans);font-weight:700;font-size:clamp(42px,7.2vw,88px);line-height:.98;letter-spacing:-.02em;margin:22px 0 0;text-wrap:balance;max-width:none}
 .cover .lede{font-size:clamp(18px,1.9vw,23px);color:var(--ink-2);max-width:none;margin:22px 0 0;line-height:1.55}
 .cover-meta{margin-top:34px;display:flex;flex-wrap:wrap;gap:24px 40px;font-family:var(--mono);font-size:12px;color:var(--ink-3);letter-spacing:.04em}
 .cover-meta b{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px;font-weight:600}
-.cover-meta span{font-family:var(--cond);font-size:15px;color:var(--ink);letter-spacing:0}
+.cover-meta span{font-family:var(--sans);font-size:15px;color:var(--ink);letter-spacing:0}
 .hint{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);display:flex;align-items:center;gap:8px}
 .hint::after{content:"↓";animation:bob 1.6s ease-in-out infinite}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
@@ -276,7 +279,7 @@ body{margin:0}
 .menu.open{transform:none}
 .menu .grp{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);padding:14px 10px 4px;border-top:1px solid var(--rule-2);margin-top:6px}
 .menu .grp:first-child{border-top:0;margin-top:0}
-.menu a{display:flex;gap:10px;align-items:baseline;text-decoration:none;color:var(--ink-2);font-family:var(--cond);font-size:14px;padding:6px 10px;border-radius:3px;border-left:2px solid transparent}
+.menu a{display:flex;gap:10px;align-items:baseline;text-decoration:none;color:var(--ink-2);font-family:var(--sans);font-size:14px;padding:6px 10px;border-radius:3px;border-left:2px solid transparent}
 .menu a .n{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);min-width:20px;font-variant-numeric:tabular-nums}
 .menu a:hover{background:var(--blueprint-soft);color:var(--ink)}
 .menu a.on{border-left-color:var(--blueprint);color:var(--blueprint);background:var(--blueprint-soft);font-weight:600}
@@ -293,7 +296,7 @@ body{margin:0}
 /* figuras leves */
 .shot{border:1px solid var(--rule);border-radius:5px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
 .shot img{display:block;width:100%;height:auto}
-.sets{position:relative;height:250px;max-width:520px;margin:0 auto;font-family:var(--cond)}
+.sets{position:relative;height:250px;max-width:520px;margin:0 auto;font-family:var(--sans)}
 .sets div{position:absolute;border-radius:50%;border:1.5px solid var(--rule);display:flex;align-items:flex-end;justify-content:center;padding-bottom:10px;font-size:13px;color:var(--ink-2);text-align:center;line-height:1.3}
 .sets .s1{inset:0;background:var(--surface-2)}
 .sets .s2{inset:12% 15% 8% 15%;background:var(--amber-soft);border-color:var(--amber)}
@@ -305,7 +308,7 @@ body{margin:0}
 .dec .p{border-left:3px solid var(--amber)}.dec .p b{color:var(--amber)}
 .dec .m{border-left:3px solid var(--go)}.dec .m b{color:var(--go)}
 .dec ul{margin:0;padding-left:16px;max-width:none}
-.dec li{font-family:var(--cond);font-size:14px;line-height:1.4;margin:4px 0}
+.dec li{font-family:var(--sans);font-size:14px;line-height:1.4;margin:4px 0}
 
 /* impressão: um slide por página */
 @page{size:A4 landscape;margin:12mm}
@@ -391,7 +394,7 @@ body{margin:0}
 }
 .gl4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:14px}
 .gl{column-count:1}
-.gl{margin:0;font-family:var(--cond);font-size:12.5px;line-height:1.38;columns:2;column-gap:18px}
+.gl{margin:0;font-family:var(--sans);font-size:12.5px;line-height:1.38;columns:2;column-gap:18px}
 .gl dt{break-inside:avoid}.gl dd{break-inside:avoid}
 @media (max-width:640px){.gl{columns:1}}
 .gl dt{font-weight:600;color:var(--blueprint);margin-top:7px}
@@ -404,7 +407,7 @@ body{margin:0}
 .modal{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:4vh 4vw;background:rgba(16,23,32,.45)}
 .modal.on{display:flex}
 .modal-box{background:var(--surface);color:var(--ink);border:1px solid var(--rule);border-radius:6px;box-shadow:var(--shadow);max-width:1100px;width:100%;max-height:92vh;display:flex;flex-direction:column}
-.modal-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--rule);font-family:var(--cond);font-weight:600;font-size:15px;color:var(--blueprint)}
+.modal-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--rule);font-family:var(--sans);font-weight:600;font-size:15px;color:var(--blueprint)}
 .modal-head button{font-family:var(--mono);font-size:20px;line-height:1;width:34px;height:34px;border:1px solid var(--rule);border-radius:4px;background:var(--surface);color:var(--ink-2);cursor:pointer}
 .modal-body{padding:14px 18px 20px;overflow:auto;font-size:15px}
 .modal-body p,.modal-body li{max-width:none;font-size:15px}
@@ -418,7 +421,7 @@ body{margin:0}
 .copy.ok{color:var(--go);border-color:var(--go)}
 .gterm{text-decoration:underline dotted var(--blueprint-2);text-decoration-thickness:1.5px;text-underline-offset:3px;cursor:help}
 .gterm:hover,.gterm:focus{background:var(--blueprint-soft);outline:none;border-radius:2px}
-.gpop{position:fixed;z-index:70;max-width:340px;background:var(--surface);color:var(--ink);border:1px solid var(--rule);border-left:3px solid var(--blueprint);border-radius:4px;box-shadow:var(--shadow);padding:10px 12px;font-family:var(--cond);font-size:13.5px;line-height:1.45;display:none;pointer-events:none}
+.gpop{position:fixed;z-index:70;max-width:340px;background:var(--surface);color:var(--ink);border:1px solid var(--rule);border-left:3px solid var(--blueprint);border-radius:4px;box-shadow:var(--shadow);padding:10px 12px;font-family:var(--sans);font-size:13.5px;line-height:1.45;display:none;pointer-events:none}
 .gpop.on{display:block}
 .gpop b{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--blueprint);margin-bottom:4px}
 @media (hover:none){.gpop{pointer-events:auto}}
@@ -430,7 +433,7 @@ body{margin:0}
 @media (max-width:900px){.slide .check{grid-template-columns:minmax(0,1fr)}.slide .check-item{border-right:0}.slide .refs{columns:1}}
 
 /* extras deste manual */
-.gantt{display:grid;grid-template-columns:150px repeat(12,minmax(0,1fr));gap:4px 0;font-family:var(--cond);font-size:12.5px;align-items:center}
+.gantt{display:grid;grid-template-columns:150px repeat(12,minmax(0,1fr));gap:4px 0;font-family:var(--sans);font-size:12.5px;align-items:center}
 .gantt .gl{padding-right:8px;color:var(--ink-2);text-align:right}
 .gantt .gm{font-family:var(--mono);font-size:10px;color:var(--ink-3);text-align:center;border-bottom:1px solid var(--rule);padding-bottom:3px}
 .gantt .gb{height:14px;border-radius:2px;background:var(--blueprint);margin:3px 1px}
@@ -440,7 +443,7 @@ body{margin:0}
 .struct{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .struct>div{border:1px solid var(--rule);border-radius:4px;background:var(--surface);padding:10px 12px}
 .struct h5{margin:0 0 6px;font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--blueprint)}
-.struct ol,.struct ul{margin:0;padding-left:16px}.struct li{font-family:var(--cond);font-size:13px;line-height:1.35;margin:2px 0}
+.struct ol,.struct ul{margin:0;padding-left:16px}.struct li{font-family:var(--sans);font-size:13px;line-height:1.35;margin:2px 0}
 @media (max-width:900px){.struct{grid-template-columns:minmax(0,1fr)}.gantt{grid-template-columns:110px repeat(12,minmax(0,1fr))}}
 
 /* lupa: clique na captura para ampliar */
@@ -448,14 +451,209 @@ body{margin:0}
 .lightbox{position:fixed;inset:0;z-index:80;background:rgba(10,14,20,.88);display:none;align-items:center;justify-content:center;padding:3vh 3vw;cursor:zoom-out}
 .lightbox.on{display:flex}
 .lightbox img{max-width:94vw;max-height:88vh;width:auto;height:auto;border-radius:4px;box-shadow:0 12px 40px rgba(0,0,0,.6);background:#fff}
-.lightbox figcaption{position:absolute;left:50%;bottom:1.6vh;transform:translateX(-50%);max-width:90vw;font-family:var(--cond);font-size:13.5px;color:#E3E9EF;text-align:center;line-height:1.4;padding:6px 12px;background:rgba(10,14,20,.6);border-radius:4px}
+.lightbox figcaption{position:absolute;left:50%;bottom:1.6vh;transform:translateX(-50%);max-width:90vw;font-family:var(--sans);font-size:13.5px;color:#E3E9EF;text-align:center;line-height:1.4;padding:6px 12px;background:rgba(10,14,20,.6);border-radius:4px}
 .lightbox .lb-close{position:absolute;top:12px;right:14px;width:40px;height:40px;border-radius:4px;border:1px solid rgba(255,255,255,.3);background:rgba(10,14,20,.5);color:#fff;font:20px/1 var(--mono);cursor:pointer}
 .lightbox .lb-hint{position:absolute;top:18px;left:18px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7)}
 @media print{.lightbox{display:none!important}}
+/* mt-padrao-2026 */
+/* ==========================================================================
+   Padrão visual MirandasTech (site www + blog, redesenho de 12–13/10/2026)
+   Camada aplicada sobre o motor dos manuais por aplicar_padrao_visual.py.
+   Fonte da verdade: blog-mirandastech/docs/padrao-visual-mirandastech.md,
+   tema do blog (assets/css/screen.css) e sites/www/app/globals.css.
+   Tela escura por padrão; impressão/PDF continua clara (só as fontes mudam).
+   ========================================================================== */
+
+:root{
+  --bg:#080c14; --card:#0c1220; --code:#0b1120;
+  --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.18);
+  --ink-body:#c3cbd7; --muted:#7d8798;
+  --cyan:#65e8ff; --cyan-rgb:101,232,255; --violet:#8b5cf6; --violet-ink:#c4b5fd;
+  /* reserva declarada: Noto Sans Math e Symbols 2 só com os glifos que a Geist não tem (κ → ↗ ≈ ≠ ⊕ ◯ ⋮ ☰…) */
+  --sans:"Geist","Noto Sans Math","Noto Sans Symbols 2","Noto Sans Symbols","Noto Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --serif:"Instrument Serif","Noto Sans Math","Noto Sans",Georgia,"Times New Roman",serif;
+  --mono:"Geist Mono","Noto Sans Mono","Noto Sans Math","Noto Sans Symbols 2","Noto Sans Symbols",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --mt-top:52px;
+}
+body{font-family:var(--sans)}
+h1 em,h2 em,h3 em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.01em}
+
+@media screen{
+  /* tokens do motor remapeados para a paleta escura da marca */
+  :root:not([data-mt-claro]){
+    --paper:#080c14; --surface:#0e1526; --surface-2:#0a0f1b;
+    --ink:#f5f7fa; --ink-2:#b7c0cd; --ink-3:#7d8798;
+    --rule:rgba(255,255,255,.18); --rule-2:rgba(255,255,255,.10);
+    --blueprint:#c4b5fd; --blueprint-2:#ddd6fe; --blueprint-soft:rgba(139,92,246,.16);
+    --signal:#65e8ff; --signal-soft:rgba(101,232,255,.12);
+    --go:#54c398; --go-soft:rgba(84,195,152,.14);
+    --stop:#f08a80; --stop-soft:rgba(236,123,114,.14);
+    --amber:#e3b44f; --amber-soft:rgba(220,172,61,.14);
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 18px 40px -20px rgba(0,0,0,.8);
+    color-scheme:dark;
+  }
+  body{background:var(--bg);color:var(--ink-body)}
+  ::selection{background:var(--cyan);color:#05070c}
+  :focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:4px}
+  a{color:var(--cyan)}
+  .slide p a,.slide li a{overflow-wrap:anywhere}  /* URL longa quebra em vez de passar da tela no celular */
+  .slide :not(pre)>code,.kicker-part span{overflow-wrap:anywhere;min-width:0}  /* nome de arquivo ou URL longa também quebra */
+  strong{color:var(--ink)}
+  h1,h2,h3,h4{font-family:var(--sans)}
+  h2,h3{font-weight:600;color:var(--ink)}
+  .slide h2{font-weight:600;line-height:1.08;letter-spacing:-.035em}
+  h1 em,h2 em,h3 em{color:var(--violet-ink)}
+  code{background:rgba(255,255,255,.05);border-color:var(--line);color:var(--ink)}
+
+  /* rótulo da seção: kicker em mono com traço ciano */
+  .kicker-part{display:flex;flex-wrap:wrap;align-items:center;column-gap:10px;row-gap:2px;font-size:12px;letter-spacing:.12em;font-weight:500;color:var(--cyan)}
+  .kicker-part::before{content:"";flex:none;width:22px;height:1px;background:var(--cyan);box-shadow:0 0 10px rgba(var(--cyan-rgb),.8)}
+  .kicker-part span{color:var(--muted);margin-left:0}
+
+  /* corpo de leitura: 17px no texto, 16px nas caixas (o padrão pede 18–19; o slide é denso) */
+  .slide{font-size:17px}
+  .slide p,.slide li{font-size:17px;line-height:1.6}
+  .slide .lead{font-size:clamp(17px,1.4vw,19px);line-height:1.55}
+  .cover .lede{font-size:clamp(18px,1.6vw,20px)}
+  .slide .rule-box p,.slide .trap p,.slide .case p,.slide .note p,.slide .rule-box li,.slide .trap li,.slide .case li,.slide .note li{font-size:16px}
+  .slide .tw table{font-size:15px}
+  .slide .refs li{font-size:14px}
+  /* medida: ~68 caracteres por linha (na Geist, 1 caractere médio ≈ 0,5em; 68ch daria ~89) */
+  .slide p,.slide li,.slide .lead,.slide figcaption,.slide.cover .lede,.slide.divider p{max-width:34em}
+
+  /* deck: espaço do cabeçalho fixo */
+  .slide{padding-top:calc(var(--mt-top) + 18px)}
+  .slide .inner{max-height:calc(100vh - var(--mt-top) - 44px)}
+  .slide.alt{background:var(--surface-2)}
+  .slide{border-bottom-color:var(--line)}
+
+  /* capa e divisórias */
+  .slide.cover{background:radial-gradient(900px 560px at 82% 18%,rgba(139,92,246,.20),transparent 62%),radial-gradient(760px 460px at 6% 96%,rgba(101,232,255,.10),transparent 60%),var(--bg)}
+  .cover h1{font-weight:600;font-size:clamp(40px,5.4vw,68px);line-height:1.04;letter-spacing:-.05em}
+  .cover .lede{color:var(--ink-2)}
+  .cover-meta span{font-family:var(--sans);color:var(--ink)}
+  .mt-selo{display:flex;width:fit-content;align-items:center;gap:10px;margin-top:14px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--violet-ink)}
+  .mt-selo i{width:8px;height:8px;border-radius:50%;background:var(--violet);box-shadow:0 0 12px var(--violet)}
+  .slide.divider{background:radial-gradient(900px 520px at 85% 15%,rgba(139,92,246,.24),transparent 60%),radial-gradient(700px 420px at 8% 92%,rgba(101,232,255,.10),transparent 60%),var(--bg);color:var(--ink)}
+  .slide.divider .kicker-part{color:var(--cyan)}
+  .slide.divider .kicker-part span{color:var(--muted)}
+  .slide.divider h2{color:var(--ink);font-weight:600;letter-spacing:-.045em}
+  .slide.divider p{color:var(--ink-2)}
+  .slide.divider .num{color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.12);font-family:var(--mono)}
+
+  /* cartões e caixas: fundo de cartão, raio 16, barra lateral em gradiente (estática perto do texto) */
+  .rule-box,.trap,.case,.note{background:var(--card);border:1px solid var(--line);border-radius:16px;position:relative;overflow:hidden;padding-left:22px}
+  .rule-box::before,.trap::before,.case::before,.note::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,transparent,var(--mt-bar),transparent)}
+  .rule-box{--mt-bar:var(--violet)} .case{--mt-bar:var(--cyan)} .trap{--mt-bar:#ee8a46} .note{--mt-bar:var(--muted)}
+  .rule-box .blabel{color:var(--violet-ink)} .case .blabel{color:var(--cyan)} .trap .blabel{color:#f4a06a} .note .blabel{color:var(--muted)}
+  .rule-box p,.trap p,.case p,.note p,.rule-box li,.trap li,.case li,.note li{color:var(--ink-body)}
+
+  /* tabelas, figuras, capturas */
+  .tw{border:1px solid var(--line);border-radius:14px;background:var(--card)}
+  th{background:transparent;color:var(--ink);border-bottom:1px solid var(--line-strong)}
+  td{border-bottom-color:var(--line)}
+  figcaption,figcaption b{color:var(--muted)}
+  figcaption b{color:var(--ink-2)}
+  .shot{border:1px solid var(--line);border-radius:12px;background:var(--card)}
+
+  /* código e terminal: barra com a linguagem e botão em pílula */
+  .code{background:var(--code);border:1px solid var(--line);border-radius:14px}
+  .code-head{background:transparent;border-bottom:1px solid var(--line);color:var(--muted);font-family:var(--mono)}
+  .term{border:1px solid var(--line);border-radius:14px}
+  .copy,.term .copy{border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink-2);font-family:var(--mono)}
+  .copy:hover{border-color:var(--cyan);color:var(--cyan)}
+  .copy.ok{border-color:var(--cyan);color:var(--cyan)}
+
+  /* navegação do deck */
+  .prog{height:3px;background:linear-gradient(90deg,var(--cyan),var(--violet));z-index:47}
+  .navbtn button,.menubtn{background:var(--card);border:1px solid var(--line-strong);border-radius:999px;color:var(--ink);box-shadow:none}
+  .navbtn button:hover,.menubtn:hover{border-color:var(--cyan);color:var(--cyan)}
+  .navbtn .cnt{font-family:var(--mono);color:var(--muted)}
+  .menu{background:var(--bg);border-right:1px solid var(--line)}
+  .menu .grp{color:var(--violet-ink);border-top-color:var(--line)}
+  .menu a{color:var(--ink-2)}
+  .menu a:hover{background:rgba(255,255,255,.04);color:var(--ink)}
+  .menu a.on{color:var(--cyan)}
+
+  /* revelação discreta: sobe 28px em 0,9s */
+  .rv{transform:none;opacity:1}
+  .mt-js .rv{transform:translateY(28px);opacity:0;transition:transform .9s var(--ease),opacity .9s var(--ease)}
+  .mt-js .slide.in .rv{transform:none;opacity:1}
+
+  /* cabeçalho fixo (ponte entre os sites) */
+  .mt-skip{position:fixed;left:16px;top:-80px;z-index:100;padding:10px 14px;background:var(--cyan);color:#05070c;font-weight:600;border-radius:999px;text-decoration:none;transition:top .16s}
+  .mt-skip:focus{top:12px}
+  .mt-top{position:fixed;top:0;left:0;right:0;height:var(--mt-top);z-index:44;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 clamp(16px,3vw,28px);background:rgba(8,12,20,.74);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .mt-brand{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:17px;letter-spacing:-.02em;color:var(--ink);text-decoration:none;flex:none}
+  .mt-brand svg{color:var(--cyan)}
+  .mt-brand b{color:var(--cyan);font-weight:700}
+  .mt-where{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .mt-where b{color:var(--violet-ink);font-weight:500}
+  .mt-links{display:flex;align-items:center;gap:22px;flex:none}
+  .mt-links a{font-size:14.5px;color:var(--ink-2);text-decoration:none;transition:color .2s}
+  .mt-links a:hover{color:var(--cyan)}
+  .mt-links a::after{content:" ↗";color:var(--cyan)}
+
+  /* rodapé igual ao do blog */
+  .mt-foot{padding:96px clamp(20px,5vw,72px) 40px;color:var(--muted);font-size:14px;background:var(--bg);border-top:1px solid var(--line);scroll-snap-align:start}
+  .mt-foot a{text-decoration:none}
+  .mt-foot-big{margin:0 0 56px;display:flex;flex-wrap:wrap;align-items:center;gap:0 clamp(14px,2vw,28px);font-size:clamp(40px,6.6vw,112px);font-weight:600;line-height:1.05;letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.22)}
+  .mt-foot-big i{width:clamp(8px,1vw,14px);height:clamp(8px,1vw,14px);border-radius:50%;background:var(--cyan);box-shadow:0 0 18px var(--cyan)}
+  .mt-foot-big em{-webkit-text-stroke:0;font-family:var(--serif);font-style:italic;font-weight:400;color:var(--cyan);letter-spacing:-.01em}
+  .mt-foot-grid{display:grid;grid-template-columns:minmax(0,1.6fr) repeat(4,minmax(0,1fr));gap:32px;padding-top:40px;border-top:1px solid var(--line)}
+  .mt-foot-about p{margin:14px 0 18px;max-width:42ch;line-height:1.6;color:var(--ink-2)}
+  .mt-foot-col{display:flex;flex-direction:column;gap:10px}
+  .mt-foot-col a{color:var(--ink-2);transition:color .2s;width:fit-content}
+  .mt-foot-col a:hover{color:var(--cyan)}
+  .mt-foot-col a.ext::after{content:" ↗";color:var(--cyan)}
+  .mt-foot-h{margin:0 0 4px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .mt-foot-h b{color:var(--violet-ink);font-weight:500}
+  .mt-foot-base{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-top:40px;padding-top:22px;border-top:1px solid var(--line);font-size:13px}
+  .mt-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--line-strong);font-weight:600;font-size:14px;color:var(--ink);background:rgba(255,255,255,.02);transition:border-color .25s}
+  .mt-btn:hover{border-color:var(--cyan)}
+
+  @media (max-width:1100px){
+    .mt-foot-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .mt-foot-about{grid-column:1/-1}
+  }
+  @media (max-width:900px){ .mt-where{display:none} }
+  @media (max-width:700px){ .mt-foot-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+  @media (max-width:560px){
+    .mt-links{gap:16px}
+    .mt-links a{font-size:13.5px}
+    .mt-brand{font-size:16px}
+  }
+  @media (max-width:420px){
+    .mt-top .mt-brand span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    .mt-foot-base{flex-direction:column}
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .rv{transform:none!important;opacity:1!important;transition:none!important}
+}
+
+@media print{
+  .mt-top,.mt-foot,.mt-skip{display:none!important}
+  .mt-selo{display:block;margin-top:8px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#5b21b6}
+  .mt-selo i{display:none}
+  .pill{white-space:normal}  /* na tabela estreita a pílula quebra em vez de ser cortada */
+  .tw{overflow:visible} .tw table{min-width:0}  /* no papel não há rolagem: a tabela cabe na coluna */
+  h1 em,h2 em,h3 em{color:inherit}
+}
+
 </style>
 </head>
 <body>
 
+<script>document.documentElement.classList.add("mt-js")</script>
+<a class="mt-skip" href="#deck">Pular para o conteúdo</a>
+<header class="mt-top">
+  <a class="mt-brand" href="https://www.mirandastech.com.br/"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2 21 7v10l-9 5-9-5V7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/></svg><span>Mirandas<b>Tech</b></span></a>
+  <span class="mt-where"><b>3.4</b> · Trilha 03 · Dados e ferramentas</span>
+  <nav class="mt-links" aria-label="MirandasTech"><a href="https://www.mirandastech.com.br/">Site</a><a href="https://blog.mirandastech.com.br/">Blog</a><a href="https://lab.mirandastech.com.br/?ref=plugin.mirandastech.com.br">Laboratório</a></nav>
+</header>
 <div class="prog" id="prog"></div>
 <div class="scrim" id="scrim"></div>
 <div class="gpop" id="gpop" role="tooltip"></div>
@@ -469,7 +667,8 @@ body{margin:0}
 <section class="slide cover" id="s00" data-title="Capa">
   <div class="inner">
     <span class="brand rv">MirandasTech · Manual profissional</span>
-    <h1 class="rv">Plugin Pesquisa MirandasTech para Claude e Codex: passo a passo</h1>
+    <span class="mt-selo rv"><i></i>Trilha 03 · Dados e ferramentas · manual 3.4</span>
+    <h1 class="rv">Plugin Pesquisa MirandasTech para <em>Claude e Codex</em>: passo a passo</h1>
     <p class="lede rv">Instalar no Claude Code, no Claude Desktop, no Codex e no ChatGPT; criar a pasta do projeto; conduzir as onze fases com o Pesquisador, o Metodólogo, o Orientador e o Bibliotecário; usar o conector do Zotero; registrar e declarar — com um pacote que <strong>roda no seu computador e só fecha uma fase com evidência</strong>.</p>
     <div class="cover-meta rv">
       <div><b>Série</b><span>Manuais MirandasTech · ferramentas de pesquisa</span></div>
@@ -500,7 +699,7 @@ body{margin:0}
       <div>
         <div class="rule-box"><span class="blabel">Regra</span><p>Todo comando aparece em bloco com botão «copiar». Nomes de menu e de botão são os da interface em português, observados em setembro de 2026; quando a sua tela divergir, vale a tela. Nada aqui foi inventado: os fatos vêm do repositório do plugin e dos diretórios em que ele está publicado.</p></div>
         <div class="trap"><span class="blabel">Armadilha</span><p>O que a regra evita: tratar o plugin como quem faz a pesquisa. Ele formula, registra e confere; a decisão de método, a inclusão de estudos, a interpretação e o texto são seus. Isso não é um conselho: está escrito nas regras que os agentes leem antes de agir.</p></div>
-        <div class="note"><span class="blabel">Manuais irmãos</span><p>Este manual cuida da <em>instalação e do uso do plugin</em>. O conteúdo de cada papel está nos manuais de origem: <a href="https://metodologia.mirandastech.com.br/">Metodologia da pesquisa científica</a>, <a href="https://manual.mirandastech.com.br/">Uso de IA na pesquisa científica</a>, <a href="https://zotero.mirandastech.com.br/">Zotero para pesquisa científica</a> e <a href="https://notebook.mirandastech.com.br/">Gemini Notebook para pesquisa científica</a>. O hub que reúne todos: <a href="https://www.mirandastech.com.br/pesquisa">mirandastech.com.br/pesquisa</a>.</p></div>
+        <div class="note"><span class="blabel">Manuais irmãos</span><p>Este manual cuida da <em>instalação e do uso do plugin</em>. O conteúdo de cada papel está nos manuais de origem: <a href="https://metodologia.mirandastech.com.br/">Metodologia da pesquisa científica</a>, <a href="https://manual.mirandastech.com.br/">Uso de IA na pesquisa científica</a>, <a href="https://zotero.mirandastech.com.br/">Zotero para pesquisa científica</a> e <a href="https://notebook.mirandastech.com.br/">Gemini Notebook para pesquisa científica</a>. O Laboratório reúne todos: <a href="https://lab.mirandastech.com.br/?ref=plugin.mirandastech.com.br">lab.mirandastech.com.br</a>.</p></div>
       </div>
     </div>
   </div>
@@ -1273,7 +1472,7 @@ codex plugin list</pre></div>
           <li>Abra uma <em>issue</em> no repositório (português ou inglês) dizendo o cliente (Claude Code, Claude Desktop, Codex aplicativo ou linha de comando, ChatGPT), o sistema operacional e o que aconteceu.</li>
           <li>Ou escreva para <a href="mailto:contato@mirandastech.com.br">contato@mirandastech.com.br</a>.</li>
         </ul>
-        <div class="note"><span class="blabel">Onde está tudo</span><p>Suporte: <code>docs/SUPORTE.md</code> · Privacidade: <code>docs/PRIVACIDADE.md</code> · Termos: <code>docs/TERMOS.md</code> · Textos de submissão: <code>docs/DESCRICAO.md</code> · Plano: <code>docs/PLANO.md</code>. Hub: <a href="https://www.mirandastech.com.br/pesquisa">mirandastech.com.br/pesquisa</a>.</p></div>
+        <div class="note"><span class="blabel">Onde está tudo</span><p>Suporte: <code>docs/SUPORTE.md</code> · Privacidade: <code>docs/PRIVACIDADE.md</code> · Termos: <code>docs/TERMOS.md</code> · Textos de submissão: <code>docs/DESCRICAO.md</code> · Plano: <code>docs/PLANO.md</code>. Laboratório: <a href="https://lab.mirandastech.com.br/?ref=plugin.mirandastech.com.br">lab.mirandastech.com.br</a>.</p></div>
       </div>
     </div>
   </div>
@@ -1375,7 +1574,7 @@ codex plugin list</pre></div>
       <li><span class="rt">OPENAI. Plugins — Submission (portal, tipo «Skills only», ZIP, revisão).</span><a href="https://developers.openai.com/plugins/deploy/submission">developers.openai.com/plugins/deploy/submission</a></li>
       <li><span class="rt">MATIAS, J. P. M. <em>Pesquisa MirandasTech</em>: plugin, v1.0.0. In: OPENAI. Diretório de plugins do ChatGPT/Codex. 2026. Publicado em 8 set. 2026.</span><a href="https://chatgpt.com/plugins/plugins_6aa0a0320a248191b33a514a3a52325b">chatgpt.com/plugins/plugins_6aa0a0320a248191b33a514a3a52325b</a></li>
       <li><span class="rt">MATIAS, J. P. M. <em>Pesquisa MirandasTech</em>: plugin para Claude Code e Codex (código, manifestos, docs, plano, privacidade, termos, suporte). GitHub, 2026. CC BY 4.0.</span><a href="https://github.com/joaopaulomirandamatias/pesquisa-mirandastech">github.com/joaopaulomirandamatias/pesquisa-mirandastech</a></li>
-      <li><span class="rt">MATIAS, J. P. M. <em>Hub de pesquisa</em>: manuais, plugin e novidades. MirandasTech, 2026.</span><a href="https://www.mirandastech.com.br/pesquisa">mirandastech.com.br/pesquisa</a></li>
+      <li><span class="rt">MATIAS, J. P. M. <em>Hub de pesquisa</em>: manuais, plugin e novidades. MirandasTech, 2026.</span><a href="https://lab.mirandastech.com.br/?ref=plugin.mirandastech.com.br">lab.mirandastech.com.br</a></li>
       <li><span class="rt">MATIAS, J. P. M. <em>Metodologia da pesquisa científica</em>: passo a passo. MirandasTech, 2026. CC BY 4.0.</span><a href="https://metodologia.mirandastech.com.br/">metodologia.mirandastech.com.br</a></li>
       <li><span class="rt">MATIAS, J. P. M. <em>Uso de IA na pesquisa científica</em>: passo a passo. MirandasTech, 2026. CC BY 4.0.</span><a href="https://manual.mirandastech.com.br/">manual.mirandastech.com.br</a></li>
       <li><span class="rt">MATIAS, J. P. M. <em>Zotero para pesquisa científica</em>: passo a passo. MirandasTech, 2026. CC BY 4.0.</span><a href="https://zotero.mirandastech.com.br/">zotero.mirandastech.com.br</a></li>
@@ -1392,7 +1591,7 @@ codex plugin list</pre></div>
     <h2 class="rv">Repositório público — o que há em cada pasta</h2>
     <div class="two rv">
       <div>
-        <div class="case"><span class="blabel">Manual on-line e repositório público</span><p><strong>Este manual on-line:</strong> <a href="https://plugin.mirandastech.com.br/">plugin.mirandastech.com.br</a> (PDF em <a href="https://plugin.mirandastech.com.br/pdf">/pdf</a>)<br><strong>Repositório do plugin:</strong> <a href="https://github.com/joaopaulomirandamatias/pesquisa-mirandastech">github.com/joaopaulomirandamatias/pesquisa-mirandastech</a><br>Código do plugin (manifestos para os dois clientes), agentes, skills, comandos, conector, scripts, modelos, prompts do Codex, o plano, os textos de submissão, política de privacidade, termos e suporte. Este manual, com as capturas datadas, fica no hub: <a href="https://www.mirandastech.com.br/pesquisa">mirandastech.com.br/pesquisa</a>.</p><span class="src">Como citar: MIRANDASTECH. Plugin Pesquisa MirandasTech para Claude e Codex: passo a passo. v1.0 (rascunho), set. 2026. CC BY 4.0.</span></div>
+        <div class="case"><span class="blabel">Manual on-line e repositório público</span><p><strong>Este manual on-line:</strong> <a href="https://plugin.mirandastech.com.br/">plugin.mirandastech.com.br</a> (PDF em <a href="https://plugin.mirandastech.com.br/pdf">/pdf</a>)<br><strong>Repositório do plugin:</strong> <a href="https://github.com/joaopaulomirandamatias/pesquisa-mirandastech">github.com/joaopaulomirandamatias/pesquisa-mirandastech</a><br>Código do plugin (manifestos para os dois clientes), agentes, skills, comandos, conector, scripts, modelos, prompts do Codex, o plano, os textos de submissão, política de privacidade, termos e suporte. Este manual, com as capturas datadas, fica no hub: <a href="https://lab.mirandastech.com.br/?ref=plugin.mirandastech.com.br">lab.mirandastech.com.br</a>.</p><span class="src">Como citar: MIRANDASTECH. Plugin Pesquisa MirandasTech para Claude e Codex: passo a passo. v1.0 (rascunho), set. 2026. CC BY 4.0.</span></div>
         <div class="code"><div class="code-head">terminal — clonar</div><pre>git clone https://github.com/joaopaulomirandamatias/pesquisa-mirandastech.git</pre></div>
         <div class="colophon" style="margin-top:12px;font-size:11px">Rascunho escrito com assistência de IA (Claude, Anthropic) na estruturação, redação e verificação de fatos, sob as regras do manual de uso de IA. Comandos, nomes de componentes, inventário instalado, ferramentas do conector, fases e portas, textos de submissão e políticas conferidos no repositório do plugin e nos diretórios em 08/09/2026. Capturas a substituir pelas reais antes da publicação.</div>
       </div>
@@ -1448,6 +1647,22 @@ codex plugin list</pre></div>
 </section>
 
 </main>
+<footer class="mt-foot">
+  <p class="mt-foot-big" aria-hidden="true"><span>Estudar</span><i></i><span>construir</span><i></i><em>publicar.</em></p>
+  <div class="mt-foot-grid">
+    <div class="mt-foot-about">
+      <a class="mt-brand" href="https://www.mirandastech.com.br/"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2 21 7v10l-9 5-9-5V7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/></svg><span>Mirandas<b>Tech</b></span></a>
+      <p>Tecnologia e inteligência artificial com fundamento. O blog guarda as notas; o site mostra o ciclo, a trilha e o radar.</p>
+      <a class="mt-btn" href="https://www.mirandastech.com.br/">Ir para o site <span aria-hidden="true">↗</span></a>
+    </div>
+    <nav class="mt-foot-col" aria-label="No site"><p class="mt-foot-h">No site</p><a href="https://www.mirandastech.com.br/#ciclo">O ciclo</a><a href="https://www.mirandastech.com.br/#trilha">A trilha</a><a href="https://www.mirandastech.com.br/#radar">Radar da semana</a><a href="https://www.mirandastech.com.br/agora">Agora</a></nav>
+    <nav class="mt-foot-col" aria-label="No blog"><p class="mt-foot-h">No blog</p><a href="https://blog.mirandastech.com.br/tag/radar/">Radar</a><a href="https://blog.mirandastech.com.br/tag/pesquisa-na-pratica/">Pesquisa na prática</a><a href="https://blog.mirandastech.com.br/#/portal/signup">Newsletter</a></nav>
+    <nav class="mt-foot-col" aria-label="Laboratório"><p class="mt-foot-h">Laboratório</p><a class="ext" href="https://lab.mirandastech.com.br/?ref=plugin.mirandastech.com.br">Laboratório</a><p class="mt-foot-h"><b>Trilha 03</b> · Dados e ferramentas</p><a class="ext" href="https://dados.mirandastech.com.br/">3.1 Análise de dados na pesquisa</a><a class="ext" href="https://notebook.mirandastech.com.br/">3.2 Gemini Notebook para pesquisa científica</a><a class="ext" href="https://git.mirandastech.com.br/">3.3 Git e GitHub para pesquisadores</a></nav>
+    <nav class="mt-foot-col" aria-label="Redes"><p class="mt-foot-h">Redes</p><a href="https://github.com/joaopaulomirandamatias" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/joaopaulomirandamatias/" target="_blank" rel="noopener">LinkedIn</a></nav>
+  </div>
+  <div class="mt-foot-base"><span>© 2026 MirandasTech</span><span>Ciência, código e IA, explicados por dentro</span></div>
+</footer>
+
 <script>
 
 (function(){
@@ -1498,12 +1713,12 @@ codex plugin list</pre></div>
   /* ajuste de escala: cada slide cabe na tela (como num programa de apresentação) */
   function fitAll(){
     if (window.innerWidth <= 900) { slides.forEach(function(s){ var i = s.querySelector('.inner'); if (i) i.style.zoom = ''; s.classList.add('fit'); }); return; }
-    var avail = window.innerHeight - 52;
+    var avail = window.innerHeight - 96;
     slides.forEach(function(s){
       var inner = s.querySelector('.inner'); if (!inner || s.classList.contains('divider') || s.classList.contains('cover')) return;
       inner.style.zoom = '1'; s.classList.remove('fit');
       var need = inner.scrollHeight; if (need <= avail) { s.classList.add('fit'); return; }
-      var z = Math.max(0.75, avail / need); inner.style.zoom = z.toFixed(3);
+      var z = Math.max(0.94, avail / need); inner.style.zoom = z.toFixed(3);
       if (inner.scrollHeight * z <= avail + 2) s.classList.add('fit');
     });
   }
