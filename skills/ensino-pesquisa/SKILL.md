@@ -9,7 +9,7 @@ Manual: https://professor.mirandastech.com.br/ (páginas públicas, literatura v
 
 ## Regras
 - Alinhamento construtivo (Biggs, 1996): objetivo = o que o estudante entrega; atividade em aula produz essa entrega; a avaliação confere o artefato. Aprendizagem ativa melhora desempenho (Freeman et al., 2014); feedback específico e acionável (Hattie & Timperley, 2007); orientação explícita para iniciantes (Kirschner, Sweller & Clark, 2006) — os manuais são o passo a passo.
-- Cronograma padrão de 15 semanas = fases do Pesquisador (diagnóstico → entrega), cada semana com manual, atividade e entrega com evidência (`plano_de_ensino.py`); ajustar ao PPC, à carga horária e ao regimento.
+- Cronograma padrão de 17 semanas = fases do Pesquisador (diagnóstico → entrega), mais a semana 16 (submissão do artigo, manual de Submissão) e a 17 (estágio de docência, este manual), cada semana com manual, atividade e entrega com evidência (`plano_de_ensino.py`); ajustar ao PPC, à carga horária e ao regimento.
 - Rubrica por entrega (`rubrica.py`): critérios com peso (soma 100), arquivo que prova, quatro níveis; comentário do que muda na próxima versão; recuperação = nova versão com DECISOES.md.
 - Painel da turma (`turma_progresso.py`): fase atual, fases fechadas, dias sem alteração; parado há > 14 dias = conversa, não nota. Pastas dos estudantes vêm do `iniciar_projeto.py`.
 - Uso de IA na disciplina: permitido com registro (USO_DE_IA.csv) e declaração; proibido gerar dados, resumir o que não leu, assinar texto gerado (CNPq); detector de IA não é prova.
@@ -17,7 +17,7 @@ Manual: https://professor.mirandastech.com.br/ (páginas públicas, literatura v
 - Materiais: os manuais são CC BY 4.0 — reutilizar, adaptar e citar (`MATIAS, J. P. M. <título>. MirandasTech, v1.0, set. 2026.`); Moodle (GPL) e Classroom (rubricas, originalidade) recebem os links e as entregas; H5P (MIT) para exercícios interativos.
 
 ## Scripts (`scripts/`)
-- `python3 plano_de_ensino.py --disciplina "…" --semanas 15 [--carga 60] [--nivel graduacao|pos] [--saida PLANO_DE_ENSINO.md]`
+- `python3 plano_de_ensino.py --disciplina "…" --semanas 17 [--carga 60] [--nivel graduacao|pos] [--saida PLANO_DE_ENSINO.md]`
 - `python3 rubrica.py --entrega projeto|busca|analise|texto|banca [--saida …]` ou `--entrega custom --criterios "…;…" --peso "…;…"`
 - `python3 turma_progresso.py <pasta_da_turma> [--markdown painel.md]`
 

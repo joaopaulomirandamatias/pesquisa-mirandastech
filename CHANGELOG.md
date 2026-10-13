@@ -1,5 +1,9 @@
 # Histórico de versões
 
+## 1.0.16 — 2026-10-13
+- `plano_de_ensino.py`: o cronograma padrão passa a 17 semanas (`--semanas 17`). As semanas 1 a 15 não mudam; a 16 é a submissão do artigo (manual de Submissão: `CHECKLIST_SUBMISSAO.md`, `CARTA_APRESENTACAO.md`) e a 17 o estágio de docência (manual do professor: semana conduzida sob supervisão, rubrica com `rubrica.py`). Ementa gerada atualizada. Execução real: «gravado: PLANO_DE_ENSINO.md (17 semanas, 17 fases cobertas)».
+- `ensino-pesquisa`: cronograma padrão de 17 semanas e o comando com `--semanas 17`.
+
 ## 1.0.15 — 2026-10-13
 - `revisao-sistematica-prisma`: a decisão de usar IA entra já no protocolo (declaração conjunta Cochrane, Campbell, JBI e CEE, 2025, https://doi.org/10.11124/JBIES-25-00480); ao definir o limiar do ASReview, o aluno é avisado de que o RAISE 3 (v.4, 23/09/2026, rascunho em revisão, https://osf.io/fwaud/) classifica a triagem priorizada com parada antecipada como «Requires validation within the review»; relato pelo item 4.9 do RAISE 1; PRISMA-trAIce só como lista de conferência, sem endosso da direção do PRISMA (Moher et al., 2026, https://doi.org/10.2196/104210); nova recusa: LLM sintetizando achados entre estudos («not acceptable» no RAISE 3).
 - `triagem-assistida`: antes do lote inteiro, as propostas da IA são validadas num subconjunto da própria revisão, com limiar definido antes (RAISE 3, Tabela 2: LLM na triagem = «Requires validation within the review»).
